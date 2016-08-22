@@ -44,7 +44,6 @@ public class FsViewPort extends Html5Controller {
 
 
 	 public void mouseMove(Screen s,JSONObject data) {
-		 System.out.println("MOVE2 !!!!");
 		 Capabilities cap = s.getCapabilities();
 		 if (cap.getDeviceMode()==cap.MODE_GENERIC && !indrag) return;
 		 String[] posxy = ((String)data.get("clientXY")).split(",");
@@ -61,7 +60,6 @@ public class FsViewPort extends Html5Controller {
 	 
 	 
 	 public void downStart(Screen s,JSONObject data) {
-		 System.out.println("start down "+s);
 		String username = s.getUserName();
 		if (username!=null && !username.equals("")) {
 			//SensoApplication app = (SensoApplication)screen.getApplication();
@@ -138,6 +136,7 @@ public class FsViewPort extends Html5Controller {
 			 ps.setProperty("x",""+resultx); // we should support auto convert
 			 ps.setProperty("y",""+resulty);
 			 ps.setProperty("scale",""+resultpercentage);
+			 System.out.println("SET SHARED PROPERTIES="+path);
 			 s.getModel().setProperties(path,ps);
 			 
 	 }
@@ -160,6 +159,7 @@ public class FsViewPort extends Html5Controller {
 		 ps.setProperty("x",""+resultx); // we should support auto convert
 		 ps.setProperty("y",""+resulty);
 		 ps.setProperty("scale",""+resultpercentage);
+		 System.out.println("SET SHARED PROPERTIES="+path);
 		 s.getModel().setProperties(path,ps);
 	 }
 
