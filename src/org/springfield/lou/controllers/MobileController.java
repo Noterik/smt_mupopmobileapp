@@ -12,6 +12,7 @@ import org.springfield.fs.Fs;
 import org.springfield.fs.FsNode;
 import org.springfield.lou.controllers.Html5Controller;
 import org.springfield.lou.controllers.photoexplore.PhotoExploreRemoteController;
+import org.springfield.lou.controllers.photoinfospots.PhotoInfoSpotsRemoteController;
 import org.springfield.lou.screen.Screen;
 
 public class MobileController extends Html5Controller {
@@ -40,9 +41,11 @@ public class MobileController extends Html5Controller {
 			System.out.println("STATIONNODE="+stationnode.asXML());
 			String app =  stationnode.getProperty("app"); // get the app name
 			if (app!=null) {
-				// should be a case or loaded system
+				//TODO: should be a case or loaded system
 				if (app.equals("photoexplore")) {
     				screen.get("#mobile_content").append("div","photoexploreremote",new PhotoExploreRemoteController());
+				} else if (app.equals("photoinfospots")) {
+					screen.get("#mobile_content").append("div","photoinfospotsremote",new PhotoInfoSpotsRemoteController());
 				}
 			} else {
 				// should display error that no app was selected and curator should set it

@@ -17,4 +17,9 @@
 		</controller>
 	</view>
 
+	<view id="#photoinfospotsremote">
+		<template>mobile/photoinfospotsremote/photoinfospotsremote.mst</template>
+		<controller id="PhotoInfoSpotsRemoteController">
+		</controller>
+	</view>
 </app>
