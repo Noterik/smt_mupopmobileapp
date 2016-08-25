@@ -21,8 +21,10 @@
 package org.springfield.lou.controllers.photoinfospots;
 
 import org.json.simple.JSONObject;
+import org.springfield.fs.FsNode;
+import org.springfield.fs.FsPropertySet;
+import org.springfield.lou.application.Html5ApplicationInterface;
 import org.springfield.lou.controllers.Html5Controller;
-import org.springfield.lou.controllers.photoexplore.FsViewPort;
 import org.springfield.lou.screen.Screen;
 
 /**
@@ -34,49 +36,90 @@ import org.springfield.lou.screen.Screen;
  * 
  */
 public class PhotoInfoSpotsRemoteController extends Html5Controller {
-	//private Html5ApplicationInterface app;
-	FsViewPort viewport;
-
-	public PhotoInfoSpotsRemoteController() {
-	}
-
+	
+	String sharedspace;
+	private Html5ApplicationInterface app;
+	float lastx = -1;
+	float lasty = -1;
+	
+	public PhotoInfoSpotsRemoteController() {}
+	
 	public void attach(String sel) {
 		selector = sel;
+		app = screen.getApplication();
 		screen.loadStyleSheet("mobile/photoinfospotsremote/photoinfospotsremote.css");
-		screen.get(selector).parsehtml(new JSONObject());
-		screen.get("#photoinfospotsremote_trackarea").track("mousemove","mouseMove", this);
-		screen.get("#photoinfospotsremote_trackarea").on("touchend","touchEnd",this);
-		screen.get("#photoinfospotsremote_trackarea").on("touchstart","touchStart",this);
-		screen.get("#photoinfospotsremote_trackarea").on("mousedown","startDrag",this);
-		screen.get("#photoinfospotsremote_trackarea").on("mouseup","stopDrag",this);
+		
+		String path = model.getProperty("/screen/exhibitionpath");
 
-		String sharedspace = model.getProperty("/screen/sharedspace");
-		viewport = new FsViewPort(screen,"#photoinfospotsremote_trackarea",sharedspace+"station/2");
-
+		FsNode stationnode = model.getNode(path);
+		if (stationnode!=null) {
+			JSONObject data = new JSONObject();
+			//data.put("url",stationnode.getProperty("url_mobile"));
+			
+			screen.get(selector).parsehtml(data);
+			screen.get("#photoinfospotsremote_trackarea").track("mousemove","mouseMove", this); // track mouse move event on the #screen tag
+			screen.get("#photoinfospotsremote_trackarea").on("mouseup","mouseUp",this);
+			screen.get("#photoinfospotsremote_trackarea").on("touchend","mouseUp",this);
+		}
+		
+		sharedspace = model.getProperty("/screen/sharedspace");
 	}
+	
+	 public void mouseUp(Screen s,JSONObject data) {
+		 System.out.println("UP="+data.toJSONString());
 
-	public void mouseMove(Screen s,JSONObject data) {
-		System.out.println("MOVE="+data.toJSONString());
-		viewport.mouseMove(s,data);
-	}
+		 FsPropertySet ps = new FsPropertySet(); // send them as a set so we get 1 event
+		 ps.setProperty("x",""+lastx); // we should support auto convert
+		 ps.setProperty("y",""+lasty);
+		 ps.setProperty("action","up");
+		 model.setProperties(sharedspace+"station/2",ps);
+	 }
+	
+	 public void mouseMove(Screen s,JSONObject data) {
+		 System.out.println("MOVE="+data.toJSONString());
+		 
+		 lastx = getPercX(data);
+		 lasty = getPercY(data);
+		 
+		 FsPropertySet ps = new FsPropertySet(); // send them as a set so we get 1 event
+		 ps.setProperty("x",""+lastx); // we should support auto convert
+		 ps.setProperty("y",""+lasty);
+		 ps.setProperty("action","move");
+		 model.setProperties(sharedspace+"station/2",ps);
+	 }
+	 
+	 private float getPercX(JSONObject data) {
+		 float x = 0;
+		 float rx = 0;
+		 try {
+			String[] posxy = ((String)data.get("clientXY")).split(",");
+		 	rx = Float.parseFloat(posxy[0]);
+			long width = (Long)data.get("width");
+			x = ((float)rx/width)*100;
+			return x;
+		 } catch(Exception e) {
+			 e.printStackTrace();
+			 return -1;
+		 }
+	 }
+	 
+	 private float getPercY(JSONObject data) {
+		 float y = 0;
+		 float ry = 0;
+		 try {
+			String[] posxy = ((String)data.get("clientXY")).split(",");
+		 	ry = Float.parseFloat(posxy[1]);
 
-	public void touchEnd(Screen s,JSONObject data) {
-		System.out.println("END="+data.toJSONString());
-		viewport.touchEnd(s,data);
-	}
-
-	public void touchStart(Screen s,JSONObject data) {
-		System.out.println("START="+data.toJSONString());
-		viewport.touchStart(s,data);
-	}
-
-	public void startDrag(Screen s,JSONObject data) {
-		System.out.println("STARTDRAG="+data.toJSONString());
-		viewport.startDrag(s,data);
-	}
-
-	public void stopDrag(Screen s,JSONObject data) {
-		System.out.println("STOPDRAG="+data.toJSONString());
-		viewport.stopDrag(s,data);
-	}
+			long height = (Long)data.get("height");
+			y = ((float)ry/height)*100;
+		
+			if (y<0) y = 0;
+			if (y>100) y = 100;
+			return y;
+		 } catch(Exception e) {
+			 e.printStackTrace();
+			 return -1;
+		 }
+		 
+	 }
 }
