@@ -28,17 +28,6 @@ public class FsViewPort extends Html5Controller {
 	
 	public FsViewPort(Screen s,String selector,String p) {
 		path = p;
-		
-		/*
-		s.get(selector).track("mousemove","mouseMove", this);
-		
-		s.get(selector).on("touchend","touchEnd",this);
-		s.get(selector).on("touchstart","touchStart",this);
-		s.get(selector).on("mousedown","startDrag",this);
-		s.get(selector).on("mouseup","stopDrag",this);
-		*/
-		
-		
 		pinchstartscale = 100.0;
 	}
 
@@ -136,7 +125,7 @@ public class FsViewPort extends Html5Controller {
 			 ps.setProperty("x",""+resultx); // we should support auto convert
 			 ps.setProperty("y",""+resulty);
 			 ps.setProperty("scale",""+resultpercentage);
-			 System.out.println("SET SHARED PROPERTIES="+path);
+			 System.out.println("PINCH SET SHARED PROPERTIES="+path+" "+resultpercentage);
 			 s.getModel().setProperties(path,ps);
 			 
 	 }
@@ -159,7 +148,7 @@ public class FsViewPort extends Html5Controller {
 		 ps.setProperty("x",""+resultx); // we should support auto convert
 		 ps.setProperty("y",""+resulty);
 		 ps.setProperty("scale",""+resultpercentage);
-		 System.out.println("SET SHARED PROPERTIES="+path);
+		 System.out.println("DRAG SET SHARED PROPERTIES="+path+" "+resultpercentage);
 		 s.getModel().setProperties(path,ps);
 	 }
 
