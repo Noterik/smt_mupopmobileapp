@@ -24,7 +24,7 @@ public class MobileController extends Html5Controller {
 	public void attach(String sel) {
 		System.out.println("mobile controller attached called");
 		selector = sel;
-		screen.loadStyleSheet("mobile/mobile.css");
+
 		JSONObject data = new JSONObject();
 		//data.put("location",model.getProperty("/screen/location"));
  		screen.get(selector).parsehtml(data);

@@ -25,7 +25,7 @@ public class PhotoExploreRemoteController extends Html5Controller  {
 	
 	public void attach(String sel) {
 		selector = sel;
-		screen.loadStyleSheet("mobile/photoexploreremote/photoexploreremote.css");
+
  		screen.get(selector).parsehtml(new JSONObject());
  		screen.get("#photoexploreremote_trackarea").track("mousemove","mouseMove", this);
 		screen.get("#photoexploreremote_trackarea").on("touchend","touchEnd",this);

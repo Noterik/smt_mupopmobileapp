@@ -47,7 +47,6 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 	public void attach(String sel) {
 		selector = sel;
 		app = screen.getApplication();
-		screen.loadStyleSheet("mobile/photoinfospotsremote/photoinfospotsremote.css");
 		
 		String path = model.getProperty("/screen/exhibitionpath");
 
@@ -66,7 +65,7 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 	}
 	
 	 public void mouseUp(Screen s,JSONObject data) {
-		 System.out.println("UP="+data.toJSONString());
+		 //System.out.println("UP="+data.toJSONString());
 
 		 FsPropertySet ps = new FsPropertySet(); // send them as a set so we get 1 event
 		 ps.setProperty("x",""+lastx); // we should support auto convert
@@ -76,7 +75,7 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 	 }
 	
 	 public void mouseMove(Screen s,JSONObject data) {
-		 System.out.println("MOVE="+data.toJSONString());
+		 //System.out.println("MOVE="+data.toJSONString());
 		 
 		 lastx = getPercX(data);
 		 lasty = getPercY(data);

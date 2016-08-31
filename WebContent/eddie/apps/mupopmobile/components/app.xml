@@ -7,18 +7,21 @@
 	
 	<view id="#mobile">
 		<template>mobile/mobile.mst</template>
+		<style>mobile/mobile.css</style>
 		<controller id="MobileController">
 		</controller>
 	</view>
 	
 	<view id="#photoexploreremote">
 		<template>mobile/photoexploreremote/photoexploreremote.mst</template>
+		<style>mobile/photoexploreremote/photoexploreremote.css</style>
 		<controller id="PhotoExploreRemoteController">
 		</controller>
 	</view>
 
 	<view id="#photoinfospotsremote">
 		<template>mobile/photoinfospotsremote/photoinfospotsremote.mst</template>
+		<style>mobile/photoinfospotsremote/photoinfospotsremote.css</style>
 		<controller id="PhotoInfoSpotsRemoteController">
 		</controller>
 	</view>
