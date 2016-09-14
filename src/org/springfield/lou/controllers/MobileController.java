@@ -24,10 +24,18 @@ public class MobileController extends Html5Controller {
 	public void attach(String sel) {
 		System.out.println("mobile controller attached called");
 		selector = sel;
-
-		JSONObject data = new JSONObject();
-		//data.put("location",model.getProperty("/screen/location"));
- 		screen.get(selector).parsehtml(data);
+		fillPage();
+	}
+	
+	private void fillPage() {
+		String stationpath  = model.getProperty("/screen/exhibitionpath")+"/station";
+		FSList list = model.getList(stationpath);
+		if (list!=null) {
+			JSONObject data = FSList.ArrayToJSONObject(list.getNodes(),"en","labelid");
+			screen.get(selector).render(data);
+		} else {
+			screen.get(selector).render();
+		}
 		screen.get("#mobile_input").on("change","selectorButton",this);
 	}
 
