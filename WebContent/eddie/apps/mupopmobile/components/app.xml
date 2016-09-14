@@ -23,6 +23,23 @@
 		<template>mobile/photoinfospotsremote/photoinfospotsremote.mst</template>
 		<style>mobile/photoinfospotsremote/photoinfospotsremote.css</style>
 		<controller id="PhotoInfoSpotsRemoteController">
+			<javascript>mobile/photoinfospotsremote/PhotoInfoSpotsRemoteController.js</javascript>
+		</controller>
+	</view>
+	
+	<view id="#coverflowremote">
+		<template>mobile/image/selection/coverflowremote.mst</template>
+		<style>mobile/image/selection/coverflowremote.css</style>
+		<controller id="CoverFlowRemoteController">
+			<javascript>mobile/image/selection/CoverFlowRemoteController.js</javascript>
+		</controller>
+	</view>
+	
+	<view id="#zoomandaudioremote">
+		<template>mobile/image/spotting/zoomandaudioremote.mst</template>
+		<style>mobile/image/spotting/zoomandaudioremote.css</style>
+		<controller id="ZoomAndAudioRemoteController">
+			<javascript>mobile/image/spotting/ZoomAndAudioRemoteController.js</javascript>
 		</controller>
 	</view>
 </app>

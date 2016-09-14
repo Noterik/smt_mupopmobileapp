@@ -1,0 +1,6 @@
+<div id="photoinfospotsremote_trackarea" />
+
+</div>
+<audio id="photoinfospots_audio" controls="controls" autoplay="autoplay">
+	<source type="audio/mpeg"/>
+</audio>

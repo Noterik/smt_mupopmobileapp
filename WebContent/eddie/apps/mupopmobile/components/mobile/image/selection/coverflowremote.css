@@ -1,0 +1,42 @@
+html, body {
+	height: 100%;
+	background-color: #fff;
+}
+
+#screen, .fill-height, #coverflowremote {
+	height: 100%;	
+}
+
+.contents{
+		position: absolute;
+		top: 0;
+		left: 0;
+		box-sizing: border-box;
+		min-height: 100%;
+		padding-top: 30px;
+		padding-bottom: 70px;
+}
+
+.trackpad-wrapper {
+	height: 100%;
+	width: 100%;
+	position: relative;
+}
+
+.trackpad-wrapper .trackpad {
+	position: absolute;
+	border-radius: 12px;
+	border: 2px solid;
+	overflow: hidden;
+	border-color: #222222;
+	background-color: #fff;
+}
+
+.header {
+	background-color: #33475a;
+	height: 30px;
+	color: #fff;
+	text-align: center;
+	font-weight: 600;
+	padding-top: 5px;	
+}
