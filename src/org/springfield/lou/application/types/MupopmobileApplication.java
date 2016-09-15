@@ -33,8 +33,9 @@ public class MupopmobileApplication extends Html5Application {
     		s.setLanguageCode("en");
 			s.get("#screen").attach(new ScreenController());
 			
-			loadStyleSheet(s, "bootstrap.min");
-			loadStyleSheet(s, "bootstrap-theme");
+			loadStyleSheet(s, "libs/bootstrap.min");
+			loadStyleSheet(s, "libs/bootstrap-theme");
+			loadStyleSheet(s, "libs/font-awesome.min");
 			
     		String path = s.getParameter("path");
 			System.out.println("PATH="+path);

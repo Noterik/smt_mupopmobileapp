@@ -1,6 +1,28 @@
-<div id="photoinfospotsremote_trackarea" />
-
+<div class="header col-xs-12">
+	<div class="row">
+		<div id="previousPage" class="col-xs-2">
+			<i  class="fa fa-arrow-left"></i>
+		</div>
+		<div class="col-xs-8">
+			AMAZING EXHIBITION TITLE
+		</div>
+		<div class="col-xs-2"></div>
+	</div>
 </div>
-<audio id="photoinfospots_audio" controls="controls" autoplay="autoplay">
-	<source type="audio/mpeg"/>
-</audio>
+<div class="contents col-xs-12 fill-height">
+	<div class="trackpad-wrapper">
+		<div id="trackpad" class="trackpad">
+			<div id="help-text">Use your finger to find hotspots on the image</div>
+			<div id="help-button" class="fa fa-question-circle"></div>
+			<img class="img-responsive" id="move-pointer-animation" src="http://images1.noterik.com/mupop/move-pointer.gif"/>	
+		</div>
+	</div>
+</div>
+<div class="audioplayer-wrapper col-xs-12">
+	<div class="row">
+		<audio id="audioplayer" controls="controls" autoplay="autoplay">
+			<source type="audio/mpeg"/>
+		</audio>
+	</div>
+</div>
+

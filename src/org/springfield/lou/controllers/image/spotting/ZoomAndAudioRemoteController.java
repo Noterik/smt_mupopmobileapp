@@ -62,13 +62,15 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 			JSONObject data = new JSONObject();
 
 			screen.get(selector).parsehtml(data);
-			screen.get("#photoinfospotsremote_trackarea").track("mousemove",
-					"mouseMove", this); // track mouse move event on the #screen
-										// tag
-			screen.get("#photoinfospotsremote_trackarea").on("mouseup",
+			
+			screen.get("#trackpad").track("mousemove",
+					"mouseMove", this); // track mouse move event on the #trackpad
+			screen.get("#trackpad").on("mouseup",
 					"mouseUp", this);
-			screen.get("#photoinfospotsremote_trackarea").on("touchend",
+			screen.get("#trackpad").on("touchend",
 					"mouseUp", this);
+			screen.get("#previousPage").on("mousedown", "previousPage", this);
+			
 		}
 
 		sharedspace = model.getProperty("/screen/sharedspace");
@@ -93,7 +95,7 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 			JSONObject d = new JSONObject();
 			d.put("command", "update");
 			d.put("src", url);
-			screen.get("#photoinfospotsremote").update(d);
+			screen.get("#zoomandaudioremote").update(d);
 		}
 
 	}
@@ -113,13 +115,16 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 
 		String url = getAudio(lastx, lasty); // get the audio (if any) for this
 												// location
-		if (url != null) { // if audio found lets push it to the screen (so it
-							// plays)
+		if (url != null) { // if audio found lets push it to the screen (so it plays)
 			JSONObject d = new JSONObject();
 			d.put("command", "update");
 			d.put("src", url);
-			screen.get("#photoinfospotsremote").update(d);
+			screen.get("#zoomandaudioremote").update(d);
 		}
+	}
+	
+	public void previousPage(Screen s, JSONObject data) {
+		System.out.println("previous page requested");
 	}
 
 	private float getPercX(JSONObject data) {
@@ -175,7 +180,8 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 					if (x > (ox - ow) && x < (ox + ow)) { // within x range
 						if (y > (oy - oh) && y < (oy + oh)) { // within y range
 							System.out.println("On hotspot");
-							return url;
+							//return url;
+							return "http://images1.noterik.com/mupop/audio/calligraphy.m4a";
 						}
 					}
 				} catch (Exception e) {

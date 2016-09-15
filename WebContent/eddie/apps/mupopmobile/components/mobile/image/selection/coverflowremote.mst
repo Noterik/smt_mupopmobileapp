@@ -2,6 +2,11 @@
 <div class="contents col-xs-12 fill-height">
 	<div class="trackpad-wrapper">
 		<div id="trackpad" class="trackpad">
+			<div id="help-text1">Swipe left or right to browse the different images</div>
+			<div id="help-text2">Double tap to view the current image</div>
+			<div id="help-button"><i class="fa fa-question-circle"></i></div>
+			<img class="img-responsive" id="swipe-animation" src="http://images1.noterik.com/mupop/left-right-swipe.gif"/>
+			<img class="img-responsive" id="touch-animation" src="http://images1.noterik.com/mupop/double-tap.gif"/>
 		</div>
 	</div>
 </div>

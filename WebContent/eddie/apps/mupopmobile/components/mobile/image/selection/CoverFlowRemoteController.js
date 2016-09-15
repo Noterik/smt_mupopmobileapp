@@ -7,6 +7,29 @@ CoverFlowRemoteController.update = function(vars, data){
 	console.log(data);
 }
 
+startHelp();
+
+function startHelp() {
+	setTimeout(function(){
+		$("#help-text1").hide();
+		$("#swipe-animation").hide();
+		$("#help-text2").show();
+		$("#touch-animation").show();
+		setTimeout(function() {
+			$("#help-text2").hide();
+			$("#touch-animation").hide();
+			$("#help-button").show();
+		}, 4000);
+	}, 5000);
+}
+
+$("#help-button").on('touchstart click', function () {
+	$("#help-button").hide();
+	$("#help-text1").show();
+	$("#swipe-animation").show();
+	startHelp();
+});
+
 //Handling fitting of trackpad
 var $wrapper = jQuery('.trackpad-wrapper');
 var $trackpad = jQuery('.trackpad');
