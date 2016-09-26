@@ -42,11 +42,15 @@ public class MobileController extends Html5Controller {
 	
 	
 	public void selectorButton(Screen s,JSONObject data) {
-		String stationpath  = model.getProperty("/screen/exhibitionpath");
-		System.out.println(stationpath+"/station/"+(String)data.get("value"));	
-		FsNode stationnode = model.getNode(stationpath+"/station/"+(String)data.get("value"));	
+		String exhibitionpath  = model.getProperty("/screen/exhibitionpath");
+		FsNode stationnode = model.getNode(exhibitionpath+"/station/"+(String)data.get("value"));	
 		if (stationnode!=null) {
-			System.out.println("STATIONNODE="+stationnode.asXML());
+			String[] parts = exhibitionpath.split("/");
+			String userid=parts[4];
+			String exhibitionid=parts[6];
+			s.getModel().setProperty("@username", userid);
+			s.getModel().setProperty("@exhibitionid", exhibitionid);
+			model.setProperty("@stationid", stationnode.getId());
 			String app =  stationnode.getProperty("app"); // get the app name
 			if (app!=null) {
 				//TODO: should be a case or loaded system

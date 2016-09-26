@@ -38,7 +38,7 @@ public class MupopmobileApplication extends Html5Application {
 			loadStyleSheet(s, "libs/font-awesome.min");
 			
     		String path = s.getParameter("path");
-			System.out.println("PATH="+path);
+			System.out.println("MPATH="+path);
     		if (path!=null) {
     				s.getModel().setProperty("/screen/exhibitionpath","/domain/mupop/user/daniel"+path);
     				s.getModel().setProperty("/screen/sharedspace","/shared/test/");
