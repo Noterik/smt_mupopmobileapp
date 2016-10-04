@@ -2,6 +2,11 @@
 <div id="audio" class="col-xs-12 fill-height">
 	Please plug in your headphones and test if the audio is correctly playing before pressing start.
 	<div id="headphones" class="col-xs-12">
-		<i id="headphones-icon" class="fa fa-headphones"></i>
+		<img class="img-responsive" src="http://images1.noterik.com/mupop/headphones.png"/>
 	</div>
+</div>
+<div id="start" class="col-xs-12">
+	<button id="start" type="button" class="btn btn-default">
+  		Start
+	</button>
 </div>

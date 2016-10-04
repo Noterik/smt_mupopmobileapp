@@ -23,6 +23,7 @@ package org.springfield.lou.controllers.intro.audio;
 import org.json.simple.JSONObject;
 import org.springfield.fs.FsNode;
 import org.springfield.lou.controllers.Html5Controller;
+import org.springfield.lou.screen.Screen;
 
 /**
  * AudioTestRemoteController.java
@@ -46,6 +47,13 @@ public class AudioTestRemoteController extends Html5Controller {
 			JSONObject data = new JSONObject();
 			
 			screen.get(selector).parsehtml(data);
+			
+			screen.get("#start").on("click", "onStartClicked", this);
 		}
+	}
+	
+	public void onStartClicked(Screen s,JSONObject data) {
+		 System.out.println("Start button clicked");
+		 model.notify("/screen/photoinfospots/intro/audiotest", new FsNode("ready", "start"));
 	}
 }

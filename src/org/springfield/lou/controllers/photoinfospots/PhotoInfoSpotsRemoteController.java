@@ -55,6 +55,7 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 			
 			screen.get("#photoinfospotsremote").append("div", "languageselectionremote", new LanguageSelectionRemoteController());
 			model.onNotify("/screen/photoinfospots/intro/languageselection", "onLanguageSelected", this);
+			model.onNotify("/screen/photoinfospots/intro/audiotest", "onStartClicked", this);
 			
 			/*if (waitscreenmode!=null && !waitscreenmode.equals("off")) {
 				System.out.println("About to notify about screen joining");
@@ -86,6 +87,27 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 			screen.get("#languageselectionremote").remove();
 		
 			screen.get("#photoinfospotsremote").append("div", "audiotestremote", new AudioTestRemoteController());
+		}
+	}
+	
+	public void onStartClicked(ModelEvent e) {
+		FsNode target = e.getTargetFsNode();
+
+		if (target.getId().equals("start")) {
+			screen.get("#audiotestremote").remove();
+			
+			String waitscreenmode = model.getProperty("@station/waitscreenmode");
+			
+			if (waitscreenmode!=null && !waitscreenmode.equals("off")) {
+				System.out.println("About to notify about screen joining");
+				model.notify("/screen/tst", new FsNode("join", "1"));
+				model.onNotify("/screen/photoinfospots", "onEnterImage", this);
+			
+				//TODO: load from config what needs to be loaded
+				screen.get("#photoinfospotsremote").append("div", "coverflowremote", new CoverFlowRemoteController());
+			} else {
+				screen.get("#photoinfospotsremote").append("div", "zoomandaudioremote", new ZoomAndAudioRemoteController());
+			}
 		}
 	}
 }
