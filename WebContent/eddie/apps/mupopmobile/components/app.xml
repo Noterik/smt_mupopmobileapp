@@ -45,6 +45,14 @@
 		</controller>
 	</view>
 	
+	<view id="#interactivevideoremote">
+		<template>mobile/interactivevideoremote/interactivevideoremote.mst</template>
+		<style>mobile/interactivevideoremote/interactivevideoremote.css</style>
+		<controller id="InteractiveVideoRemoteController">
+		</controller>
+	</view>
+
+	
 	<view id="#coverflowremote">
 		<template>mobile/image/selection/coverflowremote.mst</template>
 		<style>mobile/image/selection/coverflowremote.css</style>

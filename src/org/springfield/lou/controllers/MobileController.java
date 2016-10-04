@@ -11,6 +11,7 @@ import org.springfield.fs.FSListManager;
 import org.springfield.fs.Fs;
 import org.springfield.fs.FsNode;
 import org.springfield.lou.controllers.Html5Controller;
+import org.springfield.lou.controllers.interactivevideo.InteractiveVideoRemoteController;
 import org.springfield.lou.controllers.photoexplore.PhotoExploreRemoteController;
 import org.springfield.lou.controllers.photoinfospots.PhotoInfoSpotsRemoteController;
 import org.springfield.lou.screen.Screen;
@@ -58,6 +59,8 @@ public class MobileController extends Html5Controller {
     				screen.get("#mobile_content").append("div","photoexploreremote",new PhotoExploreRemoteController());
 				} else if (app.equals("photoinfospots")) {
 					screen.get("#mobile_content").append("div","photoinfospotsremote",new PhotoInfoSpotsRemoteController());
+				} else if (app.equals("interactivevideo")) {
+					screen.get("#mobile_content").append("div","interactivevideoremote",new InteractiveVideoRemoteController());
 				}
 			} else {
 				// should display error that no app was selected and curator should set it
