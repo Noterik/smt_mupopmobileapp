@@ -63,8 +63,8 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 
 			screen.get(selector).parsehtml(data);
 			
-			//screen.get("#trackpad").track("mousemove","mouseMove", this); // track mouse move event on the #trackpad
-	 		screen.get("#trackpad").on("mousemove","mouseMove", this); 
+			screen.get("#trackpad").track("mousemove","mouseMove", this); // track mouse move event on the #trackpad
+	 		//screen.get("#trackpad").on("mousemove","mouseMove", this); 
 			screen.get("#trackpad").on("mouseup","mouseUp", this);
 			screen.get("#trackpad").on("touchend","mouseUp", this);
 			screen.get("#previousPage").on("mousedown", "previousPage", this);
@@ -101,15 +101,22 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 	}
 
 	public void mouseMove(Screen s, JSONObject data) {
-		lastx = (Double)data.get("screenXp");
-		lasty = (Double)data.get("screenYp");
+		//lastx = getPercX(data);
+		//lasty = getPercY(data);
+		System.out.println("DATA="+data.toJSONString());
+		//System.out.println("X="+lastx);
+		lastx = (Double)data.get("screenXP");
+		lasty = (Double)data.get("screenYP");
+
 		
-		FsPropertySet ps = new FsPropertySet(); // send them as a set so we get 1 event
+		FsPropertySet ps = new FsPropertySet(); // send them as a set so we get
+												// 1 event
 		ps.setProperty("x", "" + lastx); // we should support auto convert
 		ps.setProperty("y", "" + lasty);
 		ps.setProperty("action", "move");
 		model.setProperties(sharedspace + "station/"+model.getProperty("@stationid"), ps);
-
+		
+		
 		/*
 		String url = getAudio(lastx, lasty); // get the audio (if any) for this
 												// location

@@ -38,11 +38,13 @@ public class FsViewPort extends Html5Controller {
 		 String[] posxy = ((String)data.get("clientXY")).split(",");
 		 Float x1 = Float.parseFloat(posxy[0]);
 		 Float y1 = Float.parseFloat(posxy[1]);
-		 if (posxy.length==2) {
+		 if (posxy.length<7) {
 			 touchDrag(s,x1,y1,data);
 		 } else {
-			 Float x2 = Float.parseFloat(posxy[2]);
-			 Float y2 = Float.parseFloat(posxy[3]);
+			// Float x2 = Float.parseFloat(posxy[2]);
+			// Float y2 = Float.parseFloat(posxy[3]);
+			Float x2 = Float.parseFloat(posxy[6]);
+			Float y2 = Float.parseFloat(posxy[7]);
 			 touchPinch(s,x1,y1,x2,y2,data);
 		 }
 	 }
