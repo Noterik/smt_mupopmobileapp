@@ -1,0 +1,31 @@
+html, body {
+	height: 100%;
+	background-color: #fff;
+}
+
+#screen, .fill-height, #audiotestremote {
+	height: 100%;	
+}
+
+.header {
+	background-color: #33475a;
+	height: 30px;
+	color: #fff;
+	text-align: center;
+	font-weight: 600;
+	padding-top: 5px;
+	text-transform: uppercase;	
+}
+
+#audio {
+	text-align: center;
+}
+
+#headphones {
+	position: relative;
+}
+
+#headphones-icon {
+	width: 100%;
+	height: 100%;
+}

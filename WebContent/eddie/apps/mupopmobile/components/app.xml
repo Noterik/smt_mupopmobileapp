@@ -60,4 +60,16 @@
 			<javascript>mobile/image/spotting/ZoomAndAudioRemoteController.js</javascript>
 		</controller>
 	</view>
+	
+	<view id="#languageselectionremote">
+		<template>mobile/intro/language/languageselectionremote.mst</template>
+		<style>mobile/intro/language/languageselectionremote.css</style>
+		<controller id="LanguageSelectionRemoteController"/>
+	</view>
+	
+	<view id="#audiotestremote">
+		<template>mobile/intro/audio/audiotestremote.mst</template>
+		<style>mobile/intro/audio/audiotestremote.css</style>
+		<controller id="AudioTestRemoteController"/>
+	</view>
 </app>

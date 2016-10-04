@@ -1,0 +1,7 @@
+<div class="header col-xs-12">Headphones</div>
+<div id="audio" class="col-xs-12 fill-height">
+	Please plug in your headphones and test if the audio is correctly playing before pressing start.
+	<div id="headphones" class="col-xs-12">
+		<i id="headphones-icon" class="fa fa-headphones"></i>
+	</div>
+</div>

@@ -1,0 +1,6 @@
+<div class="header col-xs-12">Select Language</div>
+<div id="languages" class="col-xs-12 fill-height">
+	{{#languages}}
+		<div id="{{value}}" class="language col-xs-12 verticalcenter">{{name}}</div>
+	{{/languages}}
+</div>

@@ -24,6 +24,8 @@ import org.springfield.fs.FsNode;
 import org.springfield.lou.controllers.Html5Controller;
 import org.springfield.lou.controllers.image.selection.CoverFlowRemoteController;
 import org.springfield.lou.controllers.image.spotting.ZoomAndAudioRemoteController;
+import org.springfield.lou.controllers.intro.audio.AudioTestRemoteController;
+import org.springfield.lou.controllers.intro.language.LanguageSelectionRemoteController;
 import org.springfield.lou.model.ModelEvent;
 
 /**
@@ -51,7 +53,10 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 			System.out.println("MODE="+model.getProperty("@station/waitscreenmode"));
 			String waitscreenmode = model.getProperty("@station/waitscreenmode");
 			
-			if (waitscreenmode!=null && !waitscreenmode.equals("off")) {
+			screen.get("#photoinfospotsremote").append("div", "languageselectionremote", new LanguageSelectionRemoteController());
+			model.onNotify("/screen/photoinfospots/intro/languageselection", "onLanguageSelected", this);
+			
+			/*if (waitscreenmode!=null && !waitscreenmode.equals("off")) {
 				System.out.println("About to notify about screen joining");
 				model.notify("/screen/tst", new FsNode("join", "1"));
 				model.onNotify("/screen/photoinfospots", "onEnterImage", this);
@@ -60,18 +65,27 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 				screen.get("#photoinfospotsremote").append("div", "coverflowremote", new CoverFlowRemoteController());
 			} else {
 				screen.get("#photoinfospotsremote").append("div", "zoomandaudioremote", new ZoomAndAudioRemoteController());
-			}
+			}*/
 		}
 	} 
 	
 	public void onEnterImage(ModelEvent e) {
-		
 		FsNode target = e.getTargetFsNode();
 
 		if (target.getId().equals("enter")) {		
 			screen.get("#coverflowremote").remove();
 		
 			screen.get("#photoinfospotsremote").append("div", "zoomandaudioremote", new ZoomAndAudioRemoteController());
+		}
+	}
+	
+	public void onLanguageSelected(ModelEvent e) {
+		FsNode target = e.getTargetFsNode();
+
+		if (target.getId().equals("selected")) {		
+			screen.get("#languageselectionremote").remove();
+		
+			screen.get("#photoinfospotsremote").append("div", "audiotestremote", new AudioTestRemoteController());
 		}
 	}
 }

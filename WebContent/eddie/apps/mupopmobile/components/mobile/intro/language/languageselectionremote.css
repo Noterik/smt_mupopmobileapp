@@ -1,0 +1,36 @@
+html, body {
+	height: 100%;
+	background-color: #fff;
+}
+
+#screen, .fill-height, #languageselectionremote {
+	height: 100%;	
+}
+
+.header {
+	background-color: #33475a;
+	height: 30px;
+	color: #fff;
+	text-align: center;
+	font-weight: 600;
+	padding-top: 5px;
+	text-transform: uppercase;	
+}
+
+#languages {
+	padding: 0;
+}
+
+.language {
+	height: 40px;
+	padding-top: 10px;
+	text-align: center;
+	border: 1px solid;
+    border-width: 0 0 1px 0;
+}
+
+.verticalcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
