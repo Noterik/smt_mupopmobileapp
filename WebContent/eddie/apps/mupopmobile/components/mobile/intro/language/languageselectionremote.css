@@ -34,3 +34,26 @@ html, body {
     vertical-align: middle;
     float: none;
 }
+
+#pagination {
+	position: absolute;
+	bottom: 0;
+	height: 40px;
+	line-height: 40px;
+	background-color: #ECF0F1;
+	text-align: center;
+}
+
+.selectedpage {
+	color: #f00;
+}
+
+.selectedpage-text {
+	color: #fff;
+}
+
+#mobile_footer {
+	width: 0;
+	height: 0;
+	display: none;
+}

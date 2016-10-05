@@ -67,8 +67,7 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 	 		//screen.get("#trackpad").on("mousemove","mouseMove", this); 
 			screen.get("#trackpad").on("mouseup","mouseUp", this);
 			screen.get("#trackpad").on("touchend","mouseUp", this);
-			screen.get("#previousPage").on("mousedown", "previousPage", this);
-			
+			screen.get("#previous").on("click", "previousPage", this);
 		}
 
 		sharedspace = model.getProperty("/screen/sharedspace");

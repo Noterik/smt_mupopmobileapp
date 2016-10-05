@@ -50,23 +50,12 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 		FsNode stationnode = model.getNode(path);
 		if (stationnode!=null) {
 			sharedspace = model.getProperty("/screen/sharedspace");
+			
 			System.out.println("MODE="+model.getProperty("@station/waitscreenmode"));
-			String waitscreenmode = model.getProperty("@station/waitscreenmode");
 			
 			screen.get("#photoinfospotsremote").append("div", "languageselectionremote", new LanguageSelectionRemoteController());
 			model.onNotify("/screen/photoinfospots/intro/languageselection", "onLanguageSelected", this);
 			model.onNotify("/screen/photoinfospots/intro/audiotest", "onStartClicked", this);
-			
-			/*if (waitscreenmode!=null && !waitscreenmode.equals("off")) {
-				System.out.println("About to notify about screen joining");
-				model.notify("/screen/tst", new FsNode("join", "1"));
-				model.onNotify("/screen/photoinfospots", "onEnterImage", this);
-			
-				//TODO: load from config what needs to be loaded
-				screen.get("#photoinfospotsremote").append("div", "coverflowremote", new CoverFlowRemoteController());
-			} else {
-				screen.get("#photoinfospotsremote").append("div", "zoomandaudioremote", new ZoomAndAudioRemoteController());
-			}*/
 		}
 	} 
 	

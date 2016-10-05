@@ -35,3 +35,25 @@ html, body {
 	bottom: 140px;
 	text-align: center;
 }
+
+#pagination {
+	position: absolute;
+	bottom: 0;
+	height: 40px;
+	line-height: 40px;
+	background-color: #ECF0F1;
+	text-align: center;
+}
+
+.selectedpage {
+	color: #f00;
+}
+
+.selectedpage-text {
+	color: #fff;
+}
+
+.earlierpage {
+	color: #f00;
+	opacity: 0.5;
+}

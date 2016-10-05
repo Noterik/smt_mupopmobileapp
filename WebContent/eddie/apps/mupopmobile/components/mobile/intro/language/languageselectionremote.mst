@@ -1,6 +1,21 @@
 <div class="header col-xs-12">Select Language</div>
 <div id="languages" class="col-xs-12 fill-height">
 	{{#languages}}
-		<div id="{{value}}" class="language col-xs-12 verticalcenter">{{name}}</div>
+		<div id="{{value}}" class="row language">{{name}}</div>
 	{{/languages}}
+</div>
+<div id="pagination" class="col-xs-12">
+	<div class="row">
+		<div class="col-xs-4"></div>	
+		<div class="col-xs-2">
+			<span class="fa-stack">
+			  <i class="fa fa-circle fa-stack-2x selectedpage"></i>
+			  <span class="fa-stack-1x selectedpage-text">1</span>
+			</span>
+		</div>
+		<div class="col-xs-2">
+			2
+		</div>
+		<div class="col-xs-4"></div>	
+	</div>
 </div>
