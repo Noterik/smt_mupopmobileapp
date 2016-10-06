@@ -56,6 +56,7 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 			screen.get("#photoinfospotsremote").append("div", "languageselectionremote", new LanguageSelectionRemoteController());
 			model.onNotify("/screen/photoinfospots/intro/languageselection", "onLanguageSelected", this);
 			model.onNotify("/screen/photoinfospots/intro/audiotest", "onStartClicked", this);
+			model.onNotify("/screen/photoinfospots/image/spotting", "onCoverflowRequested", this);
 		}
 	} 
 	
@@ -97,6 +98,16 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 			} else {
 				screen.get("#photoinfospotsremote").append("div", "zoomandaudioremote", new ZoomAndAudioRemoteController());
 			}
+		}
+	}
+	
+	public void onCoverflowRequested(ModelEvent e) {
+		FsNode target = e.getTargetFsNode();
+		
+		if (target.getId().equals("requested")) {
+			screen.get("#zoomandaudioremote").remove();
+			
+			screen.get("#photoinfospotsremote").append("div", "coverflowremote", new CoverFlowRemoteController());
 		}
 	}
 }

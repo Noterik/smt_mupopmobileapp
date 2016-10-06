@@ -95,8 +95,6 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 			d.put("src", url);
 			screen.get("#zoomandaudioremote").update(d);
 		}
-	
-
 	}
 
 	public void mouseMove(Screen s, JSONObject data) {
@@ -128,10 +126,9 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 		*/
 	}
 	
-	public void previousPage(Screen s, JSONObject data) {
-		System.out.println("previous page requested");
+	public void previousPage(Screen s, JSONObject data) {		
+		model.notify("/screen/photoinfospots/image/spotting", new FsNode("coverflow", "requested"));
 	}
-
 
 	private String getAudio(double x, double y) {
 		FSList fslist = FSListManager.get("/domain/mecanex/app/sceneplayer/scene/blue/element/screen5/sounds",true);

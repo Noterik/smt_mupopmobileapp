@@ -48,6 +48,7 @@ public class CoverFlowRemoteController extends Html5Controller {
 			data.put("title", stationnode.getProperty("title"));
 
 			screen.get(selector).parsehtml(data);
+			screen.get(selector).loadScript(this);
 			
 			screen.get("#trackpad").on("swipeleft",
 					"swipeLeft", this);

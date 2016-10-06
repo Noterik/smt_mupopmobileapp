@@ -43,7 +43,7 @@ html, body {
 }
 
 .audioplayer-wrapper {
-	bottom: 40px;
+	bottom: 0;
 	height: 30px;
 	position: absolute;
 }
@@ -65,4 +65,9 @@ html, body {
 	padding-top: 3px;
 	padding-right: 5px;
 	position: absolute;
+}
+
+#previous {
+	z-index: 999;
+	cursor: pointer;
 }
