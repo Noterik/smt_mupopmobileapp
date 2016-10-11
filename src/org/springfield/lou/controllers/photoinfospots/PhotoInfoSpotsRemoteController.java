@@ -98,6 +98,10 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 			} else {
 				screen.get("#photoinfospotsremote").append("div", "zoomandaudioremote", new ZoomAndAudioRemoteController());
 			}
+		} else if (target.getId().equals("languageselection")) {
+		    screen.get("#audiotestremote").remove();
+		    
+		    screen.get("#photoinfospotsremote").append("div", "languageselectionremote", new LanguageSelectionRemoteController());
 		}
 	}
 	

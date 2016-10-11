@@ -13,8 +13,8 @@ html, body {
 		left: 0;
 		box-sizing: border-box;
 		min-height: 100%;
-		padding-top: 30px;
-		padding-bottom: 70px;
+		padding-top: 35px;
+		padding-bottom: 120px;
 }
 
 .trackpad-wrapper {
@@ -28,7 +28,7 @@ html, body {
 	border-radius: 12px;
 	border: 2px solid;
 	overflow: hidden;
-	border-color: #222222;
+	border-color: #358ed6;
 	background-color: #fff;
 	text-align: center;
 }
@@ -63,4 +63,76 @@ html, body {
 
 #touch-animation {
 	display: none;
+}
+
+.audio-bar {
+	position: absolute;
+	bottom: 75px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+}
+
+#progress-bar {
+	padding-top: 10px;
+}
+
+#seekbar {
+	width: 100%;
+}
+
+.controls {
+	position: absolute;
+	bottom: 0;
+	height: 70px;
+	line-height: 70px;
+	background-color: #ECF0F1;
+	text-align: center;
+}
+
+.icon-background {
+	color: #f00;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+/*Chrome*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    input[type='range'] {
+      overflow: hidden;
+      width: 80px;
+      -webkit-appearance: none;
+      background-color: #b6b6b6;
+    }
+    
+    input[type='range']::-webkit-slider-runnable-track {
+      height: 10px;
+      -webkit-appearance: none;
+      color: #13bba4;
+      margin-top: -1px;
+    }
+    
+    input[type='range']::-webkit-slider-thumb {
+      width: 10px;
+      -webkit-appearance: none;
+      height: 10px;
+      cursor: ew-resize;
+      background: #434343;
+      box-shadow: -80px 0 0 80px #ec8882;
+    }
+
+}
+/** FF*/
+input[type="range"]::-moz-range-progress {
+  background-color: #ec8882; 
+}
+input[type="range"]::-moz-range-track {  
+  background-color: #b6b6b6;
+}
+/* IE*/
+input[type="range"]::-ms-fill-lower {
+  background-color: #ec8882; 
+}
+input[type="range"]::-ms-fill-upper {  
+  background-color: #b6b6b6;
 }

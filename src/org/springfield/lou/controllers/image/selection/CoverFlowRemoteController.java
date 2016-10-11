@@ -56,6 +56,9 @@ public class CoverFlowRemoteController extends Html5Controller {
 					"swipeRight", this);
 			screen.get("#trackpad").on("enter",
 					"enter", this);
+			screen.get("#help").on("click", "helpClicked", this);
+			screen.get("#play").on("click", "playClicked", this);
+			screen.get("#text").on("click", "textClicked", this);
 		}
 	}
 	
@@ -69,5 +72,17 @@ public class CoverFlowRemoteController extends Html5Controller {
 	
 	public void enter(Screen s, JSONObject data) {
 		model.notify("/screen/photoinfospots", new FsNode("coverflow", "enter"));
+	}
+	
+	public void helpClicked(Screen s, JSONObject data) { 
+	    System.out.println("Help clicked");
+	}
+	
+	public void playClicked(Screen s, JSONObject data) {
+	    System.out.println("Play clicked");
+	}
+	
+	public void textClicked(Screen s, JSONObject data) {
+	    System.out.println("Text clicked");
 	}
 }

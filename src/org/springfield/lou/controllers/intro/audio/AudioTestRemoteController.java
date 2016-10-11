@@ -49,11 +49,15 @@ public class AudioTestRemoteController extends Html5Controller {
 			screen.get(selector).parsehtml(data);
 			
 			screen.get("#start").on("click", "onStartClicked", this);
+			screen.get("#page1").on("click", "onPreviousPageRequested", this);
 		}
 	}
 	
 	public void onStartClicked(Screen s,JSONObject data) {
-		 System.out.println("Start button clicked");
 		 model.notify("/screen/photoinfospots/intro/audiotest", new FsNode("ready", "start"));
+	}
+	
+	public void onPreviousPageRequested(Screen s, JSONObject data) {
+	    model.notify("/screen/photoinfospots/intro/audiotest", new FsNode("return", "languageselection"));
 	}
 }
