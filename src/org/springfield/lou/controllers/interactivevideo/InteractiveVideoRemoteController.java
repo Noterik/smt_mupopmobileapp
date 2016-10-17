@@ -23,7 +23,7 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 	public void attach(String sel) {
 		selector = sel;
 
- 		screen.get(selector).parsehtml(new JSONObject());
+ 		screen.get(selector).render(new JSONObject());
 	}
  	 
 }
