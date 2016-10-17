@@ -59,6 +59,7 @@ html, body {
 	padding-top: 3px;
 	padding-right: 5px;
 	position: absolute;
+	cursor: pointer;
 }
 
 #touch-animation {

@@ -71,8 +71,6 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 		}
 
 		sharedspace = model.getProperty("/screen/sharedspace");
-		//System.out.println("About to notify about screen joining");
-		model.notify("/screen/tst", new FsNode("join", "1"));
 	}
 
 	public void mouseUp(Screen s, JSONObject data) {

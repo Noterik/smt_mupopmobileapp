@@ -46,8 +46,9 @@ public class CoverFlowRemoteController extends Html5Controller {
 		if (stationnode != null) {
 			JSONObject data = new JSONObject();
 			data.put("title", stationnode.getProperty("title"));
+			data.put("audio", "true");
 
-			screen.get(selector).parsehtml(data);
+			screen.get(selector).render(data);
 			screen.get(selector).loadScript(this);
 			
 			screen.get("#trackpad").on("swipeleft",
@@ -59,19 +60,23 @@ public class CoverFlowRemoteController extends Html5Controller {
 			screen.get("#help").on("click", "helpClicked", this);
 			screen.get("#play").on("click", "playClicked", this);
 			screen.get("#text").on("click", "textClicked", this);
+			
+			JSONObject d = new JSONObject();	
+			d.put("command","init");
+			screen.get(selector).update(d);
 		}
 	}
 	
 	public void swipeLeft(Screen s, JSONObject data) {
-		model.notify("/screen/photoinfospots", new FsNode("coverflow", "left"));
+		model.notify("/shared/photoinfospots", new FsNode("coverflow", "left"));
 	}
 	
 	public void swipeRight(Screen s, JSONObject data) {
-		model.notify("/screen/photoinfospots", new FsNode("coverflow", "right"));
+		model.notify("/shared/photoinfospots", new FsNode("coverflow", "right"));
 	}
 	
 	public void enter(Screen s, JSONObject data) {
-		model.notify("/screen/photoinfospots", new FsNode("coverflow", "enter"));
+		model.notify("/shared/photoinfospots", new FsNode("coverflow", "enter"));
 	}
 	
 	public void helpClicked(Screen s, JSONObject data) { 

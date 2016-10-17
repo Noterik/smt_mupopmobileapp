@@ -42,6 +42,9 @@ public class AudioTestRemoteController extends Html5Controller {
 		
 		String path = model.getProperty("/screen/exhibitionpath");
 		
+		String language = model.getProperty("@language");
+		System.out.println("The following lanugage is set "+language);
+		
 		FsNode stationnode = model.getNode(path);
 		if (stationnode != null) {
 			JSONObject data = new JSONObject();

@@ -11,7 +11,9 @@
 	</div>
 </div>
 <div class="audio-bar col-xs-12">
+	{{#audio}}
 	<div class="row">
+		<audio id="audioplayer"></audio>
 		<div id="currenttime" class="col-xs-2">
 			00:00
 		</div>
@@ -22,6 +24,7 @@
 			00:23
 		</div>
 	</div>
+	{{/audio}}
 </div>
 <div class="controls col-xs-12">
 	<div class="row">

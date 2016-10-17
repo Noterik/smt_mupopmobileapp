@@ -1,5 +1,7 @@
 <app>
 	<model id="default">
+		<language>/screen['profile']/language</language>
+		
 		<username>/screen['profile']/username</username>
 		<exhibitionid>/screen['vars']/exhibitionid</exhibitionid>
 		<stationid>/screen['vars']/stationid</stationid>
