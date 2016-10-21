@@ -13,6 +13,8 @@ import org.springfield.fs.FsNode;
 import org.springfield.lou.application.Html5Application;
 import org.springfield.lou.application.Html5ApplicationInterface;
 import org.springfield.lou.controllers.Html5Controller;
+import org.springfield.lou.model.ModelBindEvent;
+import org.springfield.lou.model.ModelEvent;
 import org.springfield.lou.screen.Screen;
 
 public class InteractiveVideoRemoteController extends Html5Controller  {
@@ -24,6 +26,16 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 		selector = sel;
 
  		screen.get(selector).render(new JSONObject());
+		model.setProperty("@videoid","1");
+ 		model.onTimeLineNotify("@video","/shared['mupop']/videotimers['1']/currenttime","starttime","duration","onTimeLineEvent",this);
 	}
+
+public void onTimeLineEvent(ModelEvent e) {
+	if (e.eventtype==ModelBindEvent.TIMELINENOTIFY_ENTER) {
+		System.out.println("MOBILE VIDEO ENTERED BLOCK ("+e.eventtype+") ="+e.getTargetFsNode().getId());
+	} else if (e.eventtype==ModelBindEvent.TIMELINENOTIFY_LEAVE) {
+		System.out.println("MOBILE VIDEO LEFT BLOCK ("+e.eventtype+") ="+e.getTargetFsNode().getId());
+	}
+}
  	 
 }
