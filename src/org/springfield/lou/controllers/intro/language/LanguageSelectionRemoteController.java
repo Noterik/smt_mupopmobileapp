@@ -78,7 +78,7 @@ public class LanguageSelectionRemoteController extends Html5Controller {
 		 //TODO: store language for user session
 		 model.setProperty("@language",(String)data.get("id"));
 		 
-		 model.notify("/screen/photoinfospots/intro/languageselection", new FsNode("language", "selected"));
+		 model.notify("/shared/photoinfospots/intro/languageselection", new FsNode("language", "selected"));
 		 
 	 }
 }

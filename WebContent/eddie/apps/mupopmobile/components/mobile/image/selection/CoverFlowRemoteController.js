@@ -2,15 +2,23 @@ var CoverFlowRemoteController = function(options) {}; // needed for detection
 
 var audioPlayer;
 var audioQueued = false;
+var $wrapper;
+var $trackpad;
+var ratio = 4 / 3;
+
 
 CoverFlowRemoteController.update = function(vars, data){
-	if (!vars["loaded"]) {
-		console.log("initing");
-		resize();
-		init();
+	//init - this is also handled when returning on a page
+	if (!vars["loaded"]) {	
+		//Handling fitting of trackpad
+		$wrapper = jQuery('.trackpad-wrapper-selection');
+		$trackpad = jQuery('#trackpad');
+
+		init_selection();
 		startHelp();
+
 		vars["loaded"] = true;		
-	}	
+	}
 }
 
 function startHelp() {
@@ -34,16 +42,10 @@ $("#help-button").on('touchstart click', function () {
 	startHelp();
 });
 
-//Handling fitting of trackpad
-var $wrapper = jQuery('.trackpad-wrapper');
-var $trackpad = jQuery('.trackpad');
-var ratio = 4 / 3;
-
-function resize() {
-	console.log("reszing trackpad");
+function resize_trackpad_selection() {
 	var maxWidth = $wrapper.width();
 	var maxHeight = $wrapper.height();
-	
+
 	var width = maxWidth;
 	var height = maxHeight;
 	
@@ -71,11 +73,10 @@ function resize() {
 	$trackpad.css('left', wRemain / 2);
 }
 
-jQuery(window).on('resize', resize);
+jQuery(window).on('resize', resize_trackpad_selection);
 
-function init() {
-	console.log("init");
-	resize();
+function init_selection() {
+	resize_trackpad_selection();
 	
 	var $trackpad = jQuery('.trackpad');
 	var trackpad = $trackpad[0];

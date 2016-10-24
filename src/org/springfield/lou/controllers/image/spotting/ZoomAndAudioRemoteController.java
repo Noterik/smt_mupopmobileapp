@@ -122,7 +122,7 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 	}
 	
 	public void previousPage(Screen s, JSONObject data) {		
-		model.notify("/screen/photoinfospots/image/spotting", new FsNode("coverflow", "requested"));
+		model.notify("/shared/photoinfospots/image/spotting", new FsNode("coverflow", "requested"));
 	}
 
 }

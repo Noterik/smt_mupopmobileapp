@@ -28,8 +28,9 @@ html, body {
 	border-radius: 12px;
 	border: 2px solid;
 	overflow: hidden;
-	border-color: #222222;
+	border-color: #358ed6;
 	background-color: #fff;
+	text-align: center;
 }
 
 .header {

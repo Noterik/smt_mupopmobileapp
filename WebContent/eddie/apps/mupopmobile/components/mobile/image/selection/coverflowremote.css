@@ -17,13 +17,13 @@ html, body {
 		padding-bottom: 120px;
 }
 
-.trackpad-wrapper {
+.trackpad-wrapper-selection {
 	height: 100%;
 	width: 100%;
 	position: relative;
 }
 
-.trackpad-wrapper .trackpad {
+.trackpad-wrapper-selection .trackpad {
 	position: absolute;
 	border-radius: 12px;
 	border: 2px solid;

@@ -51,9 +51,9 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 			System.out.println("MODE="+model.getProperty("@station/waitscreenmode"));
 			
 			screen.get("#photoinfospotsremote").append("div", "languageselectionremote", new LanguageSelectionRemoteController());
-			model.onNotify("/screen/photoinfospots/intro/languageselection", "onLanguageSelected", this);
-			model.onNotify("/screen/photoinfospots/intro/audiotest", "onStartClicked", this);
-			model.onNotify("/screen/photoinfospots/image/spotting", "onCoverflowRequested", this);
+			model.onNotify("/shared/photoinfospots/intro/languageselection", "onLanguageSelected", this);
+			model.onNotify("/shared/photoinfospots/intro/audiotest", "onStartClicked", this);
+			model.onNotify("/shared/photoinfospots/image/spotting", "onCoverflowRequested", this);
 		}
 	} 
 	

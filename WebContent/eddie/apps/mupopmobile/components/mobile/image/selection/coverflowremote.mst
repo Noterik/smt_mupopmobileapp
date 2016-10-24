@@ -1,6 +1,6 @@
 <div class="header col-xs-12">Amazing exhibition title</div>
 <div class="contents col-xs-12 fill-height">
-	<div class="trackpad-wrapper">
+	<div class="trackpad-wrapper-selection">
 		<div id="trackpad" class="trackpad">
 			<div id="help-text1">Swipe left or right to browse the different images</div>
 			<div id="help-text2">Double tap to view the current image</div>

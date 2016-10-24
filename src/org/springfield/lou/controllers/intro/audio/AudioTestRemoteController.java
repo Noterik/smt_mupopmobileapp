@@ -57,10 +57,10 @@ public class AudioTestRemoteController extends Html5Controller {
 	}
 	
 	public void onStartClicked(Screen s,JSONObject data) {
-		 model.notify("/screen/photoinfospots/intro/audiotest", new FsNode("ready", "start"));
+		 model.notify("/shared/photoinfospots/intro/audiotest", new FsNode("ready", "start"));
 	}
 	
 	public void onPreviousPageRequested(Screen s, JSONObject data) {
-	    model.notify("/screen/photoinfospots/intro/audiotest", new FsNode("return", "languageselection"));
+	    model.notify("/shared/photoinfospots/intro/audiotest", new FsNode("return", "languageselection"));
 	}
 }
