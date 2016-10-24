@@ -30,6 +30,7 @@ import org.springfield.fs.FsNode;
 import org.springfield.fs.FsPropertySet;
 import org.springfield.lou.application.Html5ApplicationInterface;
 import org.springfield.lou.controllers.Html5Controller;
+import org.springfield.lou.model.ModelEvent;
 import org.springfield.lou.screen.Screen;
 
 /**
@@ -42,7 +43,6 @@ import org.springfield.lou.screen.Screen;
  */
 public class ZoomAndAudioRemoteController extends Html5Controller {
 
-	String sharedspace;
 	private Html5ApplicationInterface app;
 	double lastx = -1;
 	double lasty = -1;
@@ -54,6 +54,7 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 		selector = sel;
 
 		app = screen.getApplication();
+		String audiourl = null;
 
 		String path = model.getProperty("/screen/exhibitionpath");
 
@@ -68,42 +69,48 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 			screen.get("#trackpad").on("mouseup","mouseUp", this);
 			screen.get("#trackpad").on("touchend","mouseUp", this);
 			screen.get("#previous").on("click", "previousPage", this);
+			model.onNotify("/shared['mupop']/station/"+model.getProperty("@stationid"),"onStartAudio",this);
 		}
 
-		sharedspace = model.getProperty("/screen/sharedspace");
-		//System.out.println("About to notify about screen joining");
-		model.notify("/screen/tst", new FsNode("join", "1"));
 	}
 
 	public void mouseUp(Screen s, JSONObject data) {
-		//System.out.println("UP=" + data.toJSONString());
-
-		FsPropertySet ps = new FsPropertySet(); // send them as a set so we get
-												// 1 event
+		FsPropertySet ps = new FsPropertySet(); // send them as a set so we get 1 event
 		ps.setProperty("x", "" + lastx); // we should support auto convert
 		ps.setProperty("y", "" + lasty);
 		ps.setProperty("action", "up");
-		model.setProperties(sharedspace + "station/"+model.getProperty("@stationid"), ps);
-
-		String url = getAudio(lastx, lasty); // get the audio (if any) for this
-												// location
-		
-		if (url != null) { // if audio found lets push it to the screen (so it
-							// plays)
-			JSONObject d = new JSONObject();
-			d.put("command", "update");
-			d.put("src", url);
-			screen.get("#zoomandaudioremote").update(d);
+		model.setProperties("/shared['mupop']/station/"+model.getProperty("@stationid"), ps);
+	}
+	
+	public void onStartAudio(ModelEvent e) {
+		FsNode message = e.getTargetFsNode();
+		String action = message.getProperty("action");
+		if (action.equals("startaudio")) {
+			String url = message.getProperty("url");
+			if (url != null) { // if audio found lets push it to the screen (so it plays)
+				System.out.println("START AUDIO REQUESTED="+url);
+				JSONObject d = new JSONObject();
+				d.put("command", "update");
+				d.put("src", url);
+				screen.get("#zoomandaudioremote").update(d);
+			}
 		}
+				
 	}
 
 	public void mouseMove(Screen s, JSONObject data) {
-		//lastx = getPercX(data);
-		//lasty = getPercY(data);
-		System.out.println("DATA="+data.toJSONString());
-		//System.out.println("X="+lastx);
-		lastx = (Double)data.get("screenXP");
-		lasty = (Double)data.get("screenYP");
+		try {
+			lastx = (Double)data.get("screenXP"); // hate this
+		}  catch(Exception e) {
+			Long t = (Long)data.get("screenXP");
+			lastx = t.doubleValue();
+		}
+		try {
+			lasty = (Double)data.get("screenYP");
+		}  catch(Exception e) {
+			Long t = (Long)data.get("screenYP");
+			lasty = t.doubleValue();
+		}
 
 		
 		FsPropertySet ps = new FsPropertySet(); // send them as a set so we get
@@ -111,49 +118,11 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 		ps.setProperty("x", "" + lastx); // we should support auto convert
 		ps.setProperty("y", "" + lasty);
 		ps.setProperty("action", "move");
-		model.setProperties(sharedspace + "station/"+model.getProperty("@stationid"), ps);
-		
-		
-		/*
-		String url = getAudio(lastx, lasty); // get the audio (if any) for this
-												// location
-		if (url != null) { // if audio found lets push it to the screen (so it plays)
-			JSONObject d = new JSONObject();
-			d.put("command", "update");
-			d.put("src", url);
-			screen.get("#zoomandaudioremote").update(d);
-		}
-		*/
+		model.setProperties("/shared['mupop']/station/"+model.getProperty("@stationid"), ps);
 	}
 	
 	public void previousPage(Screen s, JSONObject data) {		
 		model.notify("/screen/photoinfospots/image/spotting", new FsNode("coverflow", "requested"));
 	}
 
-	private String getAudio(double x, double y) {
-		FSList fslist = FSListManager.get("/domain/mecanex/app/sceneplayer/scene/blue/element/screen5/sounds",true);
-		List<FsNode> nodes = fslist.getNodes();
-		if (nodes != null) {
-			for (Iterator<FsNode> iter = nodes.iterator(); iter.hasNext();) {
-				FsNode node = (FsNode) iter.next();
-				String url = node.getProperty("url");
-				try {
-					float ox = Float.parseFloat(node.getProperty("x"));
-					float oy = Float.parseFloat(node.getProperty("y"));
-					float ow = Float.parseFloat(node.getProperty("width")) / 2; //
-					float oh = Float.parseFloat(node.getProperty("height")) / 2;
-					if (x > (ox - ow) && x < (ox + ow)) { // within x range
-						if (y > (oy - oh) && y < (oy + oh)) { // within y range
-							//System.out.println("On hotspot");
-							return url;
-							//return "http://images1.noterik.com/mupop/audio/calligraphy.m4a";
-						}
-					}
-				} catch (Exception e) {
-					System.out.println("Error parsing audioimage data");
-				}
-			}
-		}
-		return null;
-	}
 }

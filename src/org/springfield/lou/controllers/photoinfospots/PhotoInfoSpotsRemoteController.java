@@ -38,8 +38,6 @@ import org.springfield.lou.model.ModelEvent;
  */
 public class PhotoInfoSpotsRemoteController extends Html5Controller {
 
-	String sharedspace;
-	
 	public PhotoInfoSpotsRemoteController() {}
 	
 	public void attach(String sel) {
@@ -49,7 +47,6 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 
 		FsNode stationnode = model.getNode(path);
 		if (stationnode!=null) {
-			sharedspace = model.getProperty("/screen/sharedspace");
 			
 			System.out.println("MODE="+model.getProperty("@station/waitscreenmode"));
 			
@@ -90,8 +87,8 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 			
 			if (waitscreenmode!=null && !waitscreenmode.equals("off")) {
 				System.out.println("About to notify about screen joining");
-				model.notify("/screen/tst", new FsNode("join", "1"));
 				model.onNotify("/screen/photoinfospots", "onEnterImage", this);
+				model.onNotify("/shared/photoinfospots", "onEnterImage", this);
 			
 				//TODO: load from config what needs to be loaded
 				screen.get("#photoinfospotsremote").append("div", "coverflowremote", new CoverFlowRemoteController());

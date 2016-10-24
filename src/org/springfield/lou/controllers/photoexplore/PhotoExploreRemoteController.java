@@ -33,8 +33,7 @@ public class PhotoExploreRemoteController extends Html5Controller  {
 		screen.get("#photoexploreremote_trackarea").on("mousedown","startDrag",this);
 		screen.get("#photoexploreremote_trackarea").on("mouseup","stopDrag",this);
  		
-		String sharedspace = model.getProperty("/screen/sharedspace");
- 		viewport = new FsViewPort(screen,"#photoexploreremote_trackarea",sharedspace+"station/1");
+ 		viewport = new FsViewPort(screen,"#photoexploreremote_trackarea","/shared['mupop']/station/1");
 
 	}
 	

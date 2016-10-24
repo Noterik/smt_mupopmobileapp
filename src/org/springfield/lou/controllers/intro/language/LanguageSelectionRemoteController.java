@@ -76,6 +76,8 @@ public class LanguageSelectionRemoteController extends Html5Controller {
 	 public void onLanguageSelected(Screen s,JSONObject data) {
 		 System.out.println("The following language was selected "+ data.get("id"));
 		 //TODO: store language for user session
+		 model.setProperty("@language",(String)data.get("id"));
+		 
 		 model.notify("/screen/photoinfospots/intro/languageselection", new FsNode("language", "selected"));
 		 
 	 }

@@ -4,11 +4,14 @@ var audioPlayer;
 var audioQueued = false;
 
 CoverFlowRemoteController.update = function(vars, data){
-	console.log(data);
-	//init();
+	if (!vars["loaded"]) {
+		console.log("initing");
+		resize();
+		init();
+		startHelp();
+		vars["loaded"] = true;		
+	}	
 }
-
-startHelp();
 
 function startHelp() {
 	setTimeout(function(){
@@ -36,7 +39,7 @@ var $wrapper = jQuery('.trackpad-wrapper');
 var $trackpad = jQuery('.trackpad');
 var ratio = 4 / 3;
 
-function resize(){
+function resize() {
 	console.log("reszing trackpad");
 	var maxWidth = $wrapper.width();
 	var maxHeight = $wrapper.height();
@@ -70,11 +73,8 @@ function resize(){
 
 jQuery(window).on('resize', resize);
 
-(function(){
-	init();
-})();
-
 function init() {
+	console.log("init");
 	resize();
 	
 	var $trackpad = jQuery('.trackpad');
