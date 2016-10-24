@@ -87,7 +87,7 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 			
 			if (waitscreenmode!=null && !waitscreenmode.equals("off")) {
 				System.out.println("About to notify about screen joining");
-				model.onNotify("/screen/photoinfospots", "onEnterImage", this);
+				model.notify("/shared/photoinfospots/device/connected", new FsNode("device", "1"));
 				model.onNotify("/shared/photoinfospots", "onEnterImage", this);
 			
 				//TODO: load from config what needs to be loaded
