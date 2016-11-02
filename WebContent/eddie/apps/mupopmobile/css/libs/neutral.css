@@ -1,0 +1,284 @@
+html, body {
+	height: 100%;
+	background-color: #fff;
+}
+
+#screen, .fill-height, #photoinfospotsremote, #audiotestremote {
+	height: 100%;	
+}
+
+#screen, .fill-height, #languageselectionremote {
+	height: 100%;	
+}
+
+#screen, .fill-height, #coverflowremote {
+	height: 100%;	
+}
+
+.header {
+	background-color: #33475a;
+	height: 30px;
+	color: #fff;
+	text-align: center;
+	font-weight: 600;
+	padding-top: 5px;
+	text-transform: uppercase;	
+}
+
+#audio {
+	text-align: center;
+}
+
+#headphones {
+	height: 40%;
+	min-height: 40%;
+}
+
+#headphones img {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#start {
+	bottom: 140px;
+	text-align: center;
+}
+
+#pagination {
+	position: absolute;
+	bottom: 0;
+	height: 40px;
+	line-height: 40px;
+	background-color: #ECF0F1;
+	text-align: center;
+}
+
+.selectedpage {
+	color: #f00;
+}
+
+.selectedpage-text {
+	color: #fff;
+}
+
+.icon-text {
+	color: #fff;
+}
+
+.earlierpage {
+	color: #f00;
+	opacity: 0.5;
+	cursor: pointer;
+}
+
+.btn.sharp {
+  border-radius:0;
+}
+
+.red-background {
+	background-color: #f00;
+	border-radius:0;
+	background-image: none;
+	text-shadow: none;
+}
+
+.red-background:hover {
+	background-color: #f00;
+	border-radius:0;
+	background-image: none;
+	
+}
+
+.white {
+	color: #fff;
+	text-shadow: none;
+}
+
+.white:hover {
+	color: #fff;
+	text-shadow: none;
+}
+
+#languages {
+	padding: 0;
+}
+
+.language {
+	height: 40px;
+	padding-top: 10px;
+	text-align: center;
+	border: 1px solid;
+    border-width: 0 0 1px 0;
+    cursor:pointer;
+}
+
+.verticalcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+#mobile_footer {
+	width: 0;
+	height: 0;
+	display: none;
+}
+
+.contents{
+	position: absolute;
+	top: 0;
+	left: 0;
+	box-sizing: border-box;
+	min-height: 100%;
+	padding-top: 35px;
+	padding-bottom: 120px;
+}
+
+.trackpad-wrapper-selection {
+	height: 100%;
+	width: 100%;
+	position: relative;
+}
+
+.trackpad-wrapper-selection .trackpad {
+	position: absolute;
+	border-radius: 12px;
+	border: 2px solid;
+	overflow: hidden;
+	border-color: #358ed6;
+	background-color: #fff;
+	text-align: center;
+}
+
+#help-text1 {
+	padding: 5px;
+}
+
+#help-text2 {
+	padding: 5px;
+	display: none;
+}
+
+#help-button {
+	display: none;
+	top: 0;
+	right: 0;
+	padding-top: 3px;
+	padding-right: 5px;
+	position: absolute;
+	cursor: pointer;
+}
+
+#touch-animation {
+	display: none;
+}
+
+.audio-bar {
+	position: absolute;
+	bottom: 75px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+}
+
+#progress-bar {
+	padding-top: 10px;
+}
+
+#seekbar {
+	width: 100%;
+}
+
+.controls {
+	position: absolute;
+	bottom: 0;
+	height: 70px;
+	line-height: 70px;
+	background-color: #ECF0F1;
+	text-align: center;
+}
+
+.icon-background {
+	color: #f00;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+/*Chrome*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    input[type='range'] {
+		overflow: hidden;
+		width: 80px;
+		-webkit-appearance: none;
+		background-color: #b6b6b6;
+    }
+    
+    input[type='range']::-webkit-slider-runnable-track {
+		height: 10px;
+		-webkit-appearance: none;
+		color: #13bba4;
+		margin-top: -1px;
+    }
+    
+    input[type='range']::-webkit-slider-thumb {
+		width: 10px;
+		-webkit-appearance: none;
+		height: 10px;
+		cursor: ew-resize;
+		background: #434343;
+		box-shadow: -80px 0 0 80px #ec8882;
+    }
+
+}
+
+/** FF*/
+input[type="range"]::-moz-range-progress {
+  background-color: #ec8882; 
+}
+input[type="range"]::-moz-range-track {  
+  background-color: #b6b6b6;
+}
+/* IE*/
+input[type="range"]::-ms-fill-lower {
+  background-color: #ec8882; 
+}
+input[type="range"]::-ms-fill-upper {  
+  background-color: #b6b6b6;
+}
+
+.trackpad-wrapper {
+	height: 100%;
+	width: 100%;
+	position: relative;
+}
+
+.trackpad-wrapper .trackpad {
+	position: absolute;
+	border-radius: 12px;
+	border: 2px solid;
+	overflow: hidden;
+	border-color: #358ed6;
+	background-color: #fff;
+	text-align: center;
+}
+
+.audioplayer-wrapper {
+	bottom: 0;
+	height: 30px;
+	position: absolute;
+}
+
+#audioplayer {
+	width: 100%;
+	height: 30px;
+	position: relative;
+}
+
+#help-text {
+	padding: 5px;
+}
+
+#previous {
+	z-index: 999;
+	cursor: pointer;
+}
