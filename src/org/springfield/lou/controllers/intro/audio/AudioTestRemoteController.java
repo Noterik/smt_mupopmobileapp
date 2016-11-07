@@ -35,32 +35,31 @@ import org.springfield.lou.screen.Screen;
  */
 public class AudioTestRemoteController extends Html5Controller {
 
-	public AudioTestRemoteController() { }
+    String deviceid;
+    
+    public AudioTestRemoteController() { }
 	
-	public void attach(String sel) {
-		selector = sel;
+    public void attach(String sel) {
+	selector = sel;
 		
-		String path = model.getProperty("/screen/exhibitionpath");
+	String path = model.getProperty("/screen/exhibitionpath");
+	deviceid = model.getProperty("@deviceid");
 		
-		String language = model.getProperty("@language");
-		System.out.println("The following lanugage is set "+language);
+	String language = model.getProperty("@userlanguage");
 		
-		FsNode stationnode = model.getNode(path);
-		if (stationnode != null) {
-			JSONObject data = new JSONObject();
+	FsNode stationnode = model.getNode(path);
+	if (stationnode != null) {
+	    JSONObject data = new JSONObject();
 			
-			screen.get(selector).parsehtml(data);
+	    screen.get(selector).render(data);
 			
-			screen.get("#start").on("click", "onStartClicked", this);
-			screen.get("#page1").on("click", "onPreviousPageRequested", this);
-		}
+	    screen.get("#start").on("click", "onStartClicked", this);	
 	}
+    }
 	
-	public void onStartClicked(Screen s,JSONObject data) {
-		 model.notify("/shared/photoinfospots/intro/audiotest", new FsNode("ready", "start"));
-	}
-	
-	public void onPreviousPageRequested(Screen s, JSONObject data) {
-	    model.notify("/shared/photoinfospots/intro/audiotest", new FsNode("return", "languageselection"));
-	}
+    public void onStartClicked(Screen s,JSONObject data) {
+	FsNode node = new FsNode("ready", "start");
+	node.setProperty("deviceid", deviceid);
+	model.notify("/shared/photoinfospots/intro/audiotest", node);
+    }
 }

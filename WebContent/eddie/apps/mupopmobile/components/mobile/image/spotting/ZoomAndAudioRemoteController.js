@@ -3,40 +3,72 @@ var ZoomAndAudioRemoteController = function(options) {}; // needed for detection
 var audioPlayer;
 var audioQueued = false;
 
-ZoomAndAudioRemoteController.update = function(vars, data){
-	console.log(data);
+var $wrapper;
+var $trackpad;
+var ratio = 4 / 3;
+
+ZoomAndAudioRemoteController.update = function(vars, data){	
+	audioPlayer = audioPlayer == undefined ? $("#audioplayer") : audioPlayer;
+	
+	//init - this is also handled when returning on a page
+	if (!vars["loaded"]) {	
+		//Handling fitting of trackpad
+		$wrapper = jQuery('.trackpad-wrapper-spotting');
+		$trackpad = jQuery('#trackpad');
+
+		init_spotting();
+		startHelp();
+
+		vars["loaded"] = true;	
+		
+		audioPlayer.on("loadedmetadata", loadedMetadata);
+		audioPlayer.on("timeupdate", updateTime);
+		audioPlayer.on('play', function() {
+			$("#play").addClass("fa-pause-circle");
+			$("#play").removeClass("fa-play-circle");
+		});
+	      
+		audioPlayer.on('pause', function() {
+			$("#play").addClass("fa-play-circle");
+			$("#play").removeClass("fa-pause-circle");
+		});
+		
+		$("#play").on('click', function() {
+			 if (audioPlayer[0].paused) {
+				 audioPlayer[0].play();
+			 } else {
+				 audioPlayer[0].pause();
+			 }
+		});
+		
+		//IOS init for automatically playing audio
+		$("#trackpad").on("touchstart", initAudio);
+	}
 	
 	var command = data['command'];
 	var targetId = '#'+data['targetid']; 
-	
-	audioPlayer = audioPlayer == undefined ? $(targetId).find("audio") : audioPlayer;
-	
+		
 	if (command == "update") {		
-		if (!audioQueued && $($(targetId).find("audio > source")[0]).attr("src") != data['src']) {
-			console.log("no audio queued or different src  detected");
-			$($(targetId).find("audio > source")[0]).attr("src", data['src']);
-			
-			audioQueued = true;
-			$("#trackpad").on("touchend.photoinfospots", playAudio());
+		if ($("#audiosrc").attr("src") != data['src']) {		
+			$("#audiosrc").attr("src", data['src']);
+			$("#audioplayer").trigger("load").trigger("play");
 		}		
 	}
 };
 
-function playAudio() {
-	console.log("play audio function called");
-	$("#trackpad").off("touchend.photoinfospots");
-	
-	if (audioQueued) {		
-		console.log("playing audio");
-		//audioPlayer[0].pause();
-		audioPlayer[0].load();
-		
-		audioPlayer[0].oncanplaythrough = audioPlayer[0].play();
-		audioQueued = false;
-	}
+function initAudio() {
+	$("#audioplayer").trigger("play");
 }
 
-startHelp();
+function loadedMetadata() {
+	$("#currenttime").text(formatTime(0));
+	$("#totaltime").text(formatTime(audioPlayer[0].duration));
+}
+
+function updateTime() {
+	$("#currenttime").text(formatTime(audioPlayer[0].currentTime));
+	$("#seekbar").val((100 / audioPlayer[0].duration) * audioPlayer[0].currentTime);
+}
 
 function startHelp() {
 	setTimeout(function(){
@@ -52,11 +84,6 @@ $("#help-button").on('touchstart click', function () {
 	$("#move-pointer-animation").show();
 	startHelp();
 });
-
-//Handling fitting of trackpad
-var $wrapper = jQuery('.trackpad-wrapper');
-var $trackpad = jQuery('.trackpad');
-var ratio = 4 / 3;
 
 function resize(){
 	var maxWidth = $wrapper.width();
@@ -89,7 +116,34 @@ function resize(){
 	$trackpad.css('left', wRemain / 2);
 }
 
-resize();
+function formatTime(time) {
+	var hours, minutes, seconds;
+	
+	hours = Math.floor(time / 3600);
+	minutes = Math.floor((time % 3600) / 60);
+	seconds = Math.floor((time % 60));
+	
+	formattedTime = "";
+	if (hours > 0) {
+		if (hours < 10) {
+			formattedTime += "0";
+		}
+		formattedTime += hours+":";
+	}
+	if (minutes < 10) {
+		formattedTime += "0";
+	}
+	formattedTime += minutes+":";
+	if (seconds < 10) {
+		formattedTime += "0";
+	}
+	formattedTime += seconds;
+	
+	return formattedTime;
+}
+
 jQuery(window).on('resize', resize);
 
-
+function init_spotting() {
+	resize();
+}

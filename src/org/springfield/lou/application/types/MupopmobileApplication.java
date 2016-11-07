@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springfield.fs.FSList;
 import org.springfield.fs.FSListManager;
@@ -23,30 +24,32 @@ import org.springfield.lou.servlet.LouServlet;
 
 public class MupopmobileApplication extends Html5Application {
 	
-	
- 	public MupopmobileApplication(String id) {
-		super(id); 
-		this.setSessionRecovery(true);
-	}
+    public MupopmobileApplication(String id) {
+	super(id); 
+	this.setSessionRecovery(true);
+	this.addToRecoveryList("profile/language");
+	this.addToRecoveryList("profile/color");
+	this.addToRecoveryList("profile/deviceid");
+    }
  	
     public void onNewScreen(Screen s) {
-    		s.setLanguageCode("en");
-			s.get("#screen").attach(new ScreenController());
+    	s.setLanguageCode("en");
+	s.get("#screen").attach(new ScreenController());
 			
-			loadStyleSheet(s, "libs/bootstrap.min");
-			loadStyleSheet(s, "libs/bootstrap-theme");
-			loadStyleSheet(s, "libs/font-awesome.min");
-			
-    		String path = s.getParameter("path");
-			System.out.println("MPATH="+path);
-    		if (path!=null) {
-    				s.getModel().setProperty("/screen/exhibitionpath","/domain/mupop/user/daniel"+path);
-    				s.get("#screen").append("div","mobile",new MobileController());
-    		}
+	loadStyleSheet(s, "libs/bootstrap.min");
+	loadStyleSheet(s, "libs/bootstrap-theme");
+	loadStyleSheet(s, "libs/font-awesome.min");
 
+	//Check if we have an id for this device already
+	if (s.getModel().getProperty("@deviceid") == null) {
+	    s.getModel().setProperty("@deviceid", UUID.randomUUID().toString());
+	}	
 			
-     }
-    
-    
-
+    	String path = s.getParameter("path");
+	System.out.println("MPATH="+path);
+    	if (path!=null) {
+    		s.getModel().setProperty("/screen/exhibitionpath","/domain/mupop/user/daniel"+path);
+    		s.get("#screen").append("div","mobile",new MobileController());
+    	}			
+    }
 }

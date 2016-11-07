@@ -1,9 +1,0 @@
-<div id="mobile_content" />
-<div id="mobile_footer">
- <div id="mobile_selector">Screen =  <select id="mobile_input">
- 			<option value="">none
- 			{{#nodes}}
-				<option value="{{id}}">{{labelid}}
-			{{/nodes}}
-			</select>
-</div>

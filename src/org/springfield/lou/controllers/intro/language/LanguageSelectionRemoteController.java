@@ -20,10 +20,8 @@
 */
 package org.springfield.lou.controllers.intro.language;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.json.simple.JSONObject;
+import org.springfield.fs.FSList;
 import org.springfield.fs.FsNode;
 import org.springfield.lou.controllers.Html5Controller;
 import org.springfield.lou.screen.Screen;
@@ -38,47 +36,33 @@ import org.springfield.lou.screen.Screen;
  */
 public class LanguageSelectionRemoteController extends Html5Controller {
 
-	public LanguageSelectionRemoteController() { }
+    String deviceid;
+    
+    public LanguageSelectionRemoteController() { }
 	
-	public void attach(String sel) {
-		selector = sel;
+    public void attach(String sel) {
+	selector = sel;
 		
-		String path = model.getProperty("/screen/exhibitionpath");
+	String path = model.getProperty("/screen/exhibitionpath");
+	deviceid = model.getProperty("@deviceid");
 		
-		FsNode stationnode = model.getNode(path);
-		if (stationnode != null) {
-			JSONObject data = new JSONObject();
+	FsNode stationnode = model.getNode(path);
+	if (stationnode != null) {
+	    //get languages from the languages
+	    FSList languageList = model.getList("@languages");
+	    
+	    JSONObject languages = FSList.ArrayToJSONObject(languageList.getNodes(),"en","language_name");
+	    screen.get(selector).render(languages);
 			
-			//TODO: get list of available languages
-			Collection<JSONObject> languages = new ArrayList<JSONObject>();
-			JSONObject nl = new JSONObject();
-			JSONObject en = new JSONObject();
-			JSONObject fr = new JSONObject();
-			
-			nl.put("name", "Nederlands");
-			nl.put("value", "nl");
-			en.put("name", "English");
-			en.put("value", "en");
-			fr.put("name", "Français");
-			fr.put("value", "fr");
-			
-			languages.add(nl);
-			languages.add(en);
-			languages.add(fr);
-
-			data.put("languages", languages);
-			screen.get(selector).parsehtml(data);
-			
-			screen.get(".language").on("click", "onLanguageSelected", this);
-		}
+	    screen.get(".language").on("click", "onLanguageSelected", this);
 	}
+    }
 	
-	 public void onLanguageSelected(Screen s,JSONObject data) {
-		 System.out.println("The following language was selected "+ data.get("id"));
-		 //TODO: store language for user session
-		 model.setProperty("@language",(String)data.get("id"));
+    public void onLanguageSelected(Screen s,JSONObject data) {
+	model.setProperty("@userlanguage",(String)data.get("id"));
 		 
-		 model.notify("/shared/photoinfospots/intro/languageselection", new FsNode("language", "selected"));
-		 
-	 }
+	FsNode languageNode = new FsNode("language", "selected");
+	languageNode.setProperty("deviceid", deviceid);		 
+	model.notify("/shared/exhibition/intro/languageselection", languageNode);	 
+    }
 }

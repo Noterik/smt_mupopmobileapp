@@ -1,17 +1,23 @@
 <app>
 	<model id="default">
-		<language>/screen['profile']/language</language>
+		<userlanguage>/screen['profile']/language</userlanguage>
 		
 		<username>/screen['profile']/username</username>
+		<color>/screen['profile']/color</color>
+		<deviceid>/screen['profile']/deviceid</deviceid>
+		
 		<exhibitionid>/screen['vars']/exhibitionid</exhibitionid>
 		<stationid>/screen['vars']/stationid</stationid>
 		<roomid>/screen['vars']/roomid</roomid>
 		<videoid>/screen['vars']/videoid</videoid>
 		<oldroomid>/screen['vars']/oldroomid</oldroomid>
 		<roomname>/screen['vars']/roomname</roomname>
-	
+
 	 	<exhibitions>/domain['mupop']/user['@username']/exhibition</exhibitions>
 	    <exhibition>/domain['mupop']/user['@username']/exhibition['@exhibitionid']</exhibition>
+	    
+	    <languages>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/language</languages>
+	    <language>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/language['@languageid']</language>
 	    
 	  	<rooms>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/room</rooms>
 	    <room>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/room['@roomid']</room>
@@ -84,5 +90,11 @@
 		<template>mobile/intro/audio/audiotestremote.mst</template>
 		<style>mobile/intro/audio/audiotestremote.css</style>
 		<controller id="AudioTestRemoteController"/>
+	</view>
+	
+	<view id="#stationselectionremote">
+		<template>mobile/intro/station/stationselectionremote.mst</template>
+		<style>mobile/intro/station/stationselectionremote.css</style>
+		<controller id="StationSelectionRemoteController"/>
 	</view>
 </app>

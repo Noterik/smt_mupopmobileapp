@@ -1,8 +1,8 @@
 <div class="header col-xs-12">Select Language</div>
 <div id="languages" class="col-xs-12 fill-height">
-	{{#languages}}
-		<div id="{{value}}" class="row language">{{name}}</div>
-	{{/languages}}
+	{{#nodes}}
+		<div id="{{id}}" class="row language">{{language_name}}</div>
+	{{/nodes}}
 </div>
 <div id="pagination" class="col-xs-12">
 	<div class="row">
