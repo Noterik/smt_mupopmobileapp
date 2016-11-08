@@ -1,0 +1,3 @@
+<div id="exhibition_end_main_text">Thank you for joining the exhibition!</div>
+<div id="exhibition_end_rejoin_text">Would you like to rejoin?</div>
+<div><input id="station_rejoin" type="submit" value="Rejoin!" />

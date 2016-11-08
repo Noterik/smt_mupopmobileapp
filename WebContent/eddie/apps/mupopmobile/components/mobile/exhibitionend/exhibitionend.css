@@ -1,0 +1,24 @@
+#exhibitionend{
+	position: absolute;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+	background-color : #ffffff;
+	text-align: center;
+	z-index: 1000;
+}
+
+#exhibition_end_main_text{
+	background: #2c3e50;
+	color: #ffffff;
+	font-size: 180%;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+#exhibition_end_rejoin_text{
+	padding-top: 7px;
+	text-align: center;
+	left: 5%;
+	font-size: 150%;
+}

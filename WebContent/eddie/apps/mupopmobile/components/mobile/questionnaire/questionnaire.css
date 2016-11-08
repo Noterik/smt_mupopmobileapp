@@ -1,0 +1,43 @@
+#questionnaire{
+    position: absolute;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+	background-color : #ffffff;
+	text-align: center;
+	z-index: 1000;
+}
+
+#question_text{
+	background: #2c3e50;
+	color: #ffffff;
+	font-size: 180%;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+#answers{
+	padding-top: 7px;
+	text-align: left;
+	left: 5%;
+	font-size: 90%;
+}
+
+.answer{
+    padding-bottom: 7px;
+    padding-top: 7px;
+	margin-left: 3%;
+	font-size: 150%;
+}
+
+#time_counter{
+	background-color: #00ff00;
+	height: 10px;
+}
+
+#time_counter_done{
+	background-color: #ff0000;
+	width: 0%;
+	float: left;
+	height: 100%;
+}

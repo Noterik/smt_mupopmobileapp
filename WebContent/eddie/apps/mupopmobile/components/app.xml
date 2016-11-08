@@ -60,7 +60,28 @@
 		<template>mobile/interactivevideoremote/interactivevideoremote.mst</template>
 		<style>mobile/interactivevideoremote/interactivevideoremote.css</style>
 		<controller id="InteractiveVideoRemoteController">
+			<javascript>mobile/interactivevideoremote/interactivevideoremote.js</javascript>
 		</controller>
+	</view>
+	
+	<view id="#audiocheck">
+		<template>mobile/audiocheck/audiocheck.mst</template>
+		<style>mobile/audiocheck/audiocheck.css</style>
+		<controller id="AudioCheckController"/>
+	</view>
+	
+	<view id="#questionnaire">
+		<template>mobile/questionnaire/questionnaire.mst</template>
+		<style>mobile/questionnaire/questionnaire.css</style>
+		<controller id="QuestionController">
+			<javascript>mobile/questionnaire/questionnaire.js</javascript>
+		</controller>
+	</view>
+	
+	<view id="#exhibitionend">
+		<template>mobile/exhibitionend/exhibitionend.mst</template>
+		<style>mobile/exhibitionend/exhibitionend.css</style>
+		<controller id="ExhibitionEndController"/>
 	</view>
 
 	

@@ -3,6 +3,7 @@
 	<name>smt_mupopmobileapp</name>
 	<comment></comment>
 	<projects>
+		<project>lou</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -1,0 +1,5 @@
+<div id="audio_check_text">Can you hear the Audio from your device?</div>
+<div>
+	<div id="audio_yes_button">Yes</div>
+	<div id="audio_no_button">No</div>
+</div>

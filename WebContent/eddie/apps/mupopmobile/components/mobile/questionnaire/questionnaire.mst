@@ -1,0 +1,9 @@
+<p id="question_text">{{question}}</p>
+<div id="answers">
+	{{#answers}}
+		<div id="{{value}}" class="answer"> {{value}}) {{name}}</div>
+		<hr>
+	{{/answers}}
+</div>
+
+<div id="countdown_timer"></div>

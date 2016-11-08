@@ -1,0 +1,26 @@
+#audio_check_text{
+	text-align: center;
+	font-size: 150%;
+	padding-bottom: 7px;
+    padding-top: 7px;
+}
+
+#audio_yes_button{
+	background: #ffffff;
+	font-size: 130%;
+	width: 50%;
+	text-align: center;
+	padding-bottom: 7px;
+    padding-top: 7px;
+    float: left;
+}
+
+#audio_no_button{
+	background: #ffffff;
+	font-size: 130%;
+	width: 50%;
+	text-align: center;
+	padding-bottom: 7px;
+    padding-top: 7px;
+    float: left;
+}
