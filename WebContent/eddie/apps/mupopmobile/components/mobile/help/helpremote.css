@@ -1,0 +1,44 @@
+html, body {
+	height: 100%;
+	background-color: #fff;
+}
+
+#screen, .fill-height, #helpremote {
+	height: 100%;	
+}
+
+.header {
+	background-color: #33475a;
+	height: 30px;
+	color: #fff;
+	text-align: center;
+	font-weight: 600;
+	padding-top: 5px;
+	text-transform: uppercase;	
+}
+
+#questions {
+	padding: 0;
+}
+
+.question, .answer {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	text-align: center;
+	border: 1px solid;
+    border-width: 0 0 1px 0;
+    cursor:pointer;
+}
+
+.verticalcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+#previousfromhelp {
+	z-index: 999;
+	cursor: pointer;
+}

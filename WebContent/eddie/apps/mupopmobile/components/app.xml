@@ -24,6 +24,12 @@
 	    
 		<stations>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station</stations>
 		<station>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']</station>
+		
+		<help_topics>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/help</help_topics>
+		<help_topic>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/help['@helpid']</help_topic>
+		
+		<images>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/image</images>
+		
 		<video>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/video['@videoid']</video>
 		
 	</model>
@@ -89,12 +95,19 @@
 	<view id="#audiotestremote">
 		<template>mobile/intro/audio/audiotestremote.mst</template>
 		<style>mobile/intro/audio/audiotestremote.css</style>
-		<controller id="AudioTestRemoteController"/>
+		<controller id="AudioTestRemoteController">
+			<javascript>mobile/intro/audio/AudioTestRemoteController.js</javascript>
+		</controller>
 	</view>
 	
 	<view id="#stationselectionremote">
 		<template>mobile/intro/station/stationselectionremote.mst</template>
 		<style>mobile/intro/station/stationselectionremote.css</style>
 		<controller id="StationSelectionRemoteController"/>
+	</view>
+	
+	<view id="#helpremote">
+		<template>mobile/help/helpremote.mst</template>
+		<style>mobile/help/helpremote.css</style>
 	</view>
 </app>

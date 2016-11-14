@@ -150,3 +150,14 @@ input[type="range"]::-ms-fill-lower {
 input[type="range"]::-ms-fill-upper {  
   background-color: #b6b6b6;
 }
+
+#textreader {
+	display: none;
+}
+
+h3 { 
+	width: 100%;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	text-align: center;
+}

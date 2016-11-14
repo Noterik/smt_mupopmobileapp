@@ -32,7 +32,7 @@ public class MobileController extends Html5Controller {
 	
 	//Get user language from session
 	String userLanguage = model.getProperty("@userlanguage");
-	    
+	
 	//get languages from the languages
 	FSList languageList = model.getList("@languages");
 	
@@ -40,7 +40,6 @@ public class MobileController extends Html5Controller {
 	if (languageList != null && languageList.size() > 1) {
 	    //only show language selection when the user has not language selected earlier or the selected
 	    //language is not available in this exhibition
-	    System.out.println("language available ? "+languageList.getNodesById(userLanguage).size());
 	    if (userLanguage == null || languageList.getNodesById(userLanguage).size() == 0) {
 		screen.get("#mobile").append("div", "languageselectionremote", new LanguageSelectionRemoteController());
 		model.onNotify("/shared/exhibition/intro/languageselection", "onLanguageSelected", this);
@@ -53,13 +52,15 @@ public class MobileController extends Html5Controller {
     }
     
     private void stationSelection() {
-	//check if multiple stations are configured
-	String stationpath  = model.getProperty("/screen/exhibitionpath")+"/station";
-	FSList list = model.getList(stationpath);
+	//check if multiple stations are configured	
+	FSList list = model.getList("@stations");
+
 	if (list!=null) {
 	    //in case of a single station directly go to this station
 	    if (list.size() == 1) {
-			
+		 FsNode station = list.getNodes().get(0);
+		 model.setProperty("@stationid", station.getId());
+		 openApp();	
 	    } else {
 		screen.get("#mobile").append("div", "stationselectionremote", new StationSelectionRemoteController());
 		model.onNotify("/shared/exhibition/intro/stationselection", "onStationSelected", this);
@@ -78,8 +79,11 @@ public class MobileController extends Html5Controller {
 	    return;
 	}
 		
-	if (target.getId().equals("requested")) {		
-	    screen.get("#stationselectionremote").remove();
+	if (target.getId().equals("requested")) {
+	    String originalController = target.getProperty("originalcontroller");
+
+	    screen.get("#"+originalController).remove();
+	    
 	    screen.get("#mobile").append("div", "languageselectionremote", new LanguageSelectionRemoteController());
 	    model.onNotify("/shared/exhibition/intro/languageselection", "onLanguageSelected", this);
 	}
@@ -115,23 +119,30 @@ public class MobileController extends Html5Controller {
     	
 	    if (stationnode!=null) {
 		model.setProperty("@stationid", stationnode.getId());
-		String app =  stationnode.getProperty("app"); // get the app name
-		if (app!=null) {
-		    if (app.equals("photoexplore")) {
-			screen.get("#mobile").append("div","photoexploreremote",new PhotoExploreRemoteController());
-		    } else if (app.equals("photoinfospots")) {
-			screen.get("#mobile").append("div","photoinfospotsremote",new PhotoInfoSpotsRemoteController());
-		    } else if (app.equals("interactivevideo")) {
-			screen.get("#mobile").append("div","interactivevideoremote",new InteractiveVideoRemoteController());
-		    }
-		} else {
-		    //TODO: should display error that no app was selected and curator should set it
-		    screen.get("#mobile_content").html("");
-		}
+		openApp();
+		
 	    } else {
 		//TODO: should show some illegal station controller with urls to all the valid ones?
 		screen.get("#mobile_content").html("");
 	    }
 	}	
+    }
+    
+    public void openApp() {
+	FsNode stationnode = model.getNode("@station");
+	
+	String app =  stationnode.getProperty("app"); // get the app name
+	if (app!=null) {
+	    if (app.equals("photoexplore")) {
+		screen.get("#mobile").append("div","photoexploreremote",new PhotoExploreRemoteController());
+	    } else if (app.equals("photoinfospots")) {
+		screen.get("#mobile").append("div","photoinfospotsremote",new PhotoInfoSpotsRemoteController());
+	    } else if (app.equals("interactivevideo")) {
+		screen.get("#mobile").append("div","interactivevideoremote",new InteractiveVideoRemoteController());
+	    }
+	} else {
+	    //TODO: should display error that no app was selected and curator should set it
+	    screen.get("#mobile_content").html("");
+	}
     }
 }

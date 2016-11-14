@@ -43,23 +43,51 @@ public class AudioTestRemoteController extends Html5Controller {
 	selector = sel;
 		
 	String path = model.getProperty("/screen/exhibitionpath");
-	deviceid = model.getProperty("@deviceid");
+	
+	deviceid = model.getProperty("@deviceid");	
+	String userLanguage = model.getProperty("@userlanguage");
 		
-	String language = model.getProperty("@userlanguage");
-		
-	FsNode stationnode = model.getNode(path);
+	FsNode stationnode = model.getNode(path+"/station/"+model.getProperty("@stationid"));	
+	
 	if (stationnode != null) {
 	    JSONObject data = new JSONObject();
-			
+	    data.put("audio_test_intro_text", stationnode.getSmartProperty(userLanguage, "audio_test_intro_text"));
+	    data.put("start", stationnode.getSmartProperty(userLanguage, "start"));
+	    data.put("headphone", stationnode.getSmartProperty(userLanguage, "headphone"));
+	    data.put("audiosrc", stationnode.getSmartProperty(userLanguage, "audio_test_intro_audio"));
+	    
 	    screen.get(selector).render(data);
-			
+	    screen.get(selector).loadScript(this);
+	    
 	    screen.get("#start").on("click", "onStartClicked", this);	
+	    screen.get("#audiotest_help").on("click", "helpPage", this);
+	    screen.get("#audiotest_previous").on("click", "previousPage", this);
+	    
+	    JSONObject d = new JSONObject();	
+	    d.put("command","init");
+	    screen.get(selector).update(d);
 	}
     }
 	
     public void onStartClicked(Screen s,JSONObject data) {
 	FsNode node = new FsNode("ready", "start");
 	node.setProperty("deviceid", deviceid);
+	
 	model.notify("/shared/photoinfospots/intro/audiotest", node);
+    }
+    
+    public void helpPage(Screen s, JSONObject data) {
+	FsNode node = new FsNode("help", "requested");
+	node.setProperty("deviceid", deviceid);
+	node.setProperty("originalcontroller", "audiotestremote");
+	    
+	model.notify("/shared/photoinfospots/help/page", node);
+    }
+    
+    public void previousPage(Screen s, JSONObject data) {
+	FsNode node = new FsNode("languagepage", "requested");
+	node.setProperty("deviceid", deviceid);
+	node.setProperty("originalcontroller", "audiotestremote");
+	model.notify("/shared/exhibition/intro/languagepage", node);
     }
 }

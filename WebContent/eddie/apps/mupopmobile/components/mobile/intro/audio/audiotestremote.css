@@ -3,7 +3,7 @@ html, body {
 	background-color: #fff;
 }
 
-#screen, .fill-height, #photoinfospotsremote, #audiotestremote {
+#screen, .fill-height, #audiotestremote {
 	height: 100%;	
 }
 
@@ -17,8 +17,14 @@ html, body {
 	text-transform: uppercase;	
 }
 
+#audiotest_previous {
+	z-index: 999;
+	cursor: pointer;
+}
+
 #audio {
 	text-align: center;
+	padding-top: 15px;
 }
 
 #headphones {
@@ -33,35 +39,8 @@ html, body {
 }
 
 #start {
-	bottom: 140px;
-	text-align: center;
-}
-
-#pagination {
-	position: absolute;
-	bottom: 0;
-	height: 40px;
-	line-height: 40px;
-	background-color: #ECF0F1;
-	text-align: center;
-}
-
-.selectedpage {
-	color: #f00;
-}
-
-.icon-text {
-	color: #fff;
-}
-
-.earlierpage {
-	color: #f00;
-	opacity: 0.5;
-	cursor: pointer;
-}
-
-.btn.sharp {
-  border-radius:0;
+	padding: 3px 6px;
+	border-radius: 6px;
 }
 
 .red-background {
@@ -75,7 +54,6 @@ html, body {
 	background-color: #f00;
 	border-radius:0;
 	background-image: none;
-	
 }
 
 .white {
@@ -87,3 +65,76 @@ html, body {
 	color: #fff;
 	text-shadow: none;
 }
+
+.audio-bar {
+	position: absolute;
+	bottom: 75px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+}
+
+#progress-bar {
+	padding-top: 10px;
+}
+
+#seekbar {
+	width: 100%;
+}
+
+.controls {
+	position: absolute;
+	bottom: 0;
+	height: 70px;
+	line-height: 70px;
+	background-color: #ECF0F1;
+	text-align: center;
+}
+
+.icon-background {
+	color: #f00;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+/*Chrome*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    input[type='range'] {
+      overflow: hidden;
+      width: 1000px;
+      -webkit-appearance: none;
+      background-color: #b6b6b6;
+    }
+    
+    input[type='range']::-webkit-slider-runnable-track {
+      height: 10px;
+      -webkit-appearance: none;
+      color: #13bba4;
+      margin-top: -1px;
+    }
+    
+    input[type='range']::-webkit-slider-thumb {
+      width: 10px;
+      -webkit-appearance: none;
+      height: 10px;
+      cursor: ew-resize;
+      background: #434343;
+      box-shadow: -1000px 0 0 1000px #ec8882;
+    }
+
+}
+/** FF*/
+input[type="range"]::-moz-range-progress {
+  background-color: #ec8882; 
+}
+input[type="range"]::-moz-range-track {  
+  background-color: #b6b6b6;
+}
+/* IE*/
+input[type="range"]::-ms-fill-lower {
+  background-color: #ec8882; 
+}
+input[type="range"]::-ms-fill-upper {  
+  background-color: #b6b6b6;
+}
+

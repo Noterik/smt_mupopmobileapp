@@ -1,7 +1,7 @@
 <div class="header col-xs-12">{{select_station}}</div>
 <div id="languages" class="col-xs-12 fill-height">
 	{{#nodes}}
-		<div id="{{id}}" class="row station">{{labelid}}</div>
+		<div id="{{id}}" class="row station">{{labelid}} - {{title}}</div>
 	{{/nodes}}
 </div>
 <div id="pagination" class="col-xs-12">

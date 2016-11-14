@@ -21,13 +21,10 @@
 package org.springfield.lou.controllers.image.spotting;
 
 import java.awt.Color;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
 import org.json.simple.JSONObject;
 import org.springfield.fs.FSList;
-import org.springfield.fs.FSListManager;
 import org.springfield.fs.FsNode;
 import org.springfield.fs.FsPropertySet;
 import org.springfield.lou.application.Html5ApplicationInterface;
@@ -45,138 +42,165 @@ import org.springfield.lou.screen.Screen;
  */
 public class ZoomAndAudioRemoteController extends Html5Controller {
 
-	private Html5ApplicationInterface app;
-	double lastx = -1;
-	double lasty = -1;
-	private String mycolor = "#888888";
-	String deviceid;
+    private Html5ApplicationInterface app;
+    double lastx = -1;
+    double lasty = -1;
+    private String mycolor = "#888888";
+    String deviceid;
+    String userLanguage;
 
-	public ZoomAndAudioRemoteController() {
-	}
+    public ZoomAndAudioRemoteController() { }
 
-	public void attach(String sel) {
-	    selector = sel;
+    public void attach(String sel) {
+	selector = sel;
 
-	    app = screen.getApplication();
-	    String audiourl = null;
+	app = screen.getApplication();
+	String audiourl = null;
 
-	    String path = model.getProperty("/screen/exhibitionpath");
-	    deviceid = model.getProperty("@deviceid");
+	String path = model.getProperty("/screen/exhibitionpath");
+	deviceid = model.getProperty("@deviceid");
+	userLanguage = model.getProperty("@userlanguage");
+	    
+	FsNode stationnode = model.getNode(path+"/station/"+model.getProperty("@stationid"));
+
+	if (stationnode != null) {
+	    JSONObject data = new JSONObject();
+	    
+	    String title = stationnode.getSmartProperty(userLanguage, "title");
+	    String helptext = stationnode.getSmartProperty(userLanguage, "hotspots_help_text");
+	    String transcript = stationnode.getSmartProperty(userLanguage, "hotspot_transcript");
+	    data.put("title", title);
+	    data.put("helptext", helptext);
+	    data.put("transcript", transcript);
+	    
+	    FSList imagesList = model.getList("@images");
+	    //with more then one image we can return to the image selection page
+	    if (imagesList.size() > 1) {
+		data.put("previous", "true");
+	    }
 		
-	    FsNode stationnode = model.getNode(path);
-
-	    if (stationnode != null) {
-		JSONObject data = new JSONObject();
-		String waitscreenmode = model.getProperty("@station/waitscreenmode");
-		
-		if (waitscreenmode != null && !waitscreenmode.equals("off")) {
-		    data.put("previous", "true");
-		}
-		
-		screen.get(selector).render(data);
-		screen.get(selector).loadScript(this);
+	    screen.get(selector).render(data);
+	    screen.get(selector).loadScript(this);
 			
-		mycolor = getColor();
+	    mycolor = getColor();
 
-		screen.get("#trackpad").track("mousemove","mouseMove", this); // track mouse move event on the #trackpad
-		screen.get("#trackpad").on("mouseup","mouseUp", this);
-		screen.get("#trackpad").on("touchend","mouseUp", this);
-		screen.get("#previous").on("click", "previousPage", this);
-		screen.get("#pointer_icon").css("background-color","#"+mycolor);
-		model.onNotify("/shared['mupop']/station/"+model.getProperty("@stationid"),"onStartAudio",this);
+	    screen.get("#trackpad").track("mousemove","mouseMove", this); // track mouse move event on the #trackpad
+	    screen.get("#trackpad").on("mouseup","mouseUp", this);
+	    screen.get("#trackpad").on("touchend","mouseUp", this);
+	    screen.get("#previous").on("click", "previousPage", this);
+	    screen.get("#zoomandaudiohelp").on("click", "helpPage", this);
+	    screen.get("#audioplayer").on("loaded", "loaded", this);
+	    screen.get("#pointer_icon").css("background-color","#"+mycolor);
+	    model.onNotify("/shared['mupop']/station/"+model.getProperty("@stationid"),"onStartAudio",this);
 		
-		JSONObject d = new JSONObject();	
-		d.put("command","init");
-		screen.get(selector).update(d);
-	    }
+	    JSONObject d = new JSONObject();	
+	    d.put("command","init");
+	    screen.get(selector).update(d);
 	}
+    }
 
-	public void mouseUp(Screen s, JSONObject data) {
-		FsPropertySet ps = new FsPropertySet(); // send them as a set so we get 1 event
-		ps.setProperty("x", "" + lastx); // we should support auto convert
-		ps.setProperty("y", "" + lasty);
-		ps.setProperty("deviceid", deviceid);
-		ps.setProperty("action", "up");
-		model.setProperties("/shared['mupop']/station/"+model.getProperty("@stationid"), ps);
-	}
+    public void mouseUp(Screen s, JSONObject data) {
+	FsPropertySet ps = new FsPropertySet(); // send them as a set so we get 1 event
+	ps.setProperty("x", "" + lastx); // we should support auto convert
+	ps.setProperty("y", "" + lasty);
+	ps.setProperty("deviceid", deviceid);
+	ps.setProperty("language", userLanguage);
+	ps.setProperty("action", "up");
+	model.setProperties("/shared['mupop']/station/"+model.getProperty("@stationid"), ps);
+    }
 	
-	public void onStartAudio(ModelEvent e) {
-	    FsNode message = e.getTargetFsNode();
-	   
-	    //only reach device that triggered this event
-	    if (!message.getProperty("deviceid").equals(deviceid)) {
-		return;
-	    }
-	    
-	    String action = message.getProperty("action");
-	    
-	    System.out.println("Start audio requested");
-	    
-	    if (action.equals("startaudio")) {
-		String url = message.getProperty("url");
-		if (url != null) { // if audio found lets push it to the screen (so it plays)
-		    System.out.println("START AUDIO REQUESTED="+url);
-		    JSONObject d = new JSONObject();
-		    d.put("command", "update");
-		    d.put("src", url);
-		    screen.get("#zoomandaudioremote").update(d);
-		}
-	    }		
-	}
+    public void onStartAudio(ModelEvent e) {
+	FsNode message = e.getTargetFsNode();
 
-	public void mouseMove(Screen s, JSONObject data) {
-	    	double width = ((long) data.get("width")) * 1.0;
-	    	double height = ((long) data.get("height")) * 1.0;
+	//only reach device that triggered this event
+	if (!message.getProperty("deviceid").equals(deviceid)) {
+	    return;
+	}
+	    
+	String action = message.getProperty("action");
+	    
+	if (action.equals("startaudio")) {
+	    String url = message.getProperty("url");
+	    if (url != null) { // if audio found lets push it to the screen (so it plays)
+		JSONObject d = new JSONObject();
+		d.put("command", "update");
+		d.put("src", url);
+		String text = message.getProperty("text") == null ? "" : message.getProperty("text");
+		d.put("text", text);
+		screen.get("#zoomandaudioremote").update(d);
+	    }
+	}		
+    }
+
+    public void mouseMove(Screen s, JSONObject data) {
+	double width = ((long) data.get("width")) * 1.0;
+	double height = ((long) data.get("height")) * 1.0;
 	    	
-	    	double rx = data.get("screenX").toString().indexOf(".") > -1 ? (double) data.get("screenX") : ((long) data.get("screenX")) * 1.0;
-	    	double ry = data.get("screenY").toString().indexOf(".") > -1 ? (double) data.get("screenY") : ((long) data.get("screenY")) * 1.0;
+	double rx = data.get("screenX").toString().indexOf(".") > -1 ? (double) data.get("screenX") : ((long) data.get("screenX")) * 1.0;
+	double ry = data.get("screenY").toString().indexOf(".") > -1 ? (double) data.get("screenY") : ((long) data.get("screenY")) * 1.0;
 	    	
-	    	lastx = (rx / width) * 100; 
-	    	lasty = (ry / height) * 100;	
+	lastx = (rx / width) * 100; 
+	lasty = (ry / height) * 100;	
 	    	
-	    	FsPropertySet ps = new FsPropertySet(); // send them as a set so we get 1 event
-	    	ps.setProperty("x", "" + lastx); // we should support auto convert
-		ps.setProperty("y", "" + lasty);
-		ps.setProperty("color", mycolor);
-		ps.setProperty("deviceid", deviceid);
-		ps.setProperty("action", "move");
-		model.setProperties("/shared['mupop']/station/"+model.getProperty("@stationid"), ps);
+	FsPropertySet ps = new FsPropertySet(); // send them as a set so we get 1 event
+	ps.setProperty("x", "" + lastx); // we should support auto convert
+	ps.setProperty("y", "" + lasty);
+	ps.setProperty("color", mycolor);
+	ps.setProperty("deviceid", deviceid);
+	ps.setProperty("language", userLanguage);
+	ps.setProperty("action", "move");
+	model.setProperties("/shared['mupop']/station/"+model.getProperty("@stationid"), ps);
 		
-		//Update position on triggering screen
-		screen.get("#pointer_icon").css("left",(rx)+"px");
-		screen.get("#pointer_icon").css("top",(ry)+"px"); // comp back for the top shift
-		screen.get("#pointer_icon").css("background-color", mycolor);
-	}
+	//Update position on triggering screen
+	screen.get("#pointer_icon").css("left",(rx)+"px");
+	screen.get("#pointer_icon").css("top",(ry)+"px"); // comp back for the top shift
+	screen.get("#pointer_icon").css("background-color", mycolor);
+    }
 	
-	public void previousPage(Screen s, JSONObject data) {
-	    FsNode node = new FsNode("coverflow", "requested");
-	    node.setProperty("deviceid", deviceid);
+    public void previousPage(Screen s, JSONObject data) {
+	FsNode node = new FsNode("coverflow", "requested");
+	node.setProperty("deviceid", deviceid);
 	    
-	    model.notify("/shared/photoinfospots/image/spotting", node);
-	}
-	
-	private String getColor() {     
-	    String color;
-	    String colorProperty = model.getProperty("@color");
+	model.notify("/shared/photoinfospots/image/spotting", node);
+    }
+    
+    public void helpPage(Screen s, JSONObject data) {
+	FsNode node = new FsNode("help", "requested");
+	node.setProperty("deviceid", deviceid);
+	node.setProperty("originalcontroller", "zoomandaudioremote");
 	    
-	    if (colorProperty != null) {
-		color = colorProperty;
-	    } else {		
-		color = generateColor();
-		model.setProperty("@color", color);
-	    }	    
-	    return color;
-	}
-	
-	private String generateColor() {	    
-	    //to get rainbow, pastel colors
-	    Random random = new Random();
-	    final float hue = random.nextFloat();
-	    // Saturation between 0.1 and 0.3
-	    final float saturation = (random.nextInt(2000) + 1000) / 10000f;
-	    final float luminance = 0.9f;
-	    final Color color = Color.getHSBColor(hue, saturation, luminance);
+	model.notify("/shared/photoinfospots/help/page", node);
+    }
+    
+    public void loaded(Screen s, JSONObject data) {
+	FsNode node = new FsNode("audio", "loaded");
+	node.setProperty("deviceid", deviceid);
 	    
-	    return "#"+Integer.toHexString(color.getRGB()).substring(2);
-	}
+	model.notify("/shared/photoinfospots/spotting/player", node);
+    }
+		
+    private String getColor() {     
+	String color;
+	String colorProperty = model.getProperty("@color");
+	    
+	if (colorProperty != null) {
+	    color = colorProperty;
+	} else {		
+	    color = generateColor();
+	    model.setProperty("@color", color);
+	}	    
+	return color;
+    }
+		
+    private String generateColor() {	    
+	//to get rainbow, pastel colors
+	Random random = new Random();
+	final float hue = random.nextFloat();
+	// Saturation between 0.6 and 0.8
+	final float saturation = (random.nextInt(2000) + 6000) / 10000f;
+	final float luminance = 0.9f;
+	final Color color = Color.getHSBColor(hue, saturation, luminance);
+	    
+	return "#"+Integer.toHexString(color.getRGB()).substring(2);
+    }
 }
