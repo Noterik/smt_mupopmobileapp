@@ -55,7 +55,6 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 	selector = sel;
 
 	app = screen.getApplication();
-	String audiourl = null;
 
 	String path = model.getProperty("/screen/exhibitionpath");
 	deviceid = model.getProperty("@deviceid");
@@ -72,12 +71,6 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 	    data.put("title", title);
 	    data.put("helptext", helptext);
 	    data.put("transcript", transcript);
-	    
-	    FSList imagesList = model.getList("@images");
-	    //with more then one image we can return to the image selection page
-	    if (imagesList.size() > 1) {
-		data.put("previous", "true");
-	    }
 		
 	    screen.get(selector).render(data);
 	    screen.get(selector).loadScript(this);
@@ -91,7 +84,7 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 	    screen.get("#zoomandaudiohelp").on("click", "helpPage", this);
 	    screen.get("#audioplayer").on("loaded", "loaded", this);
 	    screen.get("#pointer_icon").css("background-color","#"+mycolor);
-	    model.onNotify("/shared['mupop']/station/"+model.getProperty("@stationid"),"onStartAudio",this);
+	    model.onNotify("@photoinfospots/spot/audio", "onStartAudio",this);
 		
 	    JSONObject d = new JSONObject();	
 	    d.put("command","init");
@@ -106,7 +99,7 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 	ps.setProperty("deviceid", deviceid);
 	ps.setProperty("language", userLanguage);
 	ps.setProperty("action", "up");
-	model.setProperties("/shared['mupop']/station/"+model.getProperty("@stationid"), ps);
+	model.setProperties("@photoinfospots/spot/move", ps);
     }
 	
     public void onStartAudio(ModelEvent e) {
@@ -149,7 +142,7 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 	ps.setProperty("deviceid", deviceid);
 	ps.setProperty("language", userLanguage);
 	ps.setProperty("action", "move");
-	model.setProperties("/shared['mupop']/station/"+model.getProperty("@stationid"), ps);
+	model.setProperties("@photoinfospots/spot/move", ps);
 		
 	//Update position on triggering screen
 	screen.get("#pointer_icon").css("left",(rx)+"px");
@@ -158,10 +151,19 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
     }
 	
     public void previousPage(Screen s, JSONObject data) {
-	FsNode node = new FsNode("coverflow", "requested");
-	node.setProperty("deviceid", deviceid);
+	FSList imagesList = model.getList("@images");
+	
+	//with more then one image we can return to the image selection page
+	if (imagesList.size() > 1) {
+	    FsNode node = new FsNode("coverflow", "requested");
+	    model.notify("@photoinfospots/image/spotting", node);
+	} else {
+	    FsNode node = new FsNode("goto", "audiotest");
+	    node.setProperty("deviceid", deviceid);
+	    node.setProperty("originalcontroller", "zoomandaudioremote");
 	    
-	model.notify("/shared/photoinfospots/image/spotting", node);
+	    model.notify("@photoinfospots/intro/audiotest", node);
+	}
     }
     
     public void helpPage(Screen s, JSONObject data) {
@@ -169,14 +171,14 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 	node.setProperty("deviceid", deviceid);
 	node.setProperty("originalcontroller", "zoomandaudioremote");
 	    
-	model.notify("/shared/photoinfospots/help/page", node);
+	model.notify("@photoinfospots/help/page", node);
     }
     
     public void loaded(Screen s, JSONObject data) {
 	FsNode node = new FsNode("audio", "loaded");
 	node.setProperty("deviceid", deviceid);
 	    
-	model.notify("/shared/photoinfospots/spotting/player", node);
+	model.notify("@photoinfospots/spotting/player", node);
     }
 		
     private String getColor() {     

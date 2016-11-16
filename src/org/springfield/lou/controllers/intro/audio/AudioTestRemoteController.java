@@ -73,7 +73,7 @@ public class AudioTestRemoteController extends Html5Controller {
 	FsNode node = new FsNode("ready", "start");
 	node.setProperty("deviceid", deviceid);
 	
-	model.notify("/shared/photoinfospots/intro/audiotest", node);
+	model.notify("@photoinfospots/intro/audiotest", node);
     }
     
     public void helpPage(Screen s, JSONObject data) {
@@ -81,13 +81,13 @@ public class AudioTestRemoteController extends Html5Controller {
 	node.setProperty("deviceid", deviceid);
 	node.setProperty("originalcontroller", "audiotestremote");
 	    
-	model.notify("/shared/photoinfospots/help/page", node);
+	model.notify("@photoinfospots/help/page", node);
     }
     
     public void previousPage(Screen s, JSONObject data) {
-	FsNode node = new FsNode("languagepage", "requested");
+	FsNode node = new FsNode("goto", "languageselection");
 	node.setProperty("deviceid", deviceid);
 	node.setProperty("originalcontroller", "audiotestremote");
-	model.notify("/shared/exhibition/intro/languagepage", node);
+	model.notify("@photoinfospots/intro/audiotest", node);
     }
 }

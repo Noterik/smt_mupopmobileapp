@@ -32,6 +32,7 @@
 		
 		<video>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/video['@videoid']</video>
 		
+		<photoinfospots>/shared['photoinfospots']/exhibition['@exhibitionid']/station['@stationid']</photoinfospots>
 	</model>
 
 	<view id="#screen">

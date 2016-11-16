@@ -72,6 +72,6 @@ public class HelpRemoteController extends Html5Controller {
 	node.setProperty("deviceid", deviceid);
 	node.setProperty("originalcontroller", originalcontroller);
 	    
-	model.notify("/shared/photoinfospots/help/return", node);
+	model.notify("@photoinfospots/help/return", node);
     }
 }

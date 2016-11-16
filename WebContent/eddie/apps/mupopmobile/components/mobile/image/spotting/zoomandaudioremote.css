@@ -65,6 +65,11 @@ html, body {
 	cursor: pointer;
 }
 
+#zoomandaudiohelp {
+	z-index: 999;
+	cursor: pointer;
+}
+
 #pointer_icon {
 	background-color: #ff0000;
 	position: absolute;

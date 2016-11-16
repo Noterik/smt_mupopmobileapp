@@ -17,6 +17,11 @@ html, body {
 	text-transform: uppercase;	
 }
 
+#audiotest_help {
+	z-index: 999;
+	cursor: pointer;
+}
+
 #audiotest_previous {
 	z-index: 999;
 	cursor: pointer;
@@ -78,7 +83,7 @@ html, body {
 	padding-top: 10px;
 }
 
-#seekbar {
+#audiotest-seekbar {
 	width: 100%;
 }
 

@@ -1,35 +1,35 @@
 var AudioTestRemoteController = function(options) {}; // needed for detection
 
 AudioTestRemoteController.update = function(vars, data){		
-	$("#audioplayer").on("loadedmetadata", loadedMetadata);
-	$("#audioplayer").on("timeupdate", updateTime);
-	$("#audioplayer").on('play', function() {
-		$("#play").addClass("fa-pause-circle");
-		$("#play").removeClass("fa-play-circle");
+	$("#audiotest-audioplayer").on("loadedmetadata", loadedMetadataAudioTest);
+	$("#audiotest-audioplayer").on("timeupdate", updateTimeAudioTest);
+	$("#audiotest-audioplayer").on('play', function() {
+		$("#audiotest-play").addClass("fa-pause-circle");
+		$("#audiotest-play").removeClass("fa-play-circle");
 	});
       
-	$("#audioplayer").on('pause', function() {
-		$("#play").addClass("fa-play-circle");
-		$("#play").removeClass("fa-pause-circle");
+	$("#audiotest-audioplayer").on('pause', function() {
+		$("#audiotest-play").addClass("fa-play-circle");
+		$("#audiotest-play").removeClass("fa-pause-circle");
 	});
 	
-	$("#play").on('click', function() {
-		 if ($("#audioplayer")[0].paused) {
-			 $("#audioplayer")[0].play();
+	$("#audiotest-play").on('click', function() {
+		 if ($("#audiotest-audioplayer")[0].paused) {
+			 $("#audiotest-audioplayer")[0].play();
 		 } else {
-			 $("#audioplayer")[0].pause();
+			 $("#audiotest-audioplayer")[0].pause();
 		 }
 	});
 };
 
-function loadedMetadata() {
-	$("#currenttime").text(formatTime(0));
-	$("#totaltime").text(formatTime($("#audioplayer")[0].duration));
+function loadedMetadataAudioTest() {
+	$("#audiotest-currenttime").text(formatTime(0));
+	$("#audiotest-totaltime").text(formatTime($("#audiotest-audioplayer")[0].duration));
 }
 
-function updateTime() {
-	$("#currenttime").text(formatTime($("#audioplayer")[0].currentTime));
-	$("#seekbar").val((100 / $("#audioplayer")[0].duration) * $("#audioplayer")[0].currentTime);
+function updateTimeAudioTest() {
+	$("#audiotest-currenttime").text(formatTime($("#audiotest-audioplayer")[0].currentTime));
+	$("#audiotest-seekbar").val((100 / $("#audiotest-audioplayer")[0].duration) * $("#audiotest-audioplayer")[0].currentTime);
 }
 
 function formatTime(time) {

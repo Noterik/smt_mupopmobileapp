@@ -1,7 +1,5 @@
 var CoverFlowRemoteController = function(options) {}; // needed for detection
 
-var audioPlayer;
-var audioQueued = false;
 var $wrapper;
 var $trackpad;
 var ratio = 4 / 3;
@@ -12,16 +10,62 @@ CoverFlowRemoteController.update = function(vars, data){
 	if (!vars["loaded"]) {	
 		//Handling fitting of trackpad
 		$wrapper = jQuery('.trackpad-wrapper-selection');
-		$trackpad = jQuery('#trackpad');
+		$trackpad = jQuery('#coverflow-trackpad');
 
 		init_selection();
-		startHelp();
+		startCoverFlowHelp();
 
-		vars["loaded"] = true;		
+		vars["loaded"] = true;	
+		
+		$("#coverflow-audioplayer").on("loadedmetadata", loadedMetadataCoverflow);
+		$("#coverflow-audioplayer").on("timeupdate", updateTimeCoverflow);
+		$("#coverflow-audioplayer").on('play', function() {
+			$("#coverflow-play").addClass("fa-pause-circle");
+			$("#coverflow-play").removeClass("fa-play-circle");
+		});
+	      
+		$("#coverflow-audioplayer").on('pause', function() {
+			$("#coverflow-play").addClass("fa-play-circle");
+			$("#coverflow-play").removeClass("fa-pause-circle");
+		});
+		
+		$("#coverflow-play").on('click', function() {
+			 if ($("#coverflow-audioplayer")[0].paused) {
+				 $("#coverflow-audioplayer")[0].play();
+			 } else {
+				 $("#coverflow-audioplayer")[0].pause();
+			 }
+		});
+		
+		
+		$("#coverflow-text").on('click', function() {
+			if ($("#coverflow-trackpad").is(":visible")) {
+				$("#coverflow-trackpad").hide();
+				$("#coverflow-textreader").show();
+				$("#coverflow-text").addClass("fa-square-o");
+				$("#coverflow-text").removeClass("fa-book");
+			} else {
+				$("#coverflow-textreader").hide();
+				$("#coverflow-trackpad").show();
+				$("#coverflow-text").addClass("fa-book");
+				$("#coverflow-text").removeClass("fa-square-o");
+			}
+		});
+		
+		/*prevent zooming on double tap for ios 10 because:
+		
+			"To improve accessibility on websites in Safari, 
+			users can now pinch-to-zoom even when a website sets user-scalable=no 
+			in the viewport."
+		
+		*/
+		document.documentElement.addEventListener('touchmove', function (event) {
+		    event.preventDefault();      
+		}, false);
 	}
 }
 
-function startHelp() {
+function startCoverFlowHelp() {
 	setTimeout(function(){
 		$("#help-text1").hide();
 		$("#swipe-animation").hide();
@@ -30,16 +74,16 @@ function startHelp() {
 		setTimeout(function() {
 			$("#help-text2").hide();
 			$("#touch-animation").hide();
-			$("#help-button").show();
+			$("#coverflow-help-button").show();
 		}, 4000);
 	}, 5000);
 }
 
-$("#help-button").on('touchstart click', function () {
-	$("#help-button").hide();
+$("#coverflow-help-button").on('touchstart click', function () {
+	$("#coverflow-help-button").hide();
 	$("#help-text1").show();
 	$("#swipe-animation").show();
-	startHelp();
+	startCoverFlowHelp();
 });
 
 function resize_trackpad_selection() {
@@ -97,21 +141,31 @@ function init_selection() {
 		}
 	}
 	
-	hTrackpad.on('swipeleft', function(event){
-		console.log("swipe left");
+	hTrackpad.on('swipeleft', function(event) {
 		var message = 'event(trackpad/swiperight,{"id":"trackpad","targetid":"trackpad"})';
 		sendMessage(message, true);
+		event.preventDefault();
 	})
 	
-	hTrackpad.on('swiperight', function(event){
-		console.log("swipe right");
+	hTrackpad.on('swiperight', function(event) {
 		var message = 'event(trackpad/swipeleft,{"id":"trackpad","targetid":"trackpad"})';
 		sendMessage(message, true);
+		event.preventDefault();
 	})
 	
-	hTrackpad.on('doubletap', function(event){
-		console.log("double tap");
-		  var message = 'event(trackpad/enter,{"id":"trackpad","targetid":"trackpad"})';
-		  sendMessage(message, true);
+	hTrackpad.on('doubletap', function(event) {
+		var message = 'event(trackpad/enter,{"id":"trackpad","targetid":"trackpad"})';
+		sendMessage(message, true);
+		event.preventDefault();
 	})
+}
+
+function loadedMetadataCoverflow() {
+	$("#coverflow-currenttime").text(formatTime(0));
+	$("#coverflow-totaltime").text(formatTime($("#coverflow-audioplayer")[0].duration));
+}
+
+function updateTimeCoverflow() {
+	$("#coverflow-currenttime").text(formatTime($("#coverflow-audioplayer")[0].currentTime));
+	$("#coverflow-seekbar").val((100 / $("#coverflow-audioplayer")[0].duration) * $("#coverflow-audioplayer")[0].currentTime);
 }

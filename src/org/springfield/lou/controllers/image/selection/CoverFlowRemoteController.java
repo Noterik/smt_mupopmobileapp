@@ -21,6 +21,7 @@
 package org.springfield.lou.controllers.image.selection;
 
 import org.json.simple.JSONObject;
+import org.springfield.fs.FSList;
 import org.springfield.fs.FsNode;
 import org.springfield.lou.controllers.Html5Controller;
 import org.springfield.lou.screen.Screen;
@@ -34,60 +35,90 @@ import org.springfield.lou.screen.Screen;
  * 
  */
 public class CoverFlowRemoteController extends Html5Controller {
-	
-	public CoverFlowRemoteController() { }
-	
-	public void attach(String sel) {
-		selector = sel;
-		
-		String path = model.getProperty("/screen/exhibitionpath");
-		
-		FsNode stationnode = model.getNode(path);
-		if (stationnode != null) {
-			JSONObject data = new JSONObject();
-			data.put("title", stationnode.getProperty("title"));
-			data.put("audio", "true");
 
-			screen.get(selector).render(data);
-			screen.get(selector).loadScript(this);
+    String deviceid;
+    
+    public CoverFlowRemoteController() { }
+	
+    public void attach(String sel) {
+	selector = sel;
+		
+	String path = model.getProperty("/screen/exhibitionpath");
+	
+	deviceid = model.getProperty("@deviceid");	
+	String userLanguage = model.getProperty("@userlanguage");
+	
+	FsNode stationnode = model.getNode(path+"/station/"+model.getProperty("@stationid"));
+	if (stationnode != null) {
+	    JSONObject data = new JSONObject();
+	    data.put("title", stationnode.getSmartProperty(userLanguage, "title"));
+	    data.put("helptext1", stationnode.getSmartProperty(userLanguage, "swipe_help_text"));
+	    data.put("helptext2", stationnode.getSmartProperty(userLanguage, "select_help_text"));
+	    data.put("audio", stationnode.getSmartProperty(userLanguage, "coverflow_intro_audio"));
+	    data.put("transcript",  stationnode.getSmartProperty(userLanguage, "coverflow_transcript"));
+	    data.put("transcript-text", stationnode.getSmartProperty(userLanguage, "coverflow_transcript_text"));
+	    
+	    screen.get(selector).render(data);
+	    screen.get(selector).loadScript(this);
 			
-			screen.get("#trackpad").on("swipeleft",
+	    screen.get("#trackpad").on("swipeleft",
 					"swipeLeft", this);
-			screen.get("#trackpad").on("swiperight",
+	    screen.get("#trackpad").on("swiperight",
 					"swipeRight", this);
-			screen.get("#trackpad").on("enter",
+	    screen.get("#trackpad").on("enter",
 					"enter", this);
-			screen.get("#help").on("click", "helpClicked", this);
-			screen.get("#play").on("click", "playClicked", this);
-			screen.get("#text").on("click", "textClicked", this);
+	    screen.get("#coverflow-help").on("click", "helpClicked", this);
+	    screen.get("#coverflow-play").on("click", "playClicked", this);
+	    screen.get("#coverflow-text").on("click", "textClicked", this);
+	    screen.get("#coverflow_previous").on("click", "previousPage", this);
 			
-			JSONObject d = new JSONObject();	
-			d.put("command","init");
-			screen.get(selector).update(d);
-		}
+	    JSONObject d = new JSONObject();	
+	    d.put("command","init");
+	    screen.get(selector).update(d);
 	}
+    }
 	
-	public void swipeLeft(Screen s, JSONObject data) {
-		model.notify("/shared/photoinfospots", new FsNode("coverflow", "left"));
-	}
+    public void swipeLeft(Screen s, JSONObject data) {
+	FsNode node = new FsNode("coverflow", "left");
+	node.setProperty("deviceid", deviceid);
 	
-	public void swipeRight(Screen s, JSONObject data) {
-		model.notify("/shared/photoinfospots", new FsNode("coverflow", "right"));
-	}
+	model.notify("@photoinfospots", node);
+    }
 	
-	public void enter(Screen s, JSONObject data) {
-		model.notify("/shared/photoinfospots", new FsNode("coverflow", "enter"));
-	}
+    public void swipeRight(Screen s, JSONObject data) {
+	FsNode node = new FsNode("coverflow", "right");
+	node.setProperty("deviceid", deviceid);
 	
-	public void helpClicked(Screen s, JSONObject data) { 
-	    System.out.println("Help clicked");
-	}
+	model.notify("@photoinfospots", node);
+    }
 	
-	public void playClicked(Screen s, JSONObject data) {
-	    System.out.println("Play clicked");
-	}
+    public void enter(Screen s, JSONObject data) {
+	FsNode node = new FsNode("coverflow", "enter");
 	
-	public void textClicked(Screen s, JSONObject data) {
-	    System.out.println("Text clicked");
-	}
+	model.notify("@photoinfospots", node);
+    }
+	
+    public void helpClicked(Screen s, JSONObject data) { 
+	FsNode node = new FsNode("help", "requested");
+	node.setProperty("deviceid", deviceid);
+	node.setProperty("originalcontroller", "coverflowremote");
+	    
+	model.notify("@photoinfospots/help/page", node);
+    }
+	
+    public void playClicked(Screen s, JSONObject data) {
+	System.out.println("Play clicked");
+    }
+	
+    public void textClicked(Screen s, JSONObject data) {
+	System.out.println("Text clicked");
+    }
+    
+    public void previousPage(Screen s, JSONObject data) {	
+	FsNode node = new FsNode("goto", "audiotest");
+	node.setProperty("deviceid", deviceid);
+	node.setProperty("originalcontroller", "coverflowremote");
+	    
+	model.notify("@photoinfospots/intro/audiotest", node);
+    }
 }

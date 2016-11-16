@@ -40,8 +40,10 @@ import org.springfield.lou.model.ModelEvent;
  */
 public class PhotoInfoSpotsRemoteController extends Html5Controller {
 
+    String state;
+    String mainscreenState;
     String deviceid;
-    
+  
     public PhotoInfoSpotsRemoteController() {}
 	
     public void attach(String sel) {
@@ -52,65 +54,87 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 		
 	FsNode stationnode = model.getNode(path);
 	if (stationnode!=null) {
-			
-	    System.out.println("MODE="+model.getProperty("@station/waitscreenmode"));
-	    
+	    state = "audiotestremote";
 	    screen.get("#photoinfospotsremote").append("div", "audiotestremote", new AudioTestRemoteController());
-	    model.onNotify("/shared/photoinfospots/intro/audiotest", "onStartClicked", this);
-	    model.onNotify("/shared/photoinfospots/image/spotting", "onCoverflowRequested", this);
-	    model.onNotify("/shared/photoinfospots/help/page", "onHelpRequested", this);
-	    model.onNotify("/shared/photoinfospots/help/return", "onHelpReturn", this);
+	    model.onNotify("@photoinfospots/intro/audiotest", "onStartClicked", this);
+	    model.onNotify("@photoinfospots/image/spotting", "onCoverflowRequested", this);
+	    model.onNotify("@photoinfospots/help/page", "onHelpRequested", this);
+	    model.onNotify("@photoinfospots/help/return", "onHelpReturn", this);
+	    model.onNotify("@photoinfospots/entryscreen/loaded", "onEntryScreenLoaded", this);
 	}
     } 
 	
     public void onEnterImage(ModelEvent e) {
 	FsNode target = e.getTargetFsNode();
-
+	
 	if (target.getId().equals("enter")) {		
-	    screen.get("#coverflowremote").remove();		
-	    screen.get("#photoinfospotsremote").append("div", "zoomandaudioremote", new ZoomAndAudioRemoteController());
+	    //reach all devices that had have zoomandaudio screen
+	    if (state.equals("coverflow")) {
+		screen.get("#coverflowremote").remove();
+		loadZoomAndAudio();
+	    }
 	}
     }
 	
     public void onStartClicked(ModelEvent e) {
 	FsNode target = e.getTargetFsNode();
-		
+
 	//only reach device that triggered this event
 	if (!target.getProperty("deviceid").equals(deviceid)) {
 	    return;
 	}
 		
 	if (target.getId().equals("start")) {
-	    screen.get("#audiotestremote").remove();
-	
-	    FSList imagesList = model.getList("@images");
+	   screen.get("#audiotestremote").remove();
 	    
-	    model.notify("/shared/photoinfospots/device/connected", new FsNode("device", "1"));
-	    
-	    if (imagesList.size() > 1) {
-    	    	model.onNotify("/shared/photoinfospots", "onEnterImage", this);
-
-    	    	screen.get("#photoinfospotsremote").append("div", "coverflowremote", new CoverFlowRemoteController());
-    	    } else {
-    		screen.get("#photoinfospotsremote").append("div", "zoomandaudioremote", new ZoomAndAudioRemoteController());
-    	    }
+	   //check state of mainscreen to show appropriate mobile screen
+	   mainscreenState = model.getProperty("@photoinfospots/vars/state");
+	   
+	   model.onNotify("@photoinfospots", "onEnterImage", this);
+	   
+	   if (mainscreenState.equals("staticentryscreen") || mainscreenState.equals("imagerotationentryscreen")) {
+	       FSList imagesList = model.getList("@images");
+		    
+		model.notify("@photoinfospots/device/connected", new FsNode("device", "1"));
+		    
+		if (imagesList.size() > 1) {
+		    loadCoverflow();
+		} else {
+		    loadZoomAndAudio();
+		}
+	   } else if (mainscreenState.equals("coverflow")) {
+		loadCoverflow();
+	   } else if (mainscreenState.equals("zoomandaudio")) {
+		loadZoomAndAudio();
+	   }
 	} else if (target.getId().equals("languageselection")) {
-	    screen.get("#audiotestremote").remove();    
+	    screen.get("#"+target.getProperty("originalcontroller")).remove();    
 	    screen.get("#photoinfospotsremote").append("div", "languageselectionremote", new LanguageSelectionRemoteController());
+	} else if (target.getId().equals("audiotest")) {
+	    screen.get("#"+target.getProperty("originalcontroller")).remove();
+	    screen.get("#photoinfospotsremote").append("div", "audiotestremote", new AudioTestRemoteController());
 	}
     }
-	
+
+    public void loadCoverflow() {	
+	state = "coverflow";
+	screen.get("#photoinfospotsremote").append("div", "coverflowremote", new CoverFlowRemoteController());
+    }
+    
+    public void loadZoomAndAudio() {
+	state = "zoomandaudio";
+	screen.get("#photoinfospotsremote").append("div", "zoomandaudioremote", new ZoomAndAudioRemoteController());
+    }
+    
     public void onCoverflowRequested(ModelEvent e) {
 	FsNode target = e.getTargetFsNode();
 		
-	//only reach device that triggered this event
-	if (!target.getProperty("deviceid").equals(deviceid)) {
-	    return;
-	}
-		
 	if (target.getId().equals("requested")) {
-	    screen.get("#zoomandaudioremote").remove();	
-	    screen.get("#photoinfospotsremote").append("div", "coverflowremote", new CoverFlowRemoteController());
+	    //reach all devices that had have zoomandaudio screen
+	    if (state.equals("zoomandaudio")) {
+		screen.get("#zoomandaudioremote").remove();
+	    	loadCoverflow();
+	    }
 	}
     }
     
@@ -124,30 +148,65 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 
 	if (target.getId().equals("requested")) {
 	    String originalController = target.getProperty("originalcontroller");
-
 	    screen.get("#"+originalController).remove();
 
+	    state = "help";
 	    screen.get("#photoinfospotsremote").append("div", "helpremote", new HelpRemoteController(originalController));
 	}
     }
     
     public void onHelpReturn(ModelEvent e) {
 	FsNode target = e.getTargetFsNode();
-	
+
 	//only reach device that triggered this event
 	if (!target.getProperty("deviceid").equals(deviceid)) {
 	    return;
 	}
 	
 	if (target.getId().equals("requested")) {
-	    String originalController = target.getProperty("originalcontroller");
-	    
 	    screen.get("#helpremote").remove();
 	    
+	    String originalController = target.getProperty("originalcontroller");
+	    //check if in meanwhile the mainscreen has switched
+	    mainscreenState = model.getProperty("@photoinfospots/vars/state");
+	    if (originalController.equals("zoomandaudioremote") && mainscreenState.equals("coverflow")) {
+		originalController = "coverflowremote";
+	    }
+	    if (originalController.equals("coverflow") && mainscreenState.equals("zoomandaudio")) {
+		originalController = "zoomandaudioremote";
+	    }
+
 	    if (originalController.equals("zoomandaudioremote")) {
 		 screen.get("#photoinfospotsremote").append("div", "zoomandaudioremote", new ZoomAndAudioRemoteController());
 	    } else if (originalController.equals("audiotestremote")) {
 		 screen.get("#photoinfospotsremote").append("div", "audiotestremote", new AudioTestRemoteController());
+	    } else if (originalController.equals("coverflowremote")) {
+		 screen.get("#photoinfospotsremote").append("div", "coverflowremote", new CoverFlowRemoteController());
+	    }
+	}
+    }
+    
+    public void onEntryScreenLoaded(ModelEvent e) {
+	FsNode target = e.getTargetFsNode();
+	
+	if (target.getId().equals("loaded")) {
+	    if (state.equals("coverflow")) {
+		screen.get("#coverflowremote").remove();
+	    } else if (state.equals("zoomandaudio")) {
+		screen.get("#zoomandaudioremote").remove();
+	    } else {
+		//not affected
+		return;
+	    }
+	    
+	    mainscreenState = model.getProperty("@photoinfospots/vars/state");
+		 
+	    if (mainscreenState.equals("staticentryscreen") || mainscreenState.equals("imagerotationentryscreen")) {
+		screen.get("#photoinfospotsremote").append("div", "audiotestremote", new AudioTestRemoteController());
+	    } else if (mainscreenState.equals("coverflow")) {
+		screen.get("#photoinfospotsremote").append("div", "coverflowremote", new CoverFlowRemoteController());
+	    } else if (mainscreenState.equals("zoomandaudio")) {
+		screen.get("#photoinfospotsremote").append("div", "zoomandaudioremote", new ZoomAndAudioRemoteController());
 	    }
 	}
     }

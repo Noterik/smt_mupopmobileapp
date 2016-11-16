@@ -163,9 +163,7 @@ function formatTime(time) {
 	return formattedTime;
 }
 
-function audioLoaded() {
-	console.log("Audio loaded");
-	
+function audioLoaded() {	
 	var message = 'event(audioplayer/loaded,{"id":"audioplayer","targetid":"audioplayer"})';
 	sendMessage(message, true);
 }

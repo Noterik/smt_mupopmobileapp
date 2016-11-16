@@ -36,13 +36,14 @@ public class MobileController extends Html5Controller {
 	//get languages from the languages
 	FSList languageList = model.getList("@languages");
 	
+	model.onNotify("@photoinfospots/intro/languageselection", "onLanguageSelected", this);
+	
 	//only show languageselection when multiple languages are configured
 	if (languageList != null && languageList.size() > 1) {
 	    //only show language selection when the user has not language selected earlier or the selected
 	    //language is not available in this exhibition
 	    if (userLanguage == null || languageList.getNodesById(userLanguage).size() == 0) {
 		screen.get("#mobile").append("div", "languageselectionremote", new LanguageSelectionRemoteController());
-		model.onNotify("/shared/exhibition/intro/languageselection", "onLanguageSelected", this);
 	    } else {
 		stationSelection();
 	    }

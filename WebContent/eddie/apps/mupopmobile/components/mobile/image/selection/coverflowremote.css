@@ -43,6 +43,16 @@ html, body {
 	text-transform: uppercase;
 }
 
+#coverflow_previous {
+	z-index: 999;
+	cursor: pointer;
+}
+
+#coverflow-help {
+	z-index: 999;
+	cursor: pointer;
+}
+
 #help-text1 {
 	padding: 5px;
 }
@@ -52,7 +62,7 @@ html, body {
 	display: none;
 }
 
-#help-button {
+#coverflow-help-button {
 	display: none;
 	top: 0;
 	right: 0;
@@ -74,11 +84,11 @@ html, body {
 	text-align: center;
 }
 
-#progress-bar {
+#coverflow-progress-bar {
 	padding-top: 10px;
 }
 
-#seekbar {
+#coverflow-seekbar {
 	width: 100%;
 }
 
@@ -101,7 +111,7 @@ html, body {
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     input[type='range'] {
       overflow: hidden;
-      width: 80px;
+      width: 1000px;
       -webkit-appearance: none;
       background-color: #b6b6b6;
     }
@@ -119,7 +129,7 @@ html, body {
       height: 10px;
       cursor: ew-resize;
       background: #434343;
-      box-shadow: -80px 0 0 80px #ec8882;
+      box-shadow: -1000px 0 0 1000px #ec8882;
     }
 
 }
@@ -136,4 +146,15 @@ input[type="range"]::-ms-fill-lower {
 }
 input[type="range"]::-ms-fill-upper {  
   background-color: #b6b6b6;
+}
+
+#coverflow-textreader {
+	display: none;
+}
+
+h3.coverflow { 
+	width: 100%;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	text-align: center;
 }
