@@ -67,12 +67,12 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
     public void onEnterImage(ModelEvent e) {
 	FsNode target = e.getTargetFsNode();
 	
-	if (target.getId().equals("enter")) {		
-	    //reach all devices that had have zoomandaudio screen
-	    if (state.equals("coverflow")) {
-		screen.get("#coverflowremote").remove();
-		loadZoomAndAudio();
-	    }
+	model.setProperty("@imageid", target.getId());
+	
+	//reach all devices that had have zoomandaudio screen
+	if (state.equals("coverflow")) {
+	    screen.get("#coverflowremote").remove();
+	    loadZoomAndAudio();
 	}
     }
 	
@@ -90,9 +90,10 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 	   //check state of mainscreen to show appropriate mobile screen
 	   mainscreenState = model.getProperty("@photoinfospots/vars/state");
 	   
-	   model.onNotify("@photoinfospots", "onEnterImage", this);
-	   
-	   if (mainscreenState.equals("staticentryscreen") || mainscreenState.equals("imagerotationentryscreen")) {
+	   model.onNotify("@photoinfospots/image/selected", "onEnterImage", this);
+	   if (mainscreenState == null) {
+	       //no main screen!
+	   } else if (mainscreenState.equals("staticentryscreen") || mainscreenState.equals("imagerotationentryscreen")) {
 	       FSList imagesList = model.getList("@images");
 		    
 		model.notify("@photoinfospots/device/connected", new FsNode("device", "1"));
@@ -100,11 +101,13 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 		if (imagesList.size() > 1) {
 		    loadCoverflow();
 		} else {
+		    model.setProperty("@imageid", model.getProperty("@photoinfospots/vars/imageid"));
 		    loadZoomAndAudio();
 		}
 	   } else if (mainscreenState.equals("coverflow")) {
 		loadCoverflow();
 	   } else if (mainscreenState.equals("zoomandaudio")) {
+	       	model.setProperty("@imageid", model.getProperty("@photoinfospots/vars/imageid"));
 		loadZoomAndAudio();
 	   }
 	} else if (target.getId().equals("languageselection")) {
@@ -167,12 +170,14 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 	    screen.get("#helpremote").remove();
 	    
 	    String originalController = target.getProperty("originalcontroller");
+	    	    
 	    //check if in meanwhile the mainscreen has switched
 	    mainscreenState = model.getProperty("@photoinfospots/vars/state");
+	    
 	    if (originalController.equals("zoomandaudioremote") && mainscreenState.equals("coverflow")) {
 		originalController = "coverflowremote";
 	    }
-	    if (originalController.equals("coverflow") && mainscreenState.equals("zoomandaudio")) {
+	    if (originalController.equals("coverflowremote") && mainscreenState.equals("zoomandaudio")) {
 		originalController = "zoomandaudioremote";
 	    }
 

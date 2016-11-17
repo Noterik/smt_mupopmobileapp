@@ -30,6 +30,20 @@ public class MobileController extends Html5Controller {
 	screen.getModel().setProperty("@username", parts[4]);
 	screen.getModel().setProperty("@exhibitionid", parts[6]);
 	
+	String style = null;
+	FsNode exhibition = model.getNode("@exhibition");
+	if (exhibition != null) {
+	    style = exhibition.getProperty("style");
+	}
+	
+	if (style == null || style.equals("neutral")) {
+	    screen.loadStyleSheet("mobile/styles/neutral.css");
+	} else if (style.equals("leuven")) {
+	    screen.loadStyleSheet("mobile/styles/leuven.css");
+	} else if (style.equals("soundandvision")) {
+	    screen.loadStyleSheet("mobile/styles/soundandvision.css");
+	}
+	
 	//Get user language from session
 	String userLanguage = model.getProperty("@userlanguage");
 	
@@ -48,6 +62,14 @@ public class MobileController extends Html5Controller {
 		stationSelection();
 	    }
 	} else {
+	    if (languageList != null) {
+		if (userLanguage == null) {
+		    //Set user language to the only language available
+		    model.setProperty("@userlanguage", languageList.getNodes().get(0).getId());
+		}
+	    } else {
+		System.out.println("No languages set! Please add at least one language!");
+	    }
 	    stationSelection();
 	}
     }

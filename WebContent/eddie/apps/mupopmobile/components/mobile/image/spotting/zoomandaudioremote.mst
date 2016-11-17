@@ -21,14 +21,14 @@
 		</div>
 		<div id="textreader">
 		<h3>{{transcript}}</h3>
-		<div id="textreader_text"></div>
+		<div id="textreader_text">{{text}}</div>
 		</div>
 	</div>
 </div>
 <div class="audio-bar col-xs-12">
 	<div class="row">
 		<audio id="audioplayer">
-			<source id="audiosrc" src="http://images1.noterik.com/mupop/audio/stilte.m4a" type="audio/mpeg">
+			<source id="audiosrc" src="{{#audiourl}}{{audiourl}}{{/audiourl}}{{^audiourl}}http://images1.noterik.com/mupop/audio/stilte.m4a{{/audiourl}}" type="audio/mpeg">
 		</audio>
 		<div id="currenttime" class="col-xs-2">
 			--:--

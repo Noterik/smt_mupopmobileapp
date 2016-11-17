@@ -73,7 +73,10 @@ ZoomAndAudioRemoteController.update = function(vars, data){
 			if ($("#audioplayer")[0].readyState > 3) {
 			  audioLoaded();
 			}
-		}		
+		}	 else {
+			//triggered same audio again, this prevents infinite spinner
+			audioLoaded();
+		}	
 	}
 };
 

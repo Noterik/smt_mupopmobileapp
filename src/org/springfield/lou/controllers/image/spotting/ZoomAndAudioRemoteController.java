@@ -61,7 +61,8 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 	userLanguage = model.getProperty("@userlanguage");
 	    
 	FsNode stationnode = model.getNode(path+"/station/"+model.getProperty("@stationid"));
-
+	FsNode imagenode = model.getNode("@image");
+		
 	if (stationnode != null) {
 	    JSONObject data = new JSONObject();
 	    
@@ -71,6 +72,11 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 	    data.put("title", title);
 	    data.put("helptext", helptext);
 	    data.put("transcript", transcript);
+	    if (imagenode != null) {
+		data.put("external-website", imagenode.getProperty("external-website"));
+		data.put("audiourl", imagenode.getProperty("audiourl"));
+		data.put("text", imagenode.getSmartProperty(userLanguage, "text"));
+	    }
 		
 	    screen.get(selector).render(data);
 	    screen.get(selector).loadScript(this);

@@ -3,7 +3,7 @@ var CoverFlowRemoteController = function(options) {}; // needed for detection
 var $wrapper;
 var $trackpad;
 var ratio = 4 / 3;
-
+var canTap = true;
 
 CoverFlowRemoteController.update = function(vars, data){
 	//init - this is also handled when returning on a page
@@ -153,10 +153,16 @@ function init_selection() {
 		event.preventDefault();
 	})
 	
-	hTrackpad.on('doubletap', function(event) {
-		var message = 'event(trackpad/enter,{"id":"trackpad","targetid":"trackpad"})';
-		sendMessage(message, true);
-		event.preventDefault();
+	hTrackpad.on('tap', function(event) {
+		if (canTap) {
+			canTap = false;
+			var message = 'event(trackpad/enter,{"id":"trackpad","targetid":"trackpad"})';
+			sendMessage(message, true);
+			event.preventDefault();
+			setTimeout(function() {
+				canTap = true;
+			}, 1000);
+		}
 	})
 }
 

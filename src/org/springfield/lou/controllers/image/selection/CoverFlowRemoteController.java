@@ -68,8 +68,6 @@ public class CoverFlowRemoteController extends Html5Controller {
 	    screen.get("#trackpad").on("enter",
 					"enter", this);
 	    screen.get("#coverflow-help").on("click", "helpClicked", this);
-	    screen.get("#coverflow-play").on("click", "playClicked", this);
-	    screen.get("#coverflow-text").on("click", "textClicked", this);
 	    screen.get("#coverflow_previous").on("click", "previousPage", this);
 			
 	    JSONObject d = new JSONObject();	
@@ -94,7 +92,6 @@ public class CoverFlowRemoteController extends Html5Controller {
 	
     public void enter(Screen s, JSONObject data) {
 	FsNode node = new FsNode("coverflow", "enter");
-	
 	model.notify("@photoinfospots", node);
     }
 	
@@ -106,14 +103,6 @@ public class CoverFlowRemoteController extends Html5Controller {
 	model.notify("@photoinfospots/help/page", node);
     }
 	
-    public void playClicked(Screen s, JSONObject data) {
-	System.out.println("Play clicked");
-    }
-	
-    public void textClicked(Screen s, JSONObject data) {
-	System.out.println("Text clicked");
-    }
-    
     public void previousPage(Screen s, JSONObject data) {	
 	FsNode node = new FsNode("goto", "audiotest");
 	node.setProperty("deviceid", deviceid);

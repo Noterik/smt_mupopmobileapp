@@ -18,7 +18,7 @@
 			<div id="help-text2">{{helptext2}}</div>
 			<div id="coverflow-help-button"><i class="fa fa-question-circle"></i></div>
 			<img class="img-responsive" id="swipe-animation" src="http://images1.noterik.com/mupop/left-right-swipe.gif"/>
-			<img class="img-responsive" id="touch-animation" src="http://images1.noterik.com/mupop/double-tap.gif"/>
+			<img class="img-responsive" id="touch-animation" src="http://images1.noterik.com/mupop/single-tap.gif"/>
 		</div>
 		<div id="coverflow-textreader">
 		<h3 class="coverflow">{{transcript}}</h3>
