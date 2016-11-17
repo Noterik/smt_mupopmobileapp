@@ -42,8 +42,15 @@ public class QuestionController extends Html5Controller{
 		data.put("answers", anwers);
 		
 		screen.get(selector).parsehtml(data);
-		
+		screen.get(selector).loadScript(this);
 		screen.get(".answer").on("click", "onAnswer", this);
+		
+		
+		
+		JSONObject nd = new JSONObject();
+		nd.put("action","setCountdown");
+		nd.put("duration", duration);
+		screen.get(selector).update(nd);
 	}
 	
 	public void onAnswer(Screen s, JSONObject data){

@@ -1,25 +1,35 @@
 var QuestionController = function(options) {}; // needed for detection
 
 QuestionController.update = function(vars, data){
-    
+    // console.log("QuestionController IS LOADED");
+    var targetid = data['target'];
+    var action = data['action'];
+
+    console.log("got action: " +action);
+    switch (action) {
+    case "setCountdown":
+        var dur = data['duration'];
+        startTimer(dur);
+        console.log("duration: " + dur );
+        
+        break;
+    default:
+        break;
+    }
 
 };
 
-function startTimer() {
+function startTimer(duration) {
     console.log("STARTING TIMER");
     var display = $("#question_timer");
     var start = Date.now(),
         diff,
         minutes,
         seconds;
+        duration = parseInt(duration) + 1000; 
     function timer() {
-        console.log("TIMER TICK!!!");
-        var duration = $("#question_timer_conainer").attr("data-time")/1000;
-        // get the number of seconds that have elapsed since 
-        // startTimer() was called
-        diff = duration - (((Date.now() - start) / 1000) | 0);
-
-        // does the same job as parseInt truncates the float
+        duration = duration - 1000;
+        diff = duration/1000;
         minutes = (diff / 60) | 0;
         seconds = (diff % 60) | 0;
 
@@ -29,8 +39,6 @@ function startTimer() {
         display.text(minutes + ":" + seconds); 
 
         if (diff <= 0) {
-            // add one second so that the count down starts at the full duration
-            // example 05:00 not 04:59
             diff = 0;
             clearInterval(intervalid);
         }
@@ -39,7 +47,4 @@ function startTimer() {
     timer();
 
     intervalid = setInterval(timer, 1000);
-
 }
-
-startTimer();
