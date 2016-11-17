@@ -20,10 +20,12 @@ public class QuestionController extends Html5Controller{
 	
 	public void attach(String sel) {
 		selector = sel;
-		String languageCode = model.getProperty("/screen/languagecode");
+		String languageCode = model.getProperty("@userlanguage");
 		Collection<JSONObject> anwers = new ArrayList<JSONObject>();
 		String question_text = model.getNode(question_data.getPath()+"/text/1").getSmartProperty(languageCode, "value");
-		JSONObject data = new JSONObject();					
+		String duration = model.getNode(question_data.getPath()).getProperty("duration");
+		JSONObject data = new JSONObject();
+		data.put("duration", duration);
 		data.put("question", question_text);
 		System.out.println(question_data.getPath()+"/text/1");
 		System.out.println(question_data.getPath()+"/text/1");
@@ -46,7 +48,7 @@ public class QuestionController extends Html5Controller{
 	
 	public void onAnswer(Screen s, JSONObject data){
 		System.out.println("answer given: " + data.get("id"));
-		screen.get(selector).hide();
+		screen.get(selector).remove();
 		screen.get("#interactivevideoremote").show();
 	}
 }

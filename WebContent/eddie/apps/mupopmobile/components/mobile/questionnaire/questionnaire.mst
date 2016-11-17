@@ -1,9 +1,17 @@
-<p id="question_text">{{question}}</p>
-<div id="answers">
-	{{#answers}}
-		<div id="{{value}}" class="answer"> {{value}}) {{name}}</div>
-		<hr>
-	{{/answers}}
+<div id="top_part">
+	<p id="question_text" class="header col-xs-12">{{question}}</p>
+	<div id="answers" class="col-xs-12">
+		{{#answers}}
+			<div id="{{value}}" class="answer col-xs-12">
+				<span class="answer-number"> {{value}}</span>
+				<span class="answer-text"> {{name}}</span>
+			</div>
+		{{/answers}}
+	</div>
 </div>
-
-<div id="countdown_timer"></div>
+<div id="bottom_part">
+	<div id="question_timer_conainer" class="col-xs-12" data-time={{duration}}>
+		<div id="question_timer_text" class="col-xs-12">COUNTDOWN</div>
+		<div id="question_timer" class="col-xs-12">{{duration}}</div>
+	</div>
+</div>

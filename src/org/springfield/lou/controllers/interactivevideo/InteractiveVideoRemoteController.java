@@ -1,14 +1,22 @@
 package org.springfield.lou.controllers.interactivevideo;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.json.simple.JSONObject;
+import org.springfield.fs.FSList;
+import org.springfield.fs.FSListManager;
 import org.springfield.fs.FsNode;
 import org.springfield.lou.controllers.Html5Controller;
+import org.springfield.lou.controllers.intro.language.LanguageSelectionRemoteControllerMupop;
 import org.springfield.lou.model.ModelBindEvent;
 import org.springfield.lou.model.ModelEvent;
 import org.springfield.lou.screen.Screen;
 
 public class InteractiveVideoRemoteController extends Html5Controller  {
-		
+	
+	FSList list;
+	
 	public InteractiveVideoRemoteController() {
 		
 	}
@@ -17,12 +25,8 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 		selector = sel;
 		String stationid = model.getProperty("@stationid");
 		String exhibitionid = model.getProperty("@exhibitionid");
-		
-		model.setProperty("/screen/languagecode", "nl");
-		System.out.println("THIS PRINTS!!: ");
 		FsNode audio_settings = model.getNode("/domain/mupop/user/daniel/exhibition/"+exhibitionid+"/station/"+stationid+"/video/1/audio/1/");
-		System.out.println("THIS ALSO PRINTS!!: ");
-		String audioUrl = audio_settings.getSmartProperty(model.getProperty("/screen/languagecode"), "url");
+		String audioUrl = audio_settings.getSmartProperty(model.getProperty("@userlanguage"), "url");
 		System.out.println("Audio URL: " + audioUrl);
  		JSONObject jso= new JSONObject(); 
  		jso.put("url", audioUrl);
@@ -35,29 +39,60 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 		if (isPlaying != null && isPlaying.equals("true"))
  			playAudio();
 		onClockUpdate(new ModelEvent());
-
+		
+		screen.get("#language_select").on("click", "onLanguageSelect", this);
+		screen.get("#audio_problem").on("click", "onAudioProblem", this);
+		
 		//add event listeners
 		model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/play", "onPlayEvent", this);
 		model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/pause", "onPauseEvent", this);
 		model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/wantedtime", "onClockUpdate", this);
 		model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/exhibitionEnded", "onExhibitionEnd", this);
-		
+		list = FSListManager.get("/domain/mupop/user/daniel/exhibition/1475504815025/station/1475504866572/video/1",false);
+
 		//time based event listeners
 		model.onTimeLineNotify("/domain/mupop/user/daniel/exhibition/1475504815025/station/1475504866572/video/1","/shared/mupop/exhibition/"+exhibitionid+"/station/"+ stationid+"/currenttime","starttime","duration","onTimeLineEvent",this);
 		
 	}
 	
+	public FsNode getCurrentFsNode(double time) {
+		FsNode match = null;
+		double nextstarttime = 1000000000;
+		list = FSListManager.get("/domain/mupop/user/daniel/exhibition/1475504815025/station/1475504866572/video/1",false);
+		List<FsNode> nodes = list.getNodes();
+		if (nodes != null) {
+			for (Iterator<FsNode> iter = nodes.iterator(); iter.hasNext();) {
+				FsNode node = (FsNode) iter.next();
+				if (time<node.getStarttime() && node.getStarttime()<nextstarttime) {
+					nextstarttime = node.getStarttime();
+					match = node;
+				}
+			}
+		}
+		return match;
+	}
+	
+	
+	public void onLanguageSelect(Screen s, JSONObject data){
+		screen.get("#mobile").append("div", "languageselectionmupopremote", new LanguageSelectionRemoteControllerMupop());
+		screen.get(selector).remove();
+	}
+	
+	public void onAudioProblem(Screen s, JSONObject data){
+		System.out.println("AUDIO PROBLEM CLICKED!");
+		screen.get(selector).hide();
+		screen.get("#mobile").append("div", "audiocheck", new AudioCheckController());
+	}
+	
 	public void onTimeLineEvent(ModelEvent e) {
 		if (e.eventtype==ModelBindEvent.TIMELINENOTIFY_ENTER) {
-//			System.out.println("MOBILE VIDEO ENTERED BLOCK ("+e.eventtype+") ="+);
 			if(e.getTargetFsNode().getName().equals("question")){
 				pauseAudio();
 				//start question controller
 				screen.get(selector).hide();
-				screen.get("#mobile_content").append("div", "questionnaire", new QuestionController(e.getTargetFsNode()));
+				screen.get("#mobile").append("div", "questionnaire", new QuestionController(e.getTargetFsNode()));
 				
 			}
-//			System.out.println("question is: " + e.getTargetFsNode().getProperty("question"));
 		} else if (e.eventtype==ModelBindEvent.TIMELINENOTIFY_LEAVE) {
 			if(e.getTargetFsNode().getName().equals("question")){
 				//remove question controller and play
@@ -98,17 +133,30 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 		String stationid = model.getProperty("@stationid");
 		String exhibitionid = model.getProperty("@exhibitionid");
 		JSONObject nd = new JSONObject();
+		String s = model.getProperty("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/curPlayTime");
+		double time = 0;
+		if (s==null)
+			s = "";
+		else 
+			time = Double.parseDouble(s);
+		FsNode fsn = getCurrentFsNode(time);
+		
 		nd.put("action","wantedtime");
 		nd.put("target", "audiop");
 		nd.put("wantedtime", model.getProperty("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/wantedtime"));
+		if (s != null)
+			nd.put("streamtime", s);
+		if(fsn!=null)
+			nd.put("endsAt", (fsn.getStarttime()));
 		screen.get(selector).update(nd);		
 	}
 	
 	public void onExhibitionEnd(ModelEvent e){
 		System.out.println("Remote:: Exhibition ended");
 		screen.get("#audiocheck").remove();
+		screen.get("#questionnaire").remove();
 		screen.get("#interactivevideoremote").remove();
-		screen.get("#mobile_content").append("div", "exhibitionend", new ExhibitionEndController());
+		screen.get("#mobile").append("div", "exhibitionend", new ExhibitionEndController());
 	}
 	
 	public void destroyed() {

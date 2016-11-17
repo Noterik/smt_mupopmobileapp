@@ -1,5 +1,15 @@
-<div id="audio_check_text">Can you hear the Audio from your device?</div>
-<div>
-	<div id="audio_yes_button">Yes</div>
-	<div id="audio_no_button">No</div>
+<div id="top_part">
+	<div id="audio_check_text" class="header col-xs-12">AUDIO PROBLEMS?</div>
+
+	<ul class="list-group">
+	  <li class="list-group-item"><div class="bulletpoint fa fa-circle"/>If your audio is on mute, try to unmute it.</li>
+	  <li class="list-group-item"><div class="bulletpoint fa fa-circle"/>Try increasing the audio volume on your phone</li>
+	  <li class="list-group-item"><div class="bulletpoint fa fa-circle"/>Check if the video is actually playing</li>
+	  <li class="list-group-item"><div class="bulletpoint fa fa-circle"/>Still not working? Ask an employee</li>
+	</ul>
+</div>
+<div id="bottom_part">
+	<div id=action_container class="col-xs-12">
+		<div id="ap_back_button" class="fa fa-arrow-left"></div>
+	</div>
 </div>

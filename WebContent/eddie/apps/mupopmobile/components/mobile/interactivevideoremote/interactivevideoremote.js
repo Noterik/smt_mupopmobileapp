@@ -1,4 +1,5 @@
-var InteractiveVideoRemote = function(options) {}; // needed for detection
+var InteractiveVideoRemote = function(options) {
+}; // needed for detection
 
 
 InteractiveVideoRemote.update = function(vars, data){
@@ -11,13 +12,18 @@ InteractiveVideoRemote.update = function(vars, data){
 	//console.log(window);
 
 	var action = data['action'];
-	console.log(data['action']);
-	console.log(data);	
+	// console.log(data['action']);
+	// console.log(data);	
 	switch (action) {
 	case "pause":
 		$("#"+targetid)[0].pause();
 		break;
 	case "play":
+		// console.log("setting audio source: " + $("#audio_counter_container").attr("data-audio-url"));
+		$("#audiop")[0].src = $("#audio_counter_container").attr("data-audio-url");
+		$("#audiop")[0].currentTime = 0;
+		$("#audiop")[0].muted = false;
+		$("#audiop")[0].volume = 1.0;
 		$("#"+targetid)[0].play();
 		break;
 	case "wantedtime":
@@ -26,13 +32,16 @@ InteractiveVideoRemote.update = function(vars, data){
 
 
 	    var wt = data['wantedtime'].split(',');
+	    var endsAt = data['endsAt'] + 1000;
 	    var realtime = wt[0];
 	    var streamtime = wt[1];
 		
 		var timeDif = realtime - curtime;
-		var remainingTime = duration - (streamtime - timeDif)/1000;
-
-		console.log("Remaining Time:: " + remainingTime);
+		// console.log(endsAt/1000);
+		var remainingTime = (endsAt/1000) - (streamtime - timeDif)/1000;
+		if (remainingTime < 0)
+			remainingTime = 0;
+		// console.log("Remaining Time:: " + remainingTime);
 		setDisplayTime(remainingTime);
 
 		var audiotime = $("#audiop")[0].currentTime*1000;
@@ -136,8 +145,9 @@ function setDisplayTime(duration) {
 
     minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10 ? "0" + seconds : seconds;
-    console.log("updating time for counter");
-    $("#audio_counter").text(minutes + ":" + seconds); 
+    // console.log("updating time for counter");
+    $("#duration_min").text(minutes); 
+    $("#duration_sec").text(seconds); 
 
     if (diff <= 0) {
         // add one second so that the count down starts at the full duration
@@ -145,3 +155,9 @@ function setDisplayTime(duration) {
         start = Date.now() + 1000;
     }
 };
+
+$("#audiop")[0].src = $("#audio_counter_container").attr("data-audio-url");
+$("#audiop")[0].currentTime = 0;
+$("#audiop")[0].muted = false;
+$("#audiop")[0].volume = 1.0;
+$("#audiop")[0].play();

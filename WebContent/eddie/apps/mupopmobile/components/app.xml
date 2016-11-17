@@ -64,6 +64,22 @@
 		</controller>
 	</view>
 	
+	<view id="#interactivevideoremoteholder">
+		<template>mobile/interactivevideoremote/holder/holder.mst</template>
+		<style>mobile/interactivevideoremote/holder/holder.css</style>
+		<controller id="InteractiveVideoHolderController">
+			<javascript>mobile/interactivevideoremote/holder/holder.js</javascript>
+		</controller>
+	</view>
+	
+	<view id="#headphonescheck">
+		<template>mobile/interactivevideoremote/headphonescheck/headphonescheck.mst</template>
+		<style>mobile/interactivevideoremote/headphonescheck/headphonescheck.css</style>
+		<controller id="HeadphonesController">
+			<javascript>mobile/interactivevideoremote/headphonescheck/headphonescheck.js</javascript>
+		</controller>
+	</view>
+	
 	<view id="#audiocheck">
 		<template>mobile/audiocheck/audiocheck.mst</template>
 		<style>mobile/audiocheck/audiocheck.css</style>
@@ -105,6 +121,12 @@
 		<template>mobile/intro/language/languageselectionremote.mst</template>
 		<style>mobile/intro/language/languageselectionremote.css</style>
 		<controller id="LanguageSelectionRemoteController"/>
+	</view>
+	
+	<view id="#languageselectionmupopremote">
+		<template>mobile/intro/languagemupop/languageselectionremote.mst</template>
+		<style>mobile/intro/languagemupop/languageselectionremote.css</style>
+		<controller id="LanguageSelectionRemoteControllerMupop"/>
 	</view>
 	
 	<view id="#audiotestremote">

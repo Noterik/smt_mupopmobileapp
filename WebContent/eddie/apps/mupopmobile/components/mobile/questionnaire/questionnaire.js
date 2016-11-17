@@ -1,31 +1,20 @@
 var QuestionController = function(options) {}; // needed for detection
 
 QuestionController.update = function(vars, data){
-	var targetid = data['target'];
-	$("#"+targetid).attr('autoplay',data['autoplay']);
-	$("#"+targetid).attr('controls',data['controls']);
-	$("#" + targetid).parent().append("<div id=\"notificationbox\" style=\"position: absolute; top: 0;\"></div>");
-
-	console.log(window);
-
-	var action = data['action'];
-	console.log(data['action']);
-	console.log(data);	
-	switch (action) {
-	case "questionTime":
-		
-	}
-
+    
 
 };
 
-
-function startTimer(duration, display) {
+function startTimer() {
+    console.log("STARTING TIMER");
+    var display = $("#question_timer");
     var start = Date.now(),
         diff,
         minutes,
         seconds;
     function timer() {
+        console.log("TIMER TICK!!!");
+        var duration = $("#question_timer_conainer").attr("data-time")/1000;
         // get the number of seconds that have elapsed since 
         // startTimer() was called
         diff = duration - (((Date.now() - start) / 1000) | 0);
@@ -42,17 +31,15 @@ function startTimer(duration, display) {
         if (diff <= 0) {
             // add one second so that the count down starts at the full duration
             // example 05:00 not 04:59
-            start = Date.now() + 1000;
+            diff = 0;
+            clearInterval(intervalid);
         }
     };
     // we don't want to wait a full second before the timer starts
     timer();
-    setInterval(timer, 1000);
+
+    intervalid = setInterval(timer, 1000);
+
 }
 
-countDownTimer = function (seconds) {
-    display = document.querySelector('#countdown_timer');
-    startTimer(seconds, display);
-};
-
-startTimer(10);
+startTimer();

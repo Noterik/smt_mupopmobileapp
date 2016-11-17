@@ -41,35 +41,34 @@ public class StationSelectionRemoteController extends Html5Controller {
     public StationSelectionRemoteController() { }
     
     public void attach(String sel) {
-	selector = sel;
-	
-	deviceid = model.getProperty("@deviceid");
-	String stationpath  = model.getProperty("/screen/exhibitionpath")+"/station";
-	
-	FSList list = model.getList(stationpath);
-	if (list!=null) {   
-	    JSONObject data = FSList.ArrayToJSONObject(list.getNodes(),"en","labelid");
-	    //data.put("select_station", value);
-	    screen.get(selector).render(data);
-	    screen.get(".station").on("click", "onStationSelected", this);
-	    screen.get(".earlierpage").on("click", "onEarlierPageClicked", this);
-	}
+		selector = sel;
+		
+		deviceid = model.getProperty("@deviceid");
+		String stationpath  = model.getProperty("/screen/exhibitionpath")+"/station";
+		
+		FSList list = model.getList(stationpath);
+		if (list!=null) {   
+		    JSONObject data = FSList.ArrayToJSONObject(list.getNodes(),"en","labelid");
+		    //data.put("select_station", value);
+		    screen.get(selector).render(data);
+		    screen.get(".station").on("click", "onStationSelected", this);
+		    screen.get(".earlierpage").on("click", "onEarlierPageClicked", this);
+		}
     }
     
     public void onStationSelected(Screen s, JSONObject data) {
-	String station = (String) data.get("id");
-	
-	FsNode stationNode = new FsNode("station", "selected");
-	stationNode.setProperty("deviceid", deviceid);
-	stationNode.setProperty("stationid", station);
-	model.notify("/shared/exhibition/intro/stationselection", stationNode);
+		String station = (String) data.get("id");
+		FsNode stationNode = new FsNode("station", "selected");
+		stationNode.setProperty("deviceid", deviceid);
+		stationNode.setProperty("stationid", station);
+		model.notify("/shared/exhibition/intro/stationselection", stationNode);
     }
     
     public void onEarlierPageClicked(Screen s, JSONObject data) {
-	System.out.println(data.toJSONString());
-	
-	FsNode node = new FsNode("languagepage", "requested");
-	node.setProperty("deviceid", deviceid);
-	model.notify("/shared/exhibition/intro/languagepage", node);
+		System.out.println(data.toJSONString());
+		
+		FsNode node = new FsNode("languagepage", "requested");
+		node.setProperty("deviceid", deviceid);
+		model.notify("/shared/exhibition/intro/languagepage", node);
     }
 }

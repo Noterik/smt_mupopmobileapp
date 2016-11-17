@@ -15,8 +15,7 @@ public class ExhibitionEndController extends Html5Controller{
 
 	public void onRejoin(Screen s, JSONObject data){
 		screen.get("#exhibitionend").remove();
-		screen.get("#mobile_content").append("div", "interactivevideoremote", new InteractiveVideoRemoteController());
-		screen.get("#interactivevideoremote").append("div","audiocheck", new AudioCheckController());
+		screen.get("#mobile").append("div", "interactivevideoremote", new InteractiveVideoRemoteController());
 	}
 }
 
