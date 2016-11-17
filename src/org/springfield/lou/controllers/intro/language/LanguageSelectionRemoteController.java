@@ -52,6 +52,14 @@ public class LanguageSelectionRemoteController extends Html5Controller {
 	    FSList languageList = model.getList("@languages");
 	    
 	    JSONObject languages = FSList.ArrayToJSONObject(languageList.getNodes(),"en","language_name");
+	    
+	    //check if multiple stations are configured	
+	    FSList list = model.getList("@stations");
+
+	    if (list!=null && list.size() > 1) {
+		languages.put("stationpage", "true");
+	    }
+	    
 	    screen.get(selector).render(languages);
 			
 	    screen.get(".language").on("click", "onLanguageSelected", this);
@@ -63,6 +71,6 @@ public class LanguageSelectionRemoteController extends Html5Controller {
 		 
 	FsNode languageNode = new FsNode("language", "selected");
 	languageNode.setProperty("deviceid", deviceid);		 
-	model.notify("/shared/exhibition/intro/languageselection", languageNode);	 
+	model.notify("@photoinfospots/intro/languageselection", languageNode);	 
     }
 }

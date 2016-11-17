@@ -1,30 +1,50 @@
-<div class="header col-xs-12">Headphones</div>
+<div class="header col-xs-12">
+	<div class="row">
+		<div id="audiotest_previous" class="col-xs-2">
+			<i  class="fa fa-arrow-left"></i>
+		</div>
+		<div class="col-xs-8">
+			{{headphone}}
+		</div>
+		<div id="audiotest_help" class="col-xs-2">
+			<i class="fa fa-question-circle"></i>
+		</div>
+	</div>
+</div>
 <div id="audio" class="col-xs-12 fill-height">
-	Please plug in your headphones and test if the audio is correctly playing before pressing start.
+	{{audio_test_intro_text}}
 	<div id="headphones" class="col-xs-12">
 		<img class="img-responsive" src="http://images1.noterik.com/mupop/headphones.png"/>
 	</div>
 </div>
-<div id="start" class="col-xs-12">
-	<button id="start" type="button" class="btn btn-default red-background white">
-  		Start
-	</button>
-</div>
-<div id="pagination" class="col-xs-12">
+<div class="audio-bar col-xs-12">
 	<div class="row">
-		<div class="col-xs-4"></div>	
-		<div class="col-xs-2">
-			<span id="page1" class="fa-stack earlierpage">
-			  <i class="fa fa-circle fa-stack-2x"></i>
-			  <span class="fa-stack-1x icon-text">1</span>
+		<audio id="audiotest-audioplayer" src="{{audiosrc}}"></audio>
+		<div id="audiotest-currenttime" class="col-xs-2">
+			--:--
+		</div>
+		<div id="progress-bar" class="col-xs-8">
+			<input id="audiotest-seekbar" value="0" min="0" step="1" type="range">
+		</div>
+		<div id="audiotest-totaltime" class="col-xs-2">
+			--:--
+		</div>
+	</div>
+</div>
+<div class="controls col-xs-12">
+	<div class="row">
+		<div class="col-xs-4">
+		</div>
+		<div class="col-xs-4">
+			  <i id="audiotest-play" class="fa fa-play-circle fa-4x icon-background"></i>
 			</span>
 		</div>
-		<div class="col-xs-2">
-			<span id="page2" class="fa-stack">
-			  <i class="fa fa-circle fa-stack-2x selectedpage"></i>
-			  <span class="fa-stack-1x icon-text">2</span>
-			</span>
+		<div class="col-xs-1">
 		</div>
-		<div class="col-xs-4"></div>	
+		<div class="col-xs-3">
+			<button id="start" type="button" class="btn btn-default red-background white">
+  				{{start}}
+			</button>
+		</div>
 	</div>
 </div>

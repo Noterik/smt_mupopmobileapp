@@ -1,0 +1,17 @@
+<div class="header col-xs-12">
+	<div class="row">
+		<div id="previousfromhelp" class="col-xs-2">
+			<i  class="fa fa-arrow-left"></i>
+		</div>
+		<div class="col-xs-8">
+			{{help_title}}
+		</div>
+		<div class="col-xs-2"></div>
+	</div>
+</div>
+<div id="questions" class="col-xs-12 fill-height">
+	{{#nodes}}
+		<div id="question_{{id}}" class="row question" data-toggle="collapse" data-parent="#questions" data-target="#answer_{{id}}">{{question}}</div>
+		<div id="answer_{{id}}" class="row answer collapse"><i>{{answer}}</i></div>
+	{{/nodes}}
+</div>

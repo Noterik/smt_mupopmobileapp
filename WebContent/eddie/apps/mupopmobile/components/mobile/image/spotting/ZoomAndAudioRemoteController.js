@@ -1,15 +1,11 @@
 var ZoomAndAudioRemoteController = function(options) {}; // needed for detection
 
-var audioPlayer;
-var audioQueued = false;
-
 var $wrapper;
 var $trackpad;
 var ratio = 4 / 3;
+var timeout = null;
 
-ZoomAndAudioRemoteController.update = function(vars, data){	
-	audioPlayer = audioPlayer == undefined ? $("#audioplayer") : audioPlayer;
-	
+ZoomAndAudioRemoteController.update = function(vars, data){		
 	//init - this is also handled when returning on a page
 	if (!vars["loaded"]) {	
 		//Handling fitting of trackpad
@@ -21,24 +17,39 @@ ZoomAndAudioRemoteController.update = function(vars, data){
 
 		vars["loaded"] = true;	
 		
-		audioPlayer.on("loadedmetadata", loadedMetadata);
-		audioPlayer.on("timeupdate", updateTime);
-		audioPlayer.on('play', function() {
+		$("#audioplayer").on("loadedmetadata", loadedMetadata);
+		$("#audioplayer").on("timeupdate", updateTime);
+		$("#audioplayer").on('play', function() {
 			$("#play").addClass("fa-pause-circle");
 			$("#play").removeClass("fa-play-circle");
 		});
 	      
-		audioPlayer.on('pause', function() {
+		$("#audioplayer").on('pause', function() {
 			$("#play").addClass("fa-play-circle");
 			$("#play").removeClass("fa-pause-circle");
 		});
 		
 		$("#play").on('click', function() {
-			 if (audioPlayer[0].paused) {
-				 audioPlayer[0].play();
+			 if ($("#audioplayer")[0].paused) {
+				 $("#audioplayer")[0].play();
 			 } else {
-				 audioPlayer[0].pause();
+				 $("#audioplayer")[0].pause();
 			 }
+		});
+		
+		
+		$("#text").on('click', function() {
+			if ($("#trackpad").is(":visible")) {
+				$("#trackpad").hide();
+				$("#textreader").show();
+				$("#text").addClass("fa-square-o");
+				$("#text").removeClass("fa-book");
+			} else {
+				$("#textreader").hide();
+				$("#trackpad").show();
+				$("#text").addClass("fa-book");
+				$("#text").removeClass("fa-square-o");
+			}
 		});
 		
 		//IOS init for automatically playing audio
@@ -51,8 +62,21 @@ ZoomAndAudioRemoteController.update = function(vars, data){
 	if (command == "update") {		
 		if ($("#audiosrc").attr("src") != data['src']) {		
 			$("#audiosrc").attr("src", data['src']);
+			$("#textreader_text").text(data['text']);
 			$("#audioplayer").trigger("load").trigger("play");
-		}		
+			
+			$("#audioplayer").on('canplaythrough', audioLoaded);
+
+			// If the video is in the cache of the browser,
+			// the 'canplaythrough' event might have been triggered
+			// before we registered the event handler.
+			if ($("#audioplayer")[0].readyState > 3) {
+			  audioLoaded();
+			}
+		}	 else {
+			//triggered same audio again, this prevents infinite spinner
+			audioLoaded();
+		}	
 	}
 };
 
@@ -62,12 +86,12 @@ function initAudio() {
 
 function loadedMetadata() {
 	$("#currenttime").text(formatTime(0));
-	$("#totaltime").text(formatTime(audioPlayer[0].duration));
+	$("#totaltime").text(formatTime($("#audioplayer")[0].duration));
 }
 
 function updateTime() {
-	$("#currenttime").text(formatTime(audioPlayer[0].currentTime));
-	$("#seekbar").val((100 / audioPlayer[0].duration) * audioPlayer[0].currentTime);
+	$("#currenttime").text(formatTime($("#audioplayer")[0].currentTime));
+	$("#seekbar").val((100 / $("#audioplayer")[0].duration) * $("#audioplayer")[0].currentTime);
 }
 
 function startHelp() {
@@ -140,6 +164,20 @@ function formatTime(time) {
 	formattedTime += seconds;
 	
 	return formattedTime;
+}
+
+function audioLoaded() {	
+	var message = 'event(audioplayer/loaded,{"id":"audioplayer","targetid":"audioplayer"})';
+	sendMessage(message, true);
+}
+
+function sendMessage(msg, force){
+	if(!timeout || force){
+		eddie.putLou('', msg);
+		timeout = setTimeout(function(){
+			timeout = null;
+		}, interval);
+	}
 }
 
 jQuery(window).on('resize', resize);

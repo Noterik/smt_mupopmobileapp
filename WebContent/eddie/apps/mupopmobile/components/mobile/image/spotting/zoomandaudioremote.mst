@@ -1,28 +1,34 @@
 <div class="header col-xs-12">
 	<div class="row">
 		<div id="previous" class="col-xs-2">
-			{{#previous}}<i  class="fa fa-arrow-left"></i>{{/previous}}
+			<i class="fa fa-arrow-left"></i>
 		</div>
 		<div class="col-xs-8">
-			Amazing exhibition title
+			{{title}}
 		</div>
-		<div class="col-xs-2"></div>
+		<div id="zoomandaudiohelp" class="col-xs-2">
+			<i class="fa fa-question-circle"></i>
+		</div>
 	</div>
 </div>
 <div class="contents col-xs-12 fill-height">
 	<div class="trackpad-wrapper-spotting">
 		<div id="trackpad" class="trackpad">
-			<div id="help-text">Use your finger to find hotspots on the image</div>
+			<div id="help-text">{{helptext}}</div>
 			<div id="help-button" class="fa fa-question-circle"></div>
 			<img class="img-responsive" id="move-pointer-animation" src="http://images1.noterik.com/mupop/move-pointer.gif"/>	
 			<div id="pointer_icon" class="pointer-icon" style="background-color: {{color}}"></div>
+		</div>
+		<div id="textreader">
+		<h3>{{transcript}}</h3>
+		<div id="textreader_text">{{text}}</div>
 		</div>
 	</div>
 </div>
 <div class="audio-bar col-xs-12">
 	<div class="row">
 		<audio id="audioplayer">
-			<source id="audiosrc" src="http://images1.noterik.com/mupop/audio/stilte.m4a" type="audio/mpeg">
+			<source id="audiosrc" src="{{#audiourl}}{{audiourl}}{{/audiourl}}{{^audiourl}}http://images1.noterik.com/mupop/audio/stilte.m4a{{/audiourl}}" type="audio/mpeg">
 		</audio>
 		<div id="currenttime" class="col-xs-2">
 			--:--
@@ -38,7 +44,10 @@
 <div class="controls col-xs-12">
 	<div class="row">
 		<div class="col-xs-2">
-			<i id="help" class="fa fa-question-circle fa-2x icon-background"></i>
+			{{#external-website}}
+			<a href="{{external-website}}" id="external-website" target="_blank">
+				<i class="fa fa-info-circle fa-2x icon-background"></i>
+			</a>{{/external-website}}
 		</div>
 		<div class="col-xs-2">
 		</div>

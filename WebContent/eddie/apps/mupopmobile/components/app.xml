@@ -9,6 +9,7 @@
 		<exhibitionid>/screen['vars']/exhibitionid</exhibitionid>
 		<stationid>/screen['vars']/stationid</stationid>
 		<roomid>/screen['vars']/roomid</roomid>
+		<imageid>/screen['vars']/imageid</imageid>
 		<videoid>/screen['vars']/videoid</videoid>
 		<oldroomid>/screen['vars']/oldroomid</oldroomid>
 		<roomname>/screen['vars']/roomname</roomname>
@@ -24,8 +25,16 @@
 	    
 		<stations>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station</stations>
 		<station>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']</station>
+		
+		<help_topics>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/help</help_topics>
+		<help_topic>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/help['@helpid']</help_topic>
+		
+		<images>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/image</images>
+		<image>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/image['@imageid']</image>
+		
 		<video>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/video['@videoid']</video>
 		
+		<photoinfospots>/shared['photoinfospots']/exhibition['@exhibitionid']/station['@stationid']</photoinfospots>
 	</model>
 
 	<view id="#screen">
@@ -132,12 +141,19 @@
 	<view id="#audiotestremote">
 		<template>mobile/intro/audio/audiotestremote.mst</template>
 		<style>mobile/intro/audio/audiotestremote.css</style>
-		<controller id="AudioTestRemoteController"/>
+		<controller id="AudioTestRemoteController">
+			<javascript>mobile/intro/audio/AudioTestRemoteController.js</javascript>
+		</controller>
 	</view>
 	
 	<view id="#stationselectionremote">
 		<template>mobile/intro/station/stationselectionremote.mst</template>
 		<style>mobile/intro/station/stationselectionremote.css</style>
 		<controller id="StationSelectionRemoteController"/>
+	</view>
+	
+	<view id="#helpremote">
+		<template>mobile/help/helpremote.mst</template>
+		<style>mobile/help/helpremote.css</style>
 	</view>
 </app>
