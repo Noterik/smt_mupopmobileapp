@@ -53,7 +53,7 @@ public class LanguageSelectionRemoteControllerMupop extends Html5Controller {
 		    
 		    JSONObject languages = FSList.ArrayToJSONObject(languageList.getNodes(),"en","language_name,flag_url");
 		    System.out.println(languages.toString());
-		    System.out.print("LANGUAGE SELECTION DONE!!!!");
+		    System.out.println("LANGUAGE SELECTION DONE!!!!");
 		    screen.get(selector).render(languages);
 				
 		    screen.get(".language").on("click", "onLanguageSelected", this);
@@ -62,9 +62,9 @@ public class LanguageSelectionRemoteControllerMupop extends Html5Controller {
 	
     public void onLanguageSelected(Screen s,JSONObject data) {
     	model.setProperty("@userlanguage",(String)data.get("id"));
-		
+		System.out.println("LANGUAGE CLICKED!!!!");
 		FsNode languageNode = new FsNode("language", "selected");
 		languageNode.setProperty("deviceid", deviceid);
-		model.notify("/shared/exhibition/intro/languageselection", languageNode);	 
+		model.notify("@exhibition/intro/languageselection", languageNode);	 
     }
 }

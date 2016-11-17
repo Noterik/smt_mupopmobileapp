@@ -71,6 +71,6 @@ public class LanguageSelectionRemoteController extends Html5Controller {
 		 
 	FsNode languageNode = new FsNode("language", "selected");
 	languageNode.setProperty("deviceid", deviceid);		 
-	model.notify("@photoinfospots/intro/languageselection", languageNode);	 
+	model.notify("@exhibition/intro/languageselection", languageNode);	 
     }
 }
