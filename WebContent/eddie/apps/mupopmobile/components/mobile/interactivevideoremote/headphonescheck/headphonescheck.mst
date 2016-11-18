@@ -5,7 +5,7 @@
 	<div id="headphones-icon" class="col-xs-12 fa fa-headphones"></div>
 	<div id="headphones-text-ready" class="top-part-align-bot small-text col-xs-12">Ready?</div>
 </div>
-<div id="bottom_part">
+<div id="bottom_part" class="headphones_bottom_part">
 	<div id=action_container class="col-xs-12">
 		<div id="headphones_text_ready" class="bot-part-align-top small-text col-xs-12">Press play!</div>
 		<div id="play-icon" class="headphones-play-btn fa fa-play"></div>
