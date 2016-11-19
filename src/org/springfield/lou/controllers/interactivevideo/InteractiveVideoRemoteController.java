@@ -16,6 +16,8 @@ import org.springfield.lou.screen.Screen;
 public class InteractiveVideoRemoteController extends Html5Controller  {
 	
 	FSList list;
+	String stationid;
+	String exhibitionid;
 	
 	public InteractiveVideoRemoteController() {
 		
@@ -23,8 +25,8 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 	
 	public void attach(String sel) {
 		selector = sel;
-		String stationid = model.getProperty("@stationid");
-		String exhibitionid = model.getProperty("@exhibitionid");
+		stationid = model.getProperty("@stationid");
+		exhibitionid = model.getProperty("@exhibitionid");
 		FsNode audio_settings = model.getNode("/domain/mupop/user/daniel/exhibition/"+exhibitionid+"/station/"+stationid+"/video/1/audio/1/");
 		String audioUrl = audio_settings.getSmartProperty(model.getProperty("@userlanguage"), "url");
 		System.out.println("Audio URL: " + audioUrl);
@@ -48,17 +50,17 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 		model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/pause", "onPauseEvent", this);
 		model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/wantedtime", "onClockUpdate", this);
 		model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/exhibitionEnded", "onExhibitionEnd", this);
-		list = FSListManager.get("/domain/mupop/user/daniel/exhibition/1475504815025/station/1475504866572/video/1",false);
+		list = FSListManager.get("/domain/mupop/user/daniel/exhibition/"+exhibitionid+"/station/"+stationid+"/video/1",false);
 
 		//time based event listeners
-		model.onTimeLineNotify("/domain/mupop/user/daniel/exhibition/1475504815025/station/1475504866572/video/1","/shared/mupop/exhibition/"+exhibitionid+"/station/"+ stationid+"/currenttime","starttime","duration","onTimeLineEvent",this);
+		model.onTimeLineNotify("/domain/mupop/user/daniel/exhibition/"+exhibitionid+"/station/"+stationid+"/video/1","/shared/mupop/exhibition/"+exhibitionid+"/station/"+ stationid+"/currenttime","starttime","duration","onTimeLineEvent",this);
 		
 	}
 	
 	public FsNode getCurrentFsNode(double time) {
 		FsNode match = null;
 		double nextstarttime = 1000000000;
-		list = FSListManager.get("/domain/mupop/user/daniel/exhibition/1475504815025/station/1475504866572/video/1",false);
+		list = FSListManager.get("/domain/mupop/user/daniel/exhibition/"+exhibitionid+"/station/"+stationid+"/video/1",false);
 		List<FsNode> nodes = list.getNodes();
 		if (nodes != null) {
 			for (Iterator<FsNode> iter = nodes.iterator(); iter.hasNext();) {

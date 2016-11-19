@@ -215,7 +215,7 @@ body {
 
 #duration_min_text {
     padding-left: 10%;
-    padding-top: 64px;
+    padding-top: 84px;
     font-weight: bold;
 }
 
@@ -225,7 +225,7 @@ body {
 
 #duration_sec_text {
     padding-left: 10%;
-    padding-top: 64px;
+    padding-top: 84px;
     font-weight: bold;
 }
 
@@ -285,7 +285,7 @@ body {
 
 #headphones-icon {
     display: block !important;
-    font-size: 164px;
+    font-size: 90px;
     margin: 0 auto;
     color: #FFF;
     width: 100%;
@@ -324,8 +324,8 @@ body {
     padding: 18px;
     padding-left: 35px;
     margin-top: 5%;
-    margin-bottom: 20px;
-    font-size: 80px;
+    margin-bottom: 40px;
+    font-size: 60px;
     text-align: center;
 }
 
@@ -409,7 +409,7 @@ body {
     background-color: #000;
     width: auto;
     color: #fff;
-    font-size: 40px;
+    font-size: 25px;
     padding: 8px 10px;
 }
 
