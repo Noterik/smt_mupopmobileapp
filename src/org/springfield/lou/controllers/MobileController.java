@@ -50,6 +50,7 @@ public class MobileController extends Html5Controller {
 	
 	//Get user language from session
 	String userLanguage = model.getProperty("@userlanguage");
+	System.out.println("USERLANGUAGE FROM 'COOKIE' "+userLanguage);
 	
 	//get languages from the languages
 	FSList languageList = model.getList("@languages");
@@ -71,12 +72,12 @@ public class MobileController extends Html5Controller {
 	    }
 	} else {
 	    if (languageList != null) {
-	    	if (userLanguage == null) {
+	    	
 	    		//Set user language to the only language available
 	    		System.out.println("LANGUAGE LIST SIZE="+languageList.size());
 	    		System.out.println("LANGUAGE PATH="+model.getProperty("@languages"));
 	    		model.setProperty("@userlanguage", languageList.getNodes().get(0).getId());
-	    	}
+	    	
 	    } else {
 		System.out.println("No languages set! Please add at least one language!");
 	    }

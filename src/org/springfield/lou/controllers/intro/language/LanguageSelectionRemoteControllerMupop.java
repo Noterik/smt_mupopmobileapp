@@ -62,7 +62,7 @@ public class LanguageSelectionRemoteControllerMupop extends Html5Controller {
 	
     public void onLanguageSelected(Screen s,JSONObject data) {
     	model.setProperty("@userlanguage",(String)data.get("id"));
-		System.out.println("LANGUAGE CLICKED!!!!");
+		System.out.println("LANGUAGE CLICKED!!!!"+(String)data.get("id"));
 		FsNode languageNode = new FsNode("language", "selected");
 		languageNode.setProperty("deviceid", deviceid);
 		model.notify("@exhibition/intro/languageselection", languageNode);	 
