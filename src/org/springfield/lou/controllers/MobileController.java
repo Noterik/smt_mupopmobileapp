@@ -57,6 +57,8 @@ public class MobileController extends Html5Controller {
 	
 	model.onNotify("@exhibition/intro/languageselection", "onLanguageSelected", this);
 	
+	model.onNotify("@exhibition/entryscreen/requested", "onEntryScreenRequested", this);
+	
 	//only show languageselection when multiple languages are configured
 	if (languageList != null && languageList.size() > 1) {
 	    //only show language selection when the user has not language selected earlier or the selected
@@ -182,6 +184,18 @@ public class MobileController extends Html5Controller {
 	} else {
 	    //TODO: should display error that no app was selected and curator should set it
 	    screen.get("#mobile_content").html("");
+	}
+    }
+    
+    public void onEntryScreenRequested(ModelEvent e) {
+	FsNode target = (FsNode) e.target;
+	
+	if (model.getProperty("@exhibitionid").equals(target.getProperty("exhibition"))) {
+	    System.out.println("Removing current mobile page due to mainscreen reload");
+	    screen.get("#languageselectionremote").remove();
+	    screen.get("#audiotestremote").remove();
+	    screen.get("#coverflowremote").remove();
+	    screen.get("#audiotestremote").remove();
 	}
     }
 }

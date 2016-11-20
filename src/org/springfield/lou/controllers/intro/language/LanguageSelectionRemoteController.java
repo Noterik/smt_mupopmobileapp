@@ -63,6 +63,7 @@ public class LanguageSelectionRemoteController extends Html5Controller {
 	    screen.get(selector).render(languages);
 			
 	    screen.get(".language").on("click", "onLanguageSelected", this);
+	    screen.get("#languageselection_previous").on("click", "onRefresh", this);
 	}
     }
 	
@@ -72,5 +73,12 @@ public class LanguageSelectionRemoteController extends Html5Controller {
 	FsNode languageNode = new FsNode("language", "selected");
 	languageNode.setProperty("deviceid", deviceid);		 
 	model.notify("@exhibition/intro/languageselection", languageNode);	 
+    }
+    
+    public void onRefresh(Screen s, JSONObject data) {
+	FsNode node = new FsNode("page", "requested");
+	node.setProperty("exhibition", model.getProperty("@exhibitionid"));
+	
+	model.notify("@exhibition/entryscreen/requested", node);
     }
 }

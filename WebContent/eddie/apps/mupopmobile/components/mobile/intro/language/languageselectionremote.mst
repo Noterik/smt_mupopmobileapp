@@ -1,4 +1,15 @@
-<div class="header col-xs-12">Select Language</div>
+<div class="header col-xs-12">
+	<div class="row">
+		<div id="languageselection_previous" class="col-xs-2">
+			<i  class="fa fa-arrow-left"></i>
+		</div>
+		<div class="col-xs-8">
+			Select Language
+		</div>
+		<div id="audiotest_help" class="col-xs-2">
+		</div>
+	</div>
+</div>
 <div id="languages" class="col-xs-12 fill-height">
 	{{#nodes}}
 		<div id="{{id}}" class="row language">{{language_name}}</div>
