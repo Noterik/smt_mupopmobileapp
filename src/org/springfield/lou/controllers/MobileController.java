@@ -196,6 +196,7 @@ public class MobileController extends Html5Controller {
 	    screen.get("#audiotestremote").remove();
 	    screen.get("#coverflowremote").remove();
 	    screen.get("#audiotestremote").remove();
+	    screen.get("#interactivevideoremote").remove();
 	}
     }
 }
