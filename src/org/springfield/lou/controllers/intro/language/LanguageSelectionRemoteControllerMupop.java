@@ -56,7 +56,7 @@ public class LanguageSelectionRemoteControllerMupop extends Html5Controller {
 		    System.out.println("LANGUAGE SELECTION DONE!!!!");
 		    screen.get(selector).render(languages);
 				
-		    screen.get(".language").on("click", "onLanguageSelected", this);
+		    screen.get(".language_video").on("click", "onLanguageSelected", this);
 		}
     }
 	

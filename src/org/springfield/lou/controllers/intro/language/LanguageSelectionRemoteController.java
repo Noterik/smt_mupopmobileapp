@@ -59,7 +59,7 @@ public class LanguageSelectionRemoteController extends Html5Controller {
 	    if (list!=null && list.size() > 1) {
 		languages.put("stationpage", "true");
 	    }
-	    
+
 	    screen.get(selector).render(languages);
 			
 	    screen.get(".language").on("click", "onLanguageSelected", this);

@@ -19,11 +19,11 @@ html, body {
 	text-transform: uppercase;	
 }
 
-#questions {
+#help_questions {
 	padding: 0;
 }
 
-.question, .answer {
+.help_question, .help_answer {
 	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-left: 20px;
