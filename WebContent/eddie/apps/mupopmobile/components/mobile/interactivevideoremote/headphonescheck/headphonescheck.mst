@@ -1,5 +1,5 @@
 <div id="top_part">
-	<div id="text-contrainer" class="header col-xs-12">
+	<div id="text-contrainer" class="header_video col-xs-12">
 		<div id="headphones-text" class="col-xs-12">PLEASE PUT YOUR HEADPHONES ON</div>
 	</div>
 	<div id="headphones-icon" class="col-xs-12 fa fa-headphones"></div>

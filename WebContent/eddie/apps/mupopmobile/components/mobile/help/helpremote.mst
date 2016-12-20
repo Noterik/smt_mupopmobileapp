@@ -9,9 +9,9 @@
 		<div class="col-xs-2"></div>
 	</div>
 </div>
-<div id="questions" class="col-xs-12 fill-height">
+<div id="help_questions" class="col-xs-12 fill-height">
 	{{#nodes}}
-		<div id="question_{{id}}" class="row question" data-toggle="collapse" data-parent="#questions" data-target="#answer_{{id}}">{{question}}</div>
-		<div id="answer_{{id}}" class="row answer collapse"><i>{{answer}}</i></div>
+		<div id="question_{{id}}" class="row help_question" data-toggle="collapse" data-parent="#help_questions" data-target="#answer_{{id}}">{{question}}</div>
+		<div id="answer_{{id}}" class="row help_answer collapse"><i>{{answer}}</i></div>
 	{{/nodes}}
 </div>

@@ -1,5 +1,5 @@
 <div id="top_part">
-	<div id="audio_check_text" class="header col-xs-12">AUDIO PROBLEMS?</div>
+	<div id="audio_check_text" class="header_video col-xs-12">AUDIO PROBLEMS?</div>
 
 	<ul class="list-group">
 	  <li class="list-group-item"><div class="bulletpoint fa fa-circle"/>If your audio is on mute, try to unmute it.</li>

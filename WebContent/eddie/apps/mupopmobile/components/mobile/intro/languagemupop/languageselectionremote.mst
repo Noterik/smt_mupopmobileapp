@@ -1,13 +1,13 @@
 <div id="lang_top_part">
-<div class="header col-xs-12">Select Language</div>
+<div class="header_video col-xs-12">Select Language</div>
 </div>
 <div id="lang_bottom_part">
-	<ul id="languages" class="col-xs-12 fill-height">
+	<ul id="languages_video" class="col-xs-12 fill-height">
 		{{#nodes}}
-			<li id="{{id}}" class="language"><img id="{{id}}" class="language_flag" src="{{flag_url}}"/>{{language_name}}</li>
+			<li id="{{id}}" class="language_video"><img id="{{id}}" class="language_flag" src="{{flag_url}}"/>{{language_name}}</li>
 		{{/nodes}}
 	</ul>
-	<div id="pagination" class="col-xs-12">
+	<div id="pagination_video" class="col-xs-12">
 		<div class="row">
 			<div class="col-xs-4"></div>	
 			<div class="col-xs-2">

@@ -1,5 +1,5 @@
 <div id="top_part">
-	<p id="question_text" class="header col-xs-12">{{question}}</p>
+	<p id="question_text" class="header_video col-xs-12">{{question}}</p>
 	<div id="answers" class="col-xs-12">
 		{{#answers}}
 			<div id="{{value}}" class="answer col-xs-12">

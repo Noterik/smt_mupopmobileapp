@@ -1,4 +1,4 @@
-<div id=audio_counter_container class="header col-xs-12" data-audio-url="{{url}}">
+<div id=audio_counter_container class="header_video col-xs-12" data-audio-url="{{url}}">
 	<div id="duration_text" class="col-xs-12">Duration</div>
 	<div id="duration_timer" class="col-xs-12">
 		<div id="duration_min" class="col-xs-3">2</div>
