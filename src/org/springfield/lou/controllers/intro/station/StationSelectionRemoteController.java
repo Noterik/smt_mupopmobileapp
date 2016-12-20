@@ -42,37 +42,42 @@ public class StationSelectionRemoteController extends Html5Controller {
     public StationSelectionRemoteController() { }
     
     public void attach(String sel) {
-	selector = sel;
+    	selector = sel;
 	
-	deviceid = model.getProperty("@deviceid");
-	String userLanguage = model.getProperty("@userlanguage");
+    	deviceid = model.getProperty("@deviceid");
+    	String userLanguage = model.getProperty("@userlanguage");
 
-	FSList stations = model.getList("@stations");
-	FsNode exhibition = model.getNode(model.getProperty("/screen/exhibitionpath"));
-	
-	if (stations != null) {   
-	    JSONObject data = FSList.ArrayToJSONObject(stations.getNodes(), userLanguage, "labelid,title");
-	    data.put("select_station", exhibition.getSmartProperty(userLanguage, "select_station"));
-	    screen.get(selector).render(data);
-	    screen.get(".station").on("click", "onStationSelected", this);
-	    screen.get(".earlierpage").on("click", "onEarlierPageClicked", this);
-	}
+    	FSList stations = model.getList("@stations");
+    	FsNode exhibition = model.getNode(model.getProperty("/screen/exhibitionpath"));
+    	if (stations != null) {   
+    		JSONObject data = FSList.ArrayToJSONObject(stations.getNodes(), userLanguage, "labelid,name");
+    		data.put("select_station", exhibition.getSmartProperty(userLanguage, "select_station"));
+    		screen.get(selector).render(data);
+    		screen.get(".station").on("click", "onStationSelected", this);
+    		//screen.get(".earlierpage").on("click", "onEarlierPageClicked", this);
+    	}
     }
     
     public void onStationSelected(Screen s, JSONObject data) {
+
 		String station = (String) data.get("id");
+    	System.out.println("On station selected "+station);
+    	/*
 		FsNode stationNode = new FsNode("station", "selected");
 		stationNode.setProperty("deviceid", deviceid);
 		stationNode.setProperty("stationid", station);
-		model.notify("/shared/exhibition/intro/stationselection", stationNode);
+		*/
+	//	model.notify("/shared/exhibition/intro/stationselection", stationNode);
     }
     
     public void onEarlierPageClicked(Screen s, JSONObject data) {
-	System.out.println(data.toJSONString());
+    /*
+		System.out.println(data.toJSONString());
 	
-	FsNode node = new FsNode("languagepage", "requested");
-	node.setProperty("deviceid", deviceid);
-	node.setProperty("originalcontroller", "stationselectionremote");
-	model.notify("/shared/exhibition/intro/languagepage", node);
+		FsNode node = new FsNode("languagepage", "requested");
+		node.setProperty("deviceid", deviceid);
+		node.setProperty("originalcontroller", "stationselectionremote");
+		model.notify("/shared/exhibition/intro/languagepage", node);
+	*/
     }
 }

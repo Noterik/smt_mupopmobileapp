@@ -41,44 +41,22 @@ public class LanguageSelectionRemoteController extends Html5Controller {
     public LanguageSelectionRemoteController() { }
 	
     public void attach(String sel) {
-	selector = sel;
-		
-	String path = model.getProperty("/screen/exhibitionpath");
-	deviceid = model.getProperty("@deviceid");
-		
-	FsNode stationnode = model.getNode(path);
-	if (stationnode != null) {
-	    //get languages from the languages
-	    FSList languageList = model.getList("@languages");
+    	selector = sel;
+    	FSList languageList = model.getList("@languages");
 	    
-	    JSONObject languages = FSList.ArrayToJSONObject(languageList.getNodes(),"en","language_name");
-	    
-	    //check if multiple stations are configured	
-	    FSList list = model.getList("@stations");
-
-	    if (list!=null && list.size() > 1) {
-		languages.put("stationpage", "true");
-	    }
-	    
-	    screen.get(selector).render(languages);
+    	JSONObject data = FSList.ArrayToJSONObject(languageList.getNodes(),"en","language_name");
+	  
+    	// we should still add per exhibition language filtering and auto-jump on one language after filter.
+	    System.out.println("RENDER LANG"+data.toJSONString());
+	    screen.get(selector).render(data);
 			
 	    screen.get(".language").on("click", "onLanguageSelected", this);
-	    screen.get("#languageselection_previous").on("click", "onRefresh", this);
-	}
     }
 	
     public void onLanguageSelected(Screen s,JSONObject data) {
-	model.setProperty("@userlanguage",(String)data.get("id"));
-		 
-	FsNode languageNode = new FsNode("language", "selected");
-	languageNode.setProperty("deviceid", deviceid);		 
-	model.notify("@exhibition/intro/languageselection", languageNode);	 
+    	screen.removeContent(selector.substring(1));
+    	model.setProperty("@userlanguage",(String)data.get("id"));
+    	model.setProperty("/screen/state","stationselect");
     }
-    
-    public void onRefresh(Screen s, JSONObject data) {
-	FsNode node = new FsNode("page", "requested");
-	node.setProperty("exhibition", model.getProperty("@exhibitionid"));
-	
-	model.notify("@exhibition/entryscreen/requested", node);
-    }
+
 }

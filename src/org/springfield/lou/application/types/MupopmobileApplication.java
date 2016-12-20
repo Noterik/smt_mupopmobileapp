@@ -46,10 +46,19 @@ public class MupopmobileApplication extends Html5Application {
 	}	
 			
     	String path = s.getParameter("path");
-	System.out.println("MPATH="+path);
+	//System.out.println("MPATH="+path);
     	if (path!=null) {
-    		s.getModel().setProperty("/screen/exhibitionpath","/domain/mupop/user/daniel"+path);
+    		System.out.println("OLD METHOD JUMPER OR URL IS WRONG !");
+    		//s.getModel().setProperty("/screen/exhibitionpath","/domain/mupop/user/daniel"+path);
+    		//s.get("#screen").append("div","mobile",new MobileController());
+    	} else {
+        	String u = s.getParameter("u");
+        	String e = s.getParameter("e");
+        	System.out.println("USER="+u+" EX="+e);
+    		s.getModel().setProperty("/screen/exhibitionpath","/domain/mupop/user/"+u+"/exhibition/"+e); // goal is to remove this soon
+    		s.getModel().setProperty("@username", u);
+    		s.getModel().setProperty("@exhibitionid",e);
     		s.get("#screen").append("div","mobile",new MobileController());
-    	}			
+    	}
     }
 }

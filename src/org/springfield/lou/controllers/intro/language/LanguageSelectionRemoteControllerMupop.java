@@ -38,33 +38,28 @@ public class LanguageSelectionRemoteControllerMupop extends Html5Controller {
 
     String deviceid;
     
-    public LanguageSelectionRemoteControllerMupop() { }
-	
+    public LanguageSelectionRemoteControllerMupop() { 
+    	
+    }
+    
     public void attach(String sel) {
-		selector = sel;
-		System.out.print("LANGUAGE SELECTION!!!!");
-		String path = model.getProperty("/screen/exhibitionpath");
-		deviceid = model.getProperty("@deviceid");
+    	selector = sel;
+    	FSList languageList = model.getList("@languages");
+	    
+    	//JSONObject data = FSList.ArrayToJSONObject(languageList.getNodes(),"en","language_name");
+	    JSONObject data = FSList.ArrayToJSONObject(languageList.getNodes(),"en","language_name,flag_url");
+	  
+    	// we should still add per exhibition language filtering and auto-jump on one language after filter.
+	    
+	    screen.get(selector).render(data);
 			
-		FsNode stationnode = model.getNode(path);
-		if (stationnode != null) {
-		    //get languages from the languages
-		    FSList languageList = model.getList("@languages");
-		    
-		    JSONObject languages = FSList.ArrayToJSONObject(languageList.getNodes(),"en","language_name,flag_url");
-		    System.out.println(languages.toString());
-		    System.out.println("LANGUAGE SELECTION DONE!!!!");
-		    screen.get(selector).render(languages);
-				
-		    screen.get(".language").on("click", "onLanguageSelected", this);
-		}
+	    screen.get(".language").on("click", "onLanguageSelected", this);
     }
 	
     public void onLanguageSelected(Screen s,JSONObject data) {
+    	screen.removeContent(selector.substring(1));
     	model.setProperty("@userlanguage",(String)data.get("id"));
-		System.out.println("LANGUAGE CLICKED!!!!"+(String)data.get("id"));
-		FsNode languageNode = new FsNode("language", "selected");
-		languageNode.setProperty("deviceid", deviceid);
-		model.notify("@exhibition/intro/languageselection", languageNode);	 
+    	model.setProperty("/screen/state","stationselect");
     }
+	
 }

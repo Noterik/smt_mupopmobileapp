@@ -17,7 +17,7 @@
 	 	<exhibitions>/domain['mupop']/user['@username']/exhibition</exhibitions>
 	    <exhibition>/domain['mupop']/user['@username']/exhibition['@exhibitionid']</exhibition>
 	    
-	    <languages>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/languages</languages>
+	    <languages>/domain['mupop']/config['languages']/default</languages>
 	    <language>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/languages['@languageid']</language>
 	    
 	  	<rooms>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/room</rooms>
