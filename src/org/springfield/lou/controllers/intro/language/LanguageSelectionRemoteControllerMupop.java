@@ -46,8 +46,7 @@ public class LanguageSelectionRemoteControllerMupop extends Html5Controller {
     	selector = sel;
     	FSList languageList = model.getList("@languages");
 	    
-    	//JSONObject data = FSList.ArrayToJSONObject(languageList.getNodes(),"en","language_name");
-	    JSONObject data = FSList.ArrayToJSONObject(languageList.getNodes(),"en","language_name,flag_url");
+       JSONObject data = FSList.ArrayToJSONObject(languageList.getNodes(),"en","language_name,flag_url");
 	  
     	// we should still add per exhibition language filtering and auto-jump on one language after filter.
 	    

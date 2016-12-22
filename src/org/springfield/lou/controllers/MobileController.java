@@ -17,7 +17,7 @@ import org.springfield.lou.model.ModelEvent;
 public class MobileController extends Html5Controller {
 	
     String deviceid;
-    String state="init";
+    String oldstate="";
     
     public MobileController() { }
     // lang sel.
@@ -38,7 +38,9 @@ public class MobileController extends Html5Controller {
    
 	
     public void onStateChange(ModelEvent event) {
-		String state= event.getTargetFsNode().getProperty("state");
+		String state = event.getTargetFsNode().getProperty("state");
+		if (oldstate.equals(state)) return;
+		oldstate = state;
 
     	if (state.equals("init")) { // init the exhibition and probably show language selector
     		initStep(); 
@@ -78,7 +80,8 @@ public class MobileController extends Html5Controller {
         	}
     	} 
 		// move to the next logical state
-    	model.setProperty("/screen/state","stationselect");
+		//model.notify("@exhibitionevents/fromclient","joinrequest");
+    	//model.setProperty("/screen/state","stationselect"); // the server is in control not us
 		return;
     }
     
@@ -95,8 +98,12 @@ public class MobileController extends Html5Controller {
     			//in case of a single station directly go to this station
     			if (list.size() == 1) {
     				FsNode station = list.getNodes().get(0);
+    		    	FsNode message = new FsNode("message",screen.getId());
+    		    	message.setProperty("request","station");
     				model.setProperty("@stationid", station.getId());
-    				model.setProperty("/screen/state","mainapp"); // lets move to the main app since we only have 1 station
+    		    	message.setProperty("@stationid", station.getId());
+    				model.notify("@stationevents/fromclient",message);
+    			//	model.setProperty("/screen/state","mainapp"); // lets move to the main app since we only have 1 station
     			}
     		}
     	} else if (type.equals("listview")) {
@@ -120,7 +127,7 @@ public class MobileController extends Html5Controller {
     private void mainAppStep() {
     	FsNode stationnode = model.getNode("@station");	
     	String app =  stationnode.getProperty("app"); // get the app name
-    	System.out.println("MuPoP: mainapp select step called ="+app);
+    	System.out.println("MuPoP mobile: mainapp select step called ="+app);
     	if (app!=null) {
     		
     		if (app.equals("photoexplore")) {

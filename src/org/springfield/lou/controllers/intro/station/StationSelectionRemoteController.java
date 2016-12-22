@@ -59,15 +59,14 @@ public class StationSelectionRemoteController extends Html5Controller {
     }
     
     public void onStationSelected(Screen s, JSONObject data) {
-
-		String station = (String) data.get("id");
-    	System.out.println("On station selected "+station);
-    	/*
-		FsNode stationNode = new FsNode("station", "selected");
-		stationNode.setProperty("deviceid", deviceid);
-		stationNode.setProperty("stationid", station);
-		*/
-	//	model.notify("/shared/exhibition/intro/stationselection", stationNode);
+		String stationid = (String) data.get("id");
+    	System.out.println("On station selected "+stationid);
+    	screen.removeContent(selector.substring(1));
+    	model.setProperty("@stationid",stationid);
+    	FsNode message = new FsNode("message",screen.getId());
+    	message.setProperty("request","station");
+    	message.setProperty("@stationid", stationid);
+		model.notify("@stationevents/fromclient",message);
     }
     
     public void onEarlierPageClicked(Screen s, JSONObject data) {

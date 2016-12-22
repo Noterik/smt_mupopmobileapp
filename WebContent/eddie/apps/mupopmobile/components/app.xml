@@ -33,6 +33,9 @@
 		<image>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/image['@imageid']</image>
 		
 		<video>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/video['@videoid']</video>
+
+		<stationevents>/shared['exhibitionevents']/exhibition['@exhibitionid']/station['@stationid']</stationevents>
+		<exhibitionevents>/shared['exhibitionevents']/exhibition['@exhibitionid']</exhibitionevents>
 		
 		<photoinfospots>/shared['photoinfospots']/exhibition['@exhibitionid']/station['@stationid']</photoinfospots>
 	</model>
