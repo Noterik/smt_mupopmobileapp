@@ -150,7 +150,7 @@ public class FsViewPort extends Html5Controller {
 		 ps.setProperty("x",""+resultx); // we should support auto convert
 		 ps.setProperty("y",""+resulty);
 		 ps.setProperty("scale",""+resultpercentage);
-		 System.out.println("DRAG SET SHARED PROPERTIES="+path+" "+resultpercentage);
+		// System.out.println("DRAG SET SHARED PROPERTIES="+path+" "+resultpercentage);
 		 s.getModel().setProperties(path,ps);
 	 }
 

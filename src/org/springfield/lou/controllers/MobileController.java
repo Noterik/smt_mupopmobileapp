@@ -1,5 +1,6 @@
 package org.springfield.lou.controllers;
 
+import org.json.simple.JSONObject;
 import org.springfield.fs.FSList;
 import org.springfield.fs.FsNode;
 import org.springfield.lou.controllers.Html5Controller;
@@ -13,6 +14,7 @@ import org.springfield.lou.controllers.intro.station.StationSelectionRemoteContr
 import org.springfield.lou.controllers.photoexplore.PhotoExploreRemoteController;
 import org.springfield.lou.controllers.photoinfospots.PhotoInfoSpotsRemoteController;
 import org.springfield.lou.model.ModelEvent;
+import org.springfield.lou.screen.Screen;
 
 public class MobileController extends Html5Controller {
 	
@@ -33,6 +35,7 @@ public class MobileController extends Html5Controller {
 		
 		model.onPropertyUpdate("/screen/state","onStateChange",this);
 		model.setProperty("/screen/state","init"); // will trigger a event 
+		//screen.get("#screen").track("location","onGPSLocation", this);
     }
     
    
@@ -41,7 +44,7 @@ public class MobileController extends Html5Controller {
 		String state = event.getTargetFsNode().getProperty("state");
 		if (oldstate.equals(state)) return;
 		oldstate = state;
-
+		System.out.println("STEP="+state);
     	if (state.equals("init")) { // init the exhibition and probably show language selector
     		initStep(); 
     	} else if (state.equals("stationselect")) { // check station selection method if more than one station
@@ -86,7 +89,7 @@ public class MobileController extends Html5Controller {
     }
     
     private void stationSelectStep() {
- 
+    	screen.removeContent("photoexploreremote");
     	String type = model.getProperty("@exhibition/stationselect");
     	System.out.println("MuPoP: station select step called ="+type);
     	//check if multiple stations are configured	
@@ -150,6 +153,10 @@ public class MobileController extends Html5Controller {
     	
     	}
     }
+    
+	public void newGPSLocation(Screen s,JSONObject data) {
+		System.out.println("LOCATION="+data.toJSONString());
+	}
     
     
 	

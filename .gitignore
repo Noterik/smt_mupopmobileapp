@@ -10,3 +10,13 @@
 *.war
 
 src/org/springfield/lou/controllers/intro/language/LanguageSelectionRemoteController.java
+
+build/smt_mupopmobileapp.jar
+
+.classpath
+
+build/smt_mupopmobileapp.jar
+
+dist/smt_mupopmobileapp.war
+
+WebContent/WEB-INF/lib/smt_mupopmobileapp.jar
