@@ -46,11 +46,8 @@ public class MupopmobileApplication extends Html5Application {
 	}	
 			
     	String path = s.getParameter("path");
-	//System.out.println("MPATH="+path);
     	if (path!=null) {
     		System.out.println("OLD METHOD JUMPER OR URL IS WRONG !");
-    		//s.getModel().setProperty("/screen/exhibitionpath","/domain/mupop/user/daniel"+path);
-    		//s.get("#screen").append("div","mobile",new MobileController());
     	} else {
         	String u = s.getParameter("u");
         	String e = s.getParameter("e");

@@ -18,7 +18,6 @@ import org.springfield.lou.screen.Screen;
 
 public class MobileController extends Html5Controller {
 	
-    String deviceid;
     String oldstate="";
     
     public MobileController() { }
@@ -31,11 +30,11 @@ public class MobileController extends Html5Controller {
     
     public void attach(String sel) {	
 		selector = sel;
-		deviceid = model.getProperty("@deviceid"); // ehmm no idea ? daniel
 		
 		model.onPropertyUpdate("/screen/state","onStateChange",this);
 		model.setProperty("/screen/state","init"); // will trigger a event 
 		//screen.get("#screen").track("location","onGPSLocation", this);
+		System.out.println("ATTACH DONE");
     }
     
    
@@ -60,6 +59,7 @@ public class MobileController extends Html5Controller {
     }
     
     private void initStep() {
+		System.out.println("ATTACH DONE 2");
     	String style = model.getProperty("@exhibition/style");
     	if (style==null || style.equals("")) {
     		style="neutral";
@@ -67,6 +67,7 @@ public class MobileController extends Html5Controller {
     	screen.loadStyleSheet("mobile/styles/"+style+".css");
 		
     	String languageselect = model.getProperty("@exhibition/languageselect");
+		System.out.println("ATTACH DONE3 "+languageselect);
     	if (languageselect!=null && !languageselect.equals("")) {
     		// so exhibition wants language selector
     		// first lets check if user already has one selected if so we skip on init state
@@ -89,24 +90,25 @@ public class MobileController extends Html5Controller {
     }
     
     private void stationSelectStep() {
-    	screen.removeContent("photoexploreremote");
+    	screen.removeContent("photoexploreremote"); // ugly daniel
+    	
     	String type = model.getProperty("@exhibition/stationselect");
     	System.out.println("MuPoP: station select step called ="+type);
     	//check if multiple stations are configured	
     	
-    	if (type==null || type.equals("")) {
+    	if (type==null || type.equals("") || type.equals("none")) {
     		// show the first available that is online?
     		FSList list = model.getList("@stations");
     		if (list!=null) {
     			//in case of a single station directly go to this station
-    			if (list.size() == 1) {
+    			if (list.size() > 0) {
     				FsNode station = list.getNodes().get(0);
     		    	FsNode message = new FsNode("message",screen.getId());
     		    	message.setProperty("request","station");
     				model.setProperty("@stationid", station.getId());
     		    	message.setProperty("@stationid", station.getId());
     				model.notify("@stationevents/fromclient",message);
-    			//	model.setProperty("/screen/state","mainapp"); // lets move to the main app since we only have 1 station
+    				model.setProperty("/screen/state","mainapp"); // lets move to the main app since we only have 1 station
     			}
     		}
     	} else if (type.equals("listview")) {
