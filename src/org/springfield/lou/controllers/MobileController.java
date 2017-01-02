@@ -4,6 +4,7 @@ import org.json.simple.JSONObject;
 import org.springfield.fs.FSList;
 import org.springfield.fs.FsNode;
 import org.springfield.lou.controllers.Html5Controller;
+import org.springfield.lou.controllers.image.selection.CoverFlowRemoteController;
 import org.springfield.lou.controllers.interactivevideo.InteractiveVideoRemoteController;
 import org.springfield.lou.controllers.interactivevideo.AudioCheckController;
 import org.springfield.lou.controllers.interactivevideo.HeadphonesController;
@@ -125,7 +126,10 @@ public class MobileController extends Html5Controller {
     	String type = model.getProperty("@station/contentselect");
     	System.out.println("MuPoP: content select step called ="+type);
     	if (type!=null && !type.equals("")) {
-    	
+    		if (type.equals("coverflow")) {
+    			System.out.println("COVERFLOW WANTED");
+    			screen.get("#mobile").append("div", "coverflowremote", new CoverFlowRemoteController());
+    		}
     	}
     }
     
