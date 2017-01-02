@@ -1,0 +1,39 @@
+<div class="header col-xs-12">{{select_station}}</div>
+<div id="codeselect-panel">
+	<div id="codeselect-P1" class="codeselect-button">
+		{{P1}}
+	</div>
+	<div id="codeselect-P2" class="codeselect-button">
+		{{P2}}
+	</div>
+	<div id="codeselect-P3" class="codeselect-button">
+		{{P3}}
+	</div>
+	<div id="codeselect-P4" class="codeselect-button">
+		{{P4}}
+	</div>
+	<div id="codeselect-P5" class="codeselect-button">
+		{{P5}}
+	</div>
+	<div id="codeselect-P6" class="codeselect-button">
+		{{P6}}
+	</div>
+	<div id="codeselect-P7" class="codeselect-button">
+		{{P7}}
+	</div>
+	<div id="codeselect-P8" class="codeselect-button">
+		{{P8}}
+	</div>
+	<div id="codeselect-P9" class="codeselect-button">
+		{{P9}}
+	</div>
+	<div id="codeselect-P10" class="codeselect-button">
+		{{P10}}
+	</div>
+		<div id="codeselect-P11" class="codeselect-button">
+		{{P11}}
+	</div>
+	<div id="codeselect-P12" class="codeselect-button">
+		{{P12}}
+	</div>
+</div>

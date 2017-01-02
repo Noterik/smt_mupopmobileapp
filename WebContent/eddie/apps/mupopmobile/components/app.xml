@@ -155,6 +155,12 @@
 		<controller id="StationSelectionRemoteController"/>
 	</view>
 	
+	<view id="#stationcodeselectionremote">
+		<template>mobile/intro/station/stationcodeselectionremote.mst</template>
+		<style>mobile/intro/station/stationcodeselectionremote.css</style>
+		<controller id="StationCodeSelectionRemoteController"/>
+	</view>
+	
 	<view id="#helpremote">
 		<template>mobile/help/helpremote.mst</template>
 		<style>mobile/help/helpremote.css</style>

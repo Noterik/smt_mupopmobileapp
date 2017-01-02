@@ -10,6 +10,7 @@ import org.springfield.lou.controllers.interactivevideo.HeadphonesController;
 import org.springfield.lou.controllers.interactivevideo.InteractiveVideoHolderController;
 import org.springfield.lou.controllers.intro.language.LanguageSelectionRemoteController;
 import org.springfield.lou.controllers.intro.language.LanguageSelectionRemoteControllerMupop;
+import org.springfield.lou.controllers.intro.station.StationCodeSelectionRemoteController;
 import org.springfield.lou.controllers.intro.station.StationSelectionRemoteController;
 import org.springfield.lou.controllers.photoexplore.PhotoExploreRemoteController;
 import org.springfield.lou.controllers.photoinfospots.PhotoInfoSpotsRemoteController;
@@ -114,8 +115,9 @@ public class MobileController extends Html5Controller {
     	} else if (type.equals("listview")) {
     		System.out.println("START LISTVIEW");
     		screen.get("#mobile").append("div", "stationselectionremote", new StationSelectionRemoteController());
-    		//model.onNotify("/shared/exhibition/intro/stationselection", "onStationSelected", this);
-    		//model.onNotify("/shared/exhibition/intro/languagepage", "onLanguagePageRequested", this);
+    	} else if (type.equals("codeselect")) {
+    		System.out.println("START CODESELECT");
+    		screen.get("#mobile").append("div", "stationcodeselectionremote", new StationCodeSelectionRemoteController());
     	}		    
     }
     
