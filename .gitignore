@@ -1,15 +1,9 @@
-
 *.class
-
-*.jar
-
-*.jar
 
 *.jar
 
 *.war
 
-src/org/springfield/lou/controllers/intro/language/LanguageSelectionRemoteController.java
 
 build/smt_mupopmobileapp.jar
 

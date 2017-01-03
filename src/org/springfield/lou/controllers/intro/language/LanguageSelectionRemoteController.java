@@ -34,34 +34,35 @@ import org.springfield.lou.screen.Screen;
  * @package org.springfield.lou.controllers.intro.language
  * 
  */
-public class LanguageSelectionRemoteControllerMupop extends Html5Controller {
+public class LanguageSelectionRemoteController extends Html5Controller {
 
     String deviceid;
     
-    public LanguageSelectionRemoteControllerMupop() { 
-    	
-    }
-    
-    
-    
+    public LanguageSelectionRemoteController() { }
+	
     public void attach(String sel) {
     	selector = sel;
     	FSList languageList = model.getList("@languages");
 	    
-       JSONObject data = FSList.ArrayToJSONObject(languageList.getNodes(),"en","language_name,flag_url");
+    	JSONObject data = FSList.ArrayToJSONObject(languageList.getNodes(),"en","language_name");
 	  
     	// we should still add per exhibition language filtering and auto-jump on one language after filter.
-	    
 	    screen.get(selector).render(data);
-			
-	    screen.get(".language").on("click", "onLanguageSelected", this);
 
+	    screen.get(".language").on("click", "onLanguageSelected", this);
     }
 	
     public void onLanguageSelected(Screen s,JSONObject data) {
     	screen.removeContent(selector.substring(1));
     	model.setProperty("@userlanguage",(String)data.get("id"));
-    	model.setProperty("/screen/state","stationselect");
+    	System.out.println("SEND JOINREQUEST");
+    	
+    	FsNode message = new FsNode("message",screen.getId());
+    	message.setProperty("request","join");
+		model.notify("@exhibitionevents/fromclient",message);
+    	//model.setProperty("/screen/state","stationselect");
     }
-	
+    
+    
+
 }
