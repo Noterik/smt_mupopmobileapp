@@ -61,12 +61,9 @@ public class CoverFlowRemoteController extends Html5Controller {
 	    screen.get(selector).render(data);
 	    screen.get(selector).loadScript(this);
 			
-	    screen.get("#trackpad").on("swipeleft",
-					"swipeLeft", this);
-	    screen.get("#trackpad").on("swiperight",
-					"swipeRight", this);
-	    screen.get("#trackpad").on("enter",
-					"enter", this);
+	    screen.get("#trackpad").on("swipeleft","swipeLeft", this);
+	    screen.get("#trackpad").on("swiperight","swipeRight", this);
+	    screen.get("#trackpad").on("enter","enter", this);
 	    screen.get("#coverflow-help").on("click", "helpClicked", this);
 	    screen.get("#coverflow_previous").on("click", "previousPage", this);
 			
@@ -77,22 +74,21 @@ public class CoverFlowRemoteController extends Html5Controller {
     }
 	
     public void swipeLeft(Screen s, JSONObject data) {
-	FsNode node = new FsNode("coverflow", "left");
-	node.setProperty("deviceid", deviceid);
-	
-	model.notify("@photoinfospots", node);
+    	FsNode message = new FsNode("message",screen.getId());
+    	message.setProperty("action","left");
+		model.notify("@stationevents/fromclient",message);
     }
 	
     public void swipeRight(Screen s, JSONObject data) {
-	FsNode node = new FsNode("coverflow", "right");
-	node.setProperty("deviceid", deviceid);
-	
-	model.notify("@photoinfospots", node);
+    	FsNode message = new FsNode("message",screen.getId());
+    	message.setProperty("action","right");
+		model.notify("@stationevents/fromclient",message);
     }
 	
     public void enter(Screen s, JSONObject data) {
-	FsNode node = new FsNode("coverflow", "enter");
-	model.notify("@photoinfospots", node);
+    	FsNode message = new FsNode("message",screen.getId());
+    	message.setProperty("action","enter");
+		model.notify("@stationevents/fromclient",message);
     }
 	
     public void helpClicked(Screen s, JSONObject data) { 
