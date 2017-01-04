@@ -50,6 +50,7 @@
 		<template>mobile/mobile.mst</template>
 		<style>mobile/mobile.css</style>
 		<controller id="MobileController">
+			<javascript>mobile/mobile.js</javascript>
 		</controller>
 	</view>
 	
@@ -85,10 +86,10 @@
 	</view>
 	
 	<view id="#headphonescheck">
-		<template>mobile/interactivevideoremote/headphonescheck/headphonescheck.mst</template>
-		<style>mobile/interactivevideoremote/headphonescheck/headphonescheck.css</style>
+		<template>mobile/headphonescheck/headphonescheck.mst</template>
+		<style>mobile/headphonescheck/headphonescheck.css</style>
 		<controller id="HeadphonesController">
-			<javascript>mobile/interactivevideoremote/headphonescheck/headphonescheck.js</javascript>
+			<javascript>mobile/headphonescheck/headphonescheck.js</javascript>
 		</controller>
 	</view>
 	

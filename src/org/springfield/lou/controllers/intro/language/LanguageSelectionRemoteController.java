@@ -54,11 +54,8 @@ public class LanguageSelectionRemoteController extends Html5Controller {
     public void onLanguageSelected(Screen s,JSONObject data) {
     	screen.removeContent(selector.substring(1));
     	model.setProperty("@userlanguage",(String)data.get("id"));
-    	System.out.println("SEND JOINREQUEST");
-    	
-    	FsNode message = new FsNode("message",screen.getId());
-    	message.setProperty("request","join");
-    	model.notify("@exhibitionevents/fromclient",message);
+
+		model.setProperty("/screen/state","audiocheck"); 
     }
     
     

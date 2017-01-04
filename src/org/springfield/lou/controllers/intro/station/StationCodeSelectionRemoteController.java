@@ -71,6 +71,13 @@ public class StationCodeSelectionRemoteController extends Html5Controller {
     }
     
     public void onCodeSelectSelected(Screen s, JSONObject data) {
+    	// fun audio test
+    	JSONObject audiocmd = new JSONObject();
+    	audiocmd.put("action","play");
+    	audiocmd.put("src","/eddie/sounds/click.mp3");
+    	screen.get("#mobile").update(audiocmd);
+    	
+    	
 		String buttonid = (String) data.get("id");
     	String value = codes.get(buttonid);
     	if (toggle) {
