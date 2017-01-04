@@ -165,4 +165,12 @@
 		<template>mobile/help/helpremote.mst</template>
 		<style>mobile/help/helpremote.css</style>
 	</view>
+	
+	<view id="#photoexplorerremote">
+		<template>mobile/image/zoom/photoexplorerremote.mst</template>
+		<style>mobile/image/zoom/photoexplorerremote.css</style>
+		<controller id="PhotoExplorerRemoteController">
+			<javascript>mobile/image/zoom/PhotoExplorerRemoteController.js</javascript>
+		</controller>
+	</view>
 </app>

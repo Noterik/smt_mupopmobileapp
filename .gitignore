@@ -14,3 +14,4 @@ build/smt_mupopmobileapp.jar
 dist/smt_mupopmobileapp.war
 
 WebContent/WEB-INF/lib/smt_mupopmobileapp.jar
+/bin

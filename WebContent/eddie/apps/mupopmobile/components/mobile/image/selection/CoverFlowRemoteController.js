@@ -142,13 +142,13 @@ function init_selection() {
 	}
 	
 	hTrackpad.on('swipeleft', function(event) {
-		var message = 'event(trackpad/swiperight,{"id":"trackpad","targetid":"trackpad"})';
+		var message = 'event(coverflow-trackpad/swiperight,{"id":"coverflow-trackpad","targetid":"coverflow-trackpad"})';
 		sendMessage(message, true);
 		event.preventDefault();
 	})
 	
 	hTrackpad.on('swiperight', function(event) {
-		var message = 'event(trackpad/swipeleft,{"id":"trackpad","targetid":"trackpad"})';
+		var message = 'event(coverflow-trackpad/swipeleft,{"id":"coverflow-trackpad","targetid":"coverflow-trackpad"})';
 		sendMessage(message, true);
 		event.preventDefault();
 	})
@@ -156,7 +156,7 @@ function init_selection() {
 	hTrackpad.on('tap', function(event) {
 		if (canTap) {
 			canTap = false;
-			var message = 'event(trackpad/enter,{"id":"trackpad","targetid":"trackpad"})';
+			var message = 'event(coverflow-trackpad/enter,{"id":"coverflow-trackpad","targetid":"coverflow-trackpad"})';
 			sendMessage(message, true);
 			event.preventDefault();
 			setTimeout(function() {

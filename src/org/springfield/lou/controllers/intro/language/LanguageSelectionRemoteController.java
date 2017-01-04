@@ -47,9 +47,8 @@ public class LanguageSelectionRemoteController extends Html5Controller {
     	JSONObject data = FSList.ArrayToJSONObject(languageList.getNodes(),"en","language_name");
 	  
     	// we should still add per exhibition language filtering and auto-jump on one language after filter.
-	    screen.get(selector).render(data);
-
-	    screen.get(".language").on("click", "onLanguageSelected", this);
+    	screen.get(selector).render(data);
+    	screen.get(".language").on("click", "onLanguageSelected", this);
     }
 	
     public void onLanguageSelected(Screen s,JSONObject data) {
@@ -59,8 +58,7 @@ public class LanguageSelectionRemoteController extends Html5Controller {
     	
     	FsNode message = new FsNode("message",screen.getId());
     	message.setProperty("request","join");
-		model.notify("@exhibitionevents/fromclient",message);
-    	//model.setProperty("/screen/state","stationselect");
+    	model.notify("@exhibitionevents/fromclient",message);
     }
     
     
