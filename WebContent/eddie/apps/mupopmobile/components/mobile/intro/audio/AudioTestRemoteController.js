@@ -1,35 +1,44 @@
 var AudioTestRemoteController = function(options) {}; // needed for detection
 
 AudioTestRemoteController.update = function(vars, data){		
-	$("#audiotest-audioplayer").on("loadedmetadata", loadedMetadataAudioTest);
-	$("#audiotest-audioplayer").on("timeupdate", updateTimeAudioTest);
-	$("#audiotest-audioplayer").on('play', function() {
+	
+	if (data['audiosrc'] != undefined) {
+		$("#audiop source").attr("src", data['audiosrc']);
+		$("#audiop")[0].pause();
+		$("#audiop")[0].load();
+		
+		$("#audiop").on("loadedmetadata", loadedMetadataAudioTest);
+		$("#audiop").on("timeupdate", updateTimeAudioTest);
+	}
+	
+	$("#audiop").on('play', function() {
 		$("#audiotest-play").addClass("fa-pause-circle");
 		$("#audiotest-play").removeClass("fa-play-circle");
 	});
       
-	$("#audiotest-audioplayer").on('pause', function() {
+	$("#audiop").on('pause', function() {
 		$("#audiotest-play").addClass("fa-play-circle");
 		$("#audiotest-play").removeClass("fa-pause-circle");
 	});
 	
 	$("#audiotest-play").on('click', function() {
-		 if ($("#audiotest-audioplayer")[0].paused) {
-			 $("#audiotest-audioplayer")[0].play();
+		 if ($("#audiop")[0].paused) {
+			 $("#audiop")[0].play();
 		 } else {
-			 $("#audiotest-audioplayer")[0].pause();
+			 $("#audiop")[0].pause();
 		 }
 	});
 };
 
 function loadedMetadataAudioTest() {
+	$("#audiop")[0].currentTime = 0;
 	$("#audiotest-currenttime").text(formatTime(0));
-	$("#audiotest-totaltime").text(formatTime($("#audiotest-audioplayer")[0].duration));
+	$("#audiotest-totaltime").text(formatTime($("#audiop")[0].duration));
 }
 
 function updateTimeAudioTest() {
-	$("#audiotest-currenttime").text(formatTime($("#audiotest-audioplayer")[0].currentTime));
-	$("#audiotest-seekbar").val((100 / $("#audiotest-audioplayer")[0].duration) * $("#audiotest-audioplayer")[0].currentTime);
+	$("#audiotest-currenttime").text(formatTime($("#audiop")[0].currentTime));
+	$("#audiotest-seekbar").val((100 / $("#audiop")[0].duration) * $("#audiop")[0].currentTime);
 }
 
 function formatTime(time) {

@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.json.simple.JSONObject;
-
 import org.springfield.fs.FSList;
 import org.springfield.fs.FsNode;
 import org.springfield.lou.controllers.Html5Controller;
@@ -59,6 +58,12 @@ public class StationCodeSelectionRemoteController extends Html5Controller {
     
     private  void fillPage() {
     	JSONObject data = new JSONObject();
+    	
+    	userLanguage = model.getProperty("@userlanguage");
+
+    	data.put("title", model.getProperty("@language_station_code_selection_screen/title", userLanguage));
+    	data.put("explanation", model.getProperty("@language_station_code_selection_screen/explanation", userLanguage));
+
     	if (toggle) {
     		fillNumberCodes(data);
     	} else {

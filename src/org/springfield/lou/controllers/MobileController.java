@@ -78,6 +78,7 @@ public class MobileController extends Html5Controller {
 			String userLanguage = model.getProperty("@userlanguage");
 
 			System.out.println("USERLANGUAGE FROM 'COOKIE' "+userLanguage);
+			userLanguage = null;
 			if (userLanguage==null || userLanguage.equals("")) {
 				if (languageselect.equals("default")) {
 					screen.get("#mobile").append("div", "languageselectionremote", new LanguageSelectionRemoteController());
@@ -99,9 +100,9 @@ public class MobileController extends Html5Controller {
     	if (audiocheck!=null && audiocheck.equals("true")) {
     		// set local action to perform audiocheck
         	System.out.println("AUDIOCHECK="+audiocheck);
-    		//screen.get("#mobile").append("div", "audiotestremote", new AudioTestRemoteController());
+    		screen.get("#mobile").append("div", "audiotestremote", new AudioTestRemoteController());
     		
-    		screen.get("#mobile").append("div","headphonescheck", new HeadphonesController());
+    		//screen.get("#mobile").append("div","headphonescheck", new HeadphonesController());
     	} else {
     		FsNode message = new FsNode("message",screen.getId());
     		message.setProperty("request","join");

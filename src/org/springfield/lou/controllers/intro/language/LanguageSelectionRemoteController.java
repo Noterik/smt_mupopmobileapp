@@ -20,6 +20,7 @@
 */
 package org.springfield.lou.controllers.intro.language;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springfield.fs.FSList;
 import org.springfield.fs.FsNode;
@@ -42,11 +43,24 @@ public class LanguageSelectionRemoteController extends Html5Controller {
 	
     public void attach(String sel) {
     	selector = sel;
-    	FSList languageList = model.getList("@languages");
-	    
-    	JSONObject data = FSList.ArrayToJSONObject(languageList.getNodes(),"en","language_name");
-	  
-    	// we should still add per exhibition language filtering and auto-jump on one language after filter.
+    	
+    	String languages = model.getProperty("@exhibition/availablelanguages");
+    	String[] languageList = languages.split(",");
+    	
+    	JSONObject data = new JSONObject();
+	JSONArray nodes = new JSONArray();
+	data.put("nodes", nodes);
+    	
+    	for (String lang : languageList) {
+    	    JSONObject node = new JSONObject();
+    	    node.put("id",lang);
+    	    node.put("language_name", model.getProperty("@language_language_screen/name", lang));
+    	    nodes.add(node);
+    	}
+    	
+    	String defaultLanguage = model.getProperty("@exhibition/language");
+    	data.put("title", model.getProperty("@language_language_screen/title", defaultLanguage));
+  
     	screen.get(selector).render(data);
     	screen.get(".language").on("click", "onLanguageSelected", this);
     }

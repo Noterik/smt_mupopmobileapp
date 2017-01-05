@@ -1,25 +1,24 @@
 <div class="header col-xs-12">
 	<div class="row">
 		<div id="audiotest_previous" class="col-xs-2">
-			<i  class="fa fa-arrow-left"></i>
+			<!--<i  class="fa fa-arrow-left"></i>-->
 		</div>
-		<div class="col-xs-8">
-			{{headphone}}
+		<div class="col-xs-8 sound_and_vision_font">
+			{{title}}
 		</div>
 		<div id="audiotest_help" class="col-xs-2">
-			<i class="fa fa-question-circle"></i>
+			<!--<i class="fa fa-question-circle"></i>-->
 		</div>
 	</div>
 </div>
 <div id="audio" class="col-xs-12 fill-height">
-	{{audio_test_intro_text}}
+	{{explanation}}
 	<div id="headphones" class="col-xs-12">
 		<img class="img-responsive" src="http://images1.noterik.com/mupop/headphones.png"/>
 	</div>
 </div>
 <div class="audio-bar col-xs-12">
 	<div class="row">
-		<audio id="audiotest-audioplayer" src="{{audiosrc}}"></audio>
 		<div id="audiotest-currenttime" class="col-xs-2">
 			--:--
 		</div>

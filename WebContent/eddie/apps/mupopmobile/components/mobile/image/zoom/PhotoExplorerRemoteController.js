@@ -5,6 +5,10 @@ var $trackpad;
 var ratio = 4 / 3;
 var timeout = null;
 
+var pinching = false;
+var scale = null;
+var lastScale = null;
+
 PhotoExplorerRemoteController.update = function(vars, data){		
 	//init - this is also handled when returning on a page
 	if (!vars["loaded"]) {	
@@ -185,7 +189,12 @@ function init_photoexplorer() {
 	resize();
 	
 	var hTrackpad = new Hammer(trackpad);
-	hTrackpad.get('pinch').set({ enable: true });
+	//var hTrackpad = new Hammer.Manager(trackpad);
+
+	//hTrackpad.add( new Hammer.Pinch());
+	//hTrackpad.add( new Hammer.Swipe());
+	
+	/*hTrackpad.get('pinch').set({ enable: true });*/
 	
 	hTrackpad.on('swipeleft', function(event) {
 		var message = 'event(photoexplorer-trackpad/swiperight,{"id":"photoexplorer-trackpad","targetid":"photoexplorer-trackpad"})';
@@ -198,7 +207,7 @@ function init_photoexplorer() {
 		sendMessage(message, true);
 		event.preventDefault();
 	})
-	
+	/*
 	hTrackpad.on('pinchin', function(event) {
 		var message = 'event(photoexplorer-trackpad/pinchin,{"id":"photoexplorer-trackpad","targetid":"photoexplorer-trackpad"})';
 		sendMessage(message, true);
@@ -209,5 +218,75 @@ function init_photoexplorer() {
 		var message = 'event(photoexplorer-trackpad/pinchout,{"id":"photoexplorer-trackpad","targetid":"photoexplorer-trackpad"})';
 		sendMessage(message, true);
 		event.preventDefault();
-	})
+	})*/
+	
+	/**
+	 * Handle pinching gesture
+	 */
+	/*
+	hTrackpad.on('pinchstart', function(event){
+		//if(getMode() === "transformer")
+			pinching = true;
+	});
+	
+	hTrackpad.on('pinchend', function(event){
+		lastScale = scale;
+	});
+	
+	hTrackpad.on('pinchin pinchout', function(event){
+		//if(getMode() === "transformer"){
+			var rect = trackpad.getBoundingClientRect();
+			
+			var pinchRect = getTouchRect(event.pointers);
+			
+			var pinchXOrigin = pinchRect.left + (pinchRect.right - pinchRect.left) / 2;
+			var pinchYOrigin = pinchRect.top + (pinchRect.bottom - pinchRect.top) / 2;
+			
+					
+			var relativeXOrigin = pinchXOrigin - rect.left;
+			var relativeYOrigin = pinchYOrigin - rect.top;
+			
+			var rectWidth = rect.right - rect.left;
+			var rectHeight = rect.bottom - rect.top;
+					
+			var xPercentage = relativeXOrigin / rectWidth * 100;
+			var yPercentage = relativeYOrigin / rectHeight * 100;		
+			
+			scale = lastScale ? event.scale * lastScale : event.scale;
+			
+			var data = {
+				origin: {
+					x: Math.round(xPercentage),
+					y: Math.round(yPercentage)
+				},
+				action: 'scale(' + scale + ')'
+			};
+			
+			var message = "transformSlide(" + JSON.stringify(data) + ")";
+			
+			sendMessage(message);
+		//}
+	});
+	
+	hTrackpad.on('pinchend', function(event){
+		//if(getMode() === "transformer")
+			pinching = false;
+	});*/
+}
+
+function getTouchRect(touches){
+	var rect = {
+		left: null,
+		right: null,
+		top: null,
+		bottom: null
+	}
+	touches.forEach(function(touch){
+		rect.left = rect.left === null || touch.clientX < rect.left ? touch.clientX : rect.left;
+		rect.right = rect.right === null || touch.clientX > rect.right ? touch.clientX : rect.right;
+		rect.top = rect.top === null || touch.clientY < rect.top ? touch.clientY : rect.top;
+		rect.bottom = rect.bottom === null || touch.clientY > rect.bottom ? touch.clientY : rect.bottom;
+	});
+	
+	return rect;
 }

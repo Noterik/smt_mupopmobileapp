@@ -1,3 +1,23 @@
+/** Generic **/
+
+#audiop {
+	display: none;
+}
+
+@font-face {
+    font-family: akzidenz-grotesk-condensed;
+    src: url(http://images1.noterik.com/mupop/fonts/akzidenz-grotesk-condensed.woff);
+}
+
+@font-face {
+	font-family: bebas_neueregular;
+	src: url(http://images1.noterik.com/mupop/fonts/BebasNeue-webfont.woff);
+}
+
+.sound_and_vision_font {
+	font-family: akzidenz-grotesk-condensed,bebas_neueregular,Helvetica Neue,Arial,sans-serif;
+}
+
 html, body {
     height: 100%;
 }
@@ -400,11 +420,6 @@ body {
     padding: 0 !important;
 }
 
-#audiop{
-    visibility: hidden;
-    height: 0px;
-}
-
 #language_select_image{
     border-radius: 50%;
     background-color: #000;
@@ -440,7 +455,7 @@ body {
 	font-weight: 600;
 	padding-top: 12px;
 	text-transform: uppercase;	
-	font-size: 12px;
+	font-size: 16px;
 }
 
 #languages {
@@ -791,4 +806,11 @@ h3 {
 #previousfromhelp {
 	z-index: 999;
 	cursor: pointer;
+}
+
+/** Station code select **/
+
+#station_code_select_explanation {
+	padding-top: 15px;
+	text-align: center;
 }
