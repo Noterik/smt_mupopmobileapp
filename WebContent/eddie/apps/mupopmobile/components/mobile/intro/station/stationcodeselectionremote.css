@@ -4,112 +4,12 @@
 	height:60%;
 	margin-left: 2px;
 	margin-right: 2px;
+	width: 99%;
 }
 
-#codeselect-P1 {
-	position: absolute;
-	border: solid 2px black;
-	top:0%;
-	left:0%;
-	height:25%;
-	width:33%;
-}
-
-#codeselect-P2 {
-	position: absolute;
-	border: solid 2px black;
-	top:0%;
-	left: 33%;
-	height:25%;
-	width:33%;
-}
-
-#codeselect-P3 {
-	position: absolute;
-	border: solid 2px black;
-	top:0%;
-	left: 66%;
-	height:25%;
-	width:33%;
-}
-
-#codeselect-P4 {
-	position: absolute;
-	border: solid 2px black;
-	top:25%;
-	left: 0%;
-	height:25%;
-	width:33%;
-}
-
-#codeselect-P5 {
-	position: absolute;
-	border: solid 2px black;
-	top:25%;
-	left: 33%;
-	height:25%;
-	width:33%;
-}
-
-#codeselect-P6 {
-	position: absolute;
-	border: solid 2px black;
-	top:25%;
-	left: 66%;
-	height:25%;
-	width:33%;
-}
-
-#codeselect-P7 {
-	position: absolute;
-	border: solid 2px black;
-	top:50%;
-	left: 0%;
-	height:25%;
-	width:33%;
-}
-
-#codeselect-P8 {
-	position: absolute;
-	border: solid 2px black;
-	top:50%;
-	left: 33%;
-	height:25%;
-	width:33%;
-}
-
-#codeselect-P9 {
-	position: absolute;
-	border: solid 2px black;
-	top:50%;
-	left: 66%;
-	height:25%;
-	width:33%;
-}
-
-#codeselect-P10 {
-	position: absolute;
-	border: solid 2px black;
-	top:75%;
-	left: 0%;
-	height:25%;
-	width:33%;
-}
-
-#codeselect-P11 {
-	position: absolute;
-	border: solid 2px black;
-	top:75%;
-	left: 33%;
-	height:25%;
-	width:33%;
-}
-
-#codeselect-P12 {
-	position: absolute;
-	border: solid 2px black;
-	top:75%;
-	left: 66%;
-	height:25%;
-	width:33%;
+.codeselect-button {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle !important;
+	font-size: 4vh;
 }

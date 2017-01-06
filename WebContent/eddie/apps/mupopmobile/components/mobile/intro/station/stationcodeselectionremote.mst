@@ -12,49 +12,28 @@
 <div id="station_code_select_explanation" class="col-xs-12 fill-height">
 	{{explanation}}
 </div>
-<div id="codeselect-panel" class="col-xs-12">
-	<div class="row">
-		<div id="codeselect-P1" class="col-xs-3 codeselect-button">
-			{{P1}}
-		</div>
-		<div id="codeselect-P2" class="col-xs-3 codeselect-button">
-			{{P2}}
-		</div>
-		<div id="codeselect-P3" class="col-xs-3 codeselect-button">
-			{{P3}}
-		</div>
-	</div>
-	<div class="row">
-		<div id="codeselect-P4" class="col-xs-3 codeselect-button">
-			{{P4}}
-		</div>
-		<div id="codeselect-P5" class="col-xs-3 codeselect-button">
-			{{P5}}
-		</div>
-		<div id="codeselect-P6" class="col-xs-3 codeselect-button">
-			{{P6}}
-		</div>
-	</div>
-	<div class="row">
-		<div id="codeselect-P7" class="col-xs-3 codeselect-button">
-			{{P7}}
-		</div>
-		<div id="codeselect-P8" class="col-xs-3 codeselect-button">
-			{{P8}}
-		</div>
-		<div id="codeselect-P9" class="col-xs-3 codeselect-button">
-			{{P9}}
-		</div>
-	</div>
-	<div class="row">
-		<div id="codeselect-P10" class="col-xs-3 codeselect-button">
-			{{P10}}
-		</div>
-		<div id="codeselect-P11" class="col-xs-3 codeselect-button">
-			{{P11}}
-		</div>
-		<div id="codeselect-P12" class="col-xs-3 codeselect-button">
-			{{P12}}
-		</div>
-	</div>
-</div>
+
+<table id="codeselect-panel" class="table table-bordered">
+	<tbody>
+    	<tr>
+    		<td class="codeselect-button" id="codeselect-P1" scope="row">{{P1}}</td>
+      		<td class="codeselect-button" id="codeselect-P2">{{P2}}</td>
+      		<td class="codeselect-button" id="codeselect-P3">{{P3}}</td>
+    	</tr>
+    	<tr>
+    		<td class="codeselect-button" id="codeselect-P4" scope="row">{{P4}}</td>
+      		<td class="codeselect-button" id="codeselect-P5">{{P5}}</td>
+      		<td class="codeselect-button" id="codeselect-P6">{{P6}}</td>
+      	</tr>
+      	<tr>
+    		<td class="codeselect-button" id="codeselect-P7" scope="row">{{P7}}</td>
+      		<td class="codeselect-button" id="codeselect-P8">{{P8}}</td>
+      		<td class="codeselect-button" id="codeselect-P9">{{P9}}</td>
+      	</tr>
+      	<tr>
+    		<td class="codeselect-button" id="codeselect-P10" scope="row">{{P10}}</td>
+      		<td class="codeselect-button" id="codeselect-P11">{{P11}}</td>
+      		<td class="codeselect-button" id="codeselect-P12">{{P12}}</td>
+      	</tr>
+     </tbody>
+</table>

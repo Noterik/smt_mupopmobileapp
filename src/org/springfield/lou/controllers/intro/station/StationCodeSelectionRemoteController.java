@@ -34,7 +34,7 @@ import org.springfield.lou.screen.Screen;
 /**
  * StationSelectionRemoteController.java
  *
- * @author Pieter van Leeuwen
+ * @author Daniel Ockeloen
  * @copyright Copyright: Noterik B.V. 2016
  * @package org.springfield.lou.controllers.intro.station
  * 
@@ -76,14 +76,7 @@ public class StationCodeSelectionRemoteController extends Html5Controller {
     }
     
     public void onCodeSelectSelected(Screen s, JSONObject data) {
-    	// fun audio test
-    	JSONObject audiocmd = new JSONObject();
-    	audiocmd.put("action","play");
-    	audiocmd.put("src","/eddie/sounds/click.mp3");
-    	screen.get("#mobile").update(audiocmd);
-    	
-    	
-		String buttonid = (String) data.get("id");
+	String buttonid = (String) data.get("id");
     	String value = codes.get(buttonid);
     	if (toggle) {
     		alphacode = value;
@@ -141,8 +134,8 @@ public class StationCodeSelectionRemoteController extends Html5Controller {
     	codes.put("codeselect-P7","7");data.put("P7","7");
     	codes.put("codeselect-P8","8");data.put("P8","8");
     	codes.put("codeselect-P9","9");data.put("P9","9");
-    	codes.put("codeselect-P10","0");data.put("P10","0");
-    	codes.put("codeselect-P11","");data.put("P11","");
+    	codes.put("codeselect-P10","");data.put("P10","");
+    	codes.put("codeselect-P11","0");data.put("P11","0");
     	codes.put("codeselect-P12","");data.put("P12","");
     }
     
