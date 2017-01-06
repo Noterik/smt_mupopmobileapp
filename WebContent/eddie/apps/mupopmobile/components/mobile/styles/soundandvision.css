@@ -472,6 +472,7 @@ body {
 }
 
 #pagination {
+	display: none;
 	position: absolute;
 	bottom: 0;
 	height: 40px;
@@ -508,6 +509,26 @@ body {
 #headphones img {
 	margin-left: auto;
 	margin-right: auto;
+}
+
+@media only screen and (min-height: 400px) and (max-height: 499px) {
+    #headphones img {
+        width: 150px;
+        height: 149px;
+    }
+}
+
+@media only screen and (min-height: 320px) and (max-height: 399px) {
+    #headphones img {
+		width: 75px;
+        height: 74px;
+    }
+}
+
+@media only screen and (max-height: 319px) {
+    #headphones img {
+    	display: none;
+    }
 }
 
 #start {
@@ -610,7 +631,12 @@ input[type="range"]::-ms-fill-upper {
   background-color: #b6b6b6;
 }
 
-/* zoom and audio */
+/* coverflow */
+
+html, body {
+	height: 100%;
+	background-color: #fff;
+}
 
 #screen, .fill-height, #coverflowremote {
 	height: 100%;	
@@ -624,6 +650,154 @@ input[type="range"]::-ms-fill-upper {
 		min-height: 100%;
 		padding-top: 50px;
 		padding-bottom: 120px;
+}
+
+.trackpad-wrapper-selection {
+	height: 100%;
+	width: 100%;
+	position: relative;
+}
+
+.trackpad-wrapper-selection .trackpad {
+	position: absolute;
+	border-radius: 12px;
+	border: 2px solid;
+	overflow: hidden;
+	border-color: #358ed6;
+	background-color: #fff;
+	text-align: center;
+}
+
+#coverflow_previous {
+	z-index: 999;
+	cursor: pointer;
+}
+
+#coverflow-help {
+	z-index: 999;
+	cursor: pointer;
+}
+
+#help-text1 {
+	padding: 5px;
+}
+
+#help-text2 {
+	padding: 5px;
+	display: none;
+}
+
+#coverflow-help-button {
+	display: none;
+	top: 0;
+	right: 0;
+	padding-top: 3px;
+	padding-right: 5px;
+	position: absolute;
+	cursor: pointer;
+}
+
+#touch-animation {
+	display: none;
+}
+
+.audio-bar {
+	position: absolute;
+	bottom: 75px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+}
+
+#coverflow-progress-bar {
+	padding-top: 10px;
+}
+
+#coverflow-seekbar {
+	width: 100%;
+}
+
+.controls {
+	position: absolute;
+	bottom: 0;
+	height: 70px;
+	line-height: 70px;
+	background-color: #ECF0F1;
+	text-align: center;
+}
+
+.icon-background {
+	color: #f00;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+/*Chrome*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    input[type='range'] {
+      overflow: hidden;
+      width: 1000px;
+      -webkit-appearance: none;
+      background-color: #b6b6b6;
+    }
+    
+    input[type='range']::-webkit-slider-runnable-track {
+      height: 10px;
+      -webkit-appearance: none;
+      color: #13bba4;
+      margin-top: -1px;
+    }
+    
+    input[type='range']::-webkit-slider-thumb {
+      width: 10px;
+      -webkit-appearance: none;
+      height: 10px;
+      cursor: ew-resize;
+      background: #434343;
+      box-shadow: -1000px 0 0 1000px #ec8882;
+    }
+
+}
+/** FF*/
+input[type="range"]::-moz-range-progress {
+  background-color: #ec8882; 
+}
+input[type="range"]::-moz-range-track {  
+  background-color: #b6b6b6;
+}
+/* IE*/
+input[type="range"]::-ms-fill-lower {
+  background-color: #ec8882; 
+}
+input[type="range"]::-ms-fill-upper {  
+  background-color: #b6b6b6;
+}
+
+#coverflow-textreader {
+	display: none;
+}
+
+h3.coverflow { 
+	width: 100%;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	text-align: center;
+}
+
+/* zoom and audio */
+
+#screen, .fill-height, #coverflowremote {
+	height: 100%;	
+}
+
+.contents{
+	position: absolute;
+	top: 0;
+	left: 0;
+	box-sizing: border-box;
+	min-height: 100%;
+	padding-top: 50px;
+	padding-bottom: 120px;
 }
 
 .trackpad-wrapper-spotting {
