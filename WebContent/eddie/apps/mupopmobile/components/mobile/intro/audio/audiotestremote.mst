@@ -1,13 +1,13 @@
 <div class="header col-xs-12">
 	<div class="row">
 		<div id="audiotest_previous" class="col-xs-2">
-			<!--<i  class="fa fa-arrow-left"></i>-->
+			<i  class="fa fa-arrow-left"></i>
 		</div>
-		<div class="col-xs-8 sound_and_vision_font">
+		<div class="col-xs-8 font-settings">
 			{{title}}
 		</div>
 		<div id="audiotest_help" class="col-xs-2">
-			<!--<i class="fa fa-question-circle"></i>-->
+			<i class="fa fa-question-circle"></i>
 		</div>
 	</div>
 </div>

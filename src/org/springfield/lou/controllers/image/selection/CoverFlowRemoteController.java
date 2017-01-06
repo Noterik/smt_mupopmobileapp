@@ -50,7 +50,7 @@ public class CoverFlowRemoteController extends Html5Controller {
 	FsNode stationnode = model.getNode(path+"/station/"+model.getProperty("@stationid"));
 	if (stationnode != null) {
 	    JSONObject data = new JSONObject();
-	    data.put("title", stationnode.getSmartProperty(userLanguage, "title"));
+	    data.put("title", stationnode.getSmartProperty("en", "title"));
 	    data.put("helptext1", stationnode.getSmartProperty(userLanguage, "swipe_help_text"));
 	    data.put("helptext2", stationnode.getSmartProperty(userLanguage, "select_help_text"));
 	    data.put("audio", stationnode.getSmartProperty(userLanguage, "coverflow_intro_audio"));

@@ -3,7 +3,7 @@
 		<div id="coverflow_previous" class="col-xs-2">
 			<i class="fa fa-arrow-left"></i>
 		</div>
-		<div class="col-xs-8">
+		<div class="col-xs-8 font-settings">
 			{{title}}
 		</div>
 		<div id="coverflow-help" class="col-xs-2">

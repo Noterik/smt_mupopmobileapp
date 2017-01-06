@@ -39,9 +39,15 @@ public class PhotoExplorerRemoteController extends Html5Controller {
     
     public void attach(String sel) {
 	selector = sel;
-	
 	JSONObject data = new JSONObject();
 	
+	String path = model.getProperty("/screen/exhibitionpath");
+	
+	FsNode stationnode = model.getNode(path+"/station/"+model.getProperty("@stationid"));
+	if (stationnode != null) {
+	    data.put("title", stationnode.getSmartProperty("en", "title"));
+	}
+
 	screen.get(selector).render(data);
 	screen.get(selector).loadScript(this);
 	

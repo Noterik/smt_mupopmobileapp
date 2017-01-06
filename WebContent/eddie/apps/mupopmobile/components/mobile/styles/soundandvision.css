@@ -14,7 +14,7 @@
 	src: url(http://images1.noterik.com/mupop/fonts/BebasNeue-webfont.woff);
 }
 
-.sound_and_vision_font {
+.font-settings {
 	font-family: akzidenz-grotesk-condensed,bebas_neueregular,Helvetica Neue,Arial,sans-serif;
 }
 
@@ -486,13 +486,11 @@ body {
 }
 
 #audiotest_help {
-	z-index: 999;
-	cursor: pointer;
+	visibility: hidden;
 }
 
 #audiotest_previous {
-	z-index: 999;
-	cursor: pointer;
+	visibility: hidden;
 }
 
 #audio {
@@ -669,13 +667,11 @@ html, body {
 }
 
 #coverflow_previous {
-	z-index: 999;
-	cursor: pointer;
+	visibility: hidden;
 }
 
 #coverflow-help {
-	z-index: 999;
-	cursor: pointer;
+	visibility: hidden;
 }
 
 #help-text1 {
@@ -987,4 +983,14 @@ h3 {
 #station_code_select_explanation {
 	padding-top: 15px;
 	text-align: center;
+}
+
+/** Photo explore **/
+
+#photoexplore_previous {
+	visibility: hidden;
+}
+
+#photoexplore_help {
+	visibility: hidden;
 }
