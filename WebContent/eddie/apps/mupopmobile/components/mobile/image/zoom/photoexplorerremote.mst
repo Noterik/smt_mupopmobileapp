@@ -17,7 +17,6 @@
 			<div id="help-text">{{helptext}}</div>
 			<div id="help-button" class="fa fa-question-circle"></div>
 			<img class="img-responsive" id="move-pointer-animation" src="http://images1.noterik.com/mupop/move-pointer.gif"/>	
-			<div id="pointer_icon" class="pointer-icon" style="background-color: {{color}}"></div>
 		</div>
 		<div id="textreader">
 		<h3>{{transcript}}</h3>

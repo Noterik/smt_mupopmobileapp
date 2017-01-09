@@ -29,7 +29,6 @@
 {{#audio}}
 <div class="audio-bar col-xs-12">
 	<div class="row">
-		<audio id="coverflow-audioplayer" src="{{audio}}"></audio>
 		<div id="coverflow-currenttime" class="col-xs-2">
 			--:--
 		</div>

@@ -16,27 +16,33 @@ CoverFlowRemoteController.update = function(vars, data){
 		startCoverFlowHelp();
 
 		vars["loaded"] = true;	
+
+		if (data['audiosrc'] != undefined) {
+			$("#audiop source").attr("src", data['audiosrc']);
+			$("#audiop")[0].pause();
+			$("#audiop")[0].load();
+			$("#audiop")[0].play();
+			$("#audiop").on("loadedmetadata", loadedMetadataCoverflow);
+			$("#audiop").on("timeupdate", updateTimeCoverflow);
+		}		
 		
-		$("#coverflow-audioplayer").on("loadedmetadata", loadedMetadataCoverflow);
-		$("#coverflow-audioplayer").on("timeupdate", updateTimeCoverflow);
-		$("#coverflow-audioplayer").on('play', function() {
+		$("#audiop").on('play', function() {
 			$("#coverflow-play").addClass("fa-pause-circle");
 			$("#coverflow-play").removeClass("fa-play-circle");
 		});
 	      
-		$("#coverflow-audioplayer").on('pause', function() {
+		$("#audiop").on('pause', function() {
 			$("#coverflow-play").addClass("fa-play-circle");
 			$("#coverflow-play").removeClass("fa-pause-circle");
 		});
 		
 		$("#coverflow-play").on('click', function() {
-			 if ($("#coverflow-audioplayer")[0].paused) {
-				 $("#coverflow-audioplayer")[0].play();
+			 if ($("#audiop")[0].paused) {
+				 $("#audiop")[0].play();
 			 } else {
-				 $("#coverflow-audioplayer")[0].pause();
+				 $("#audiop")[0].pause();
 			 }
-		});
-		
+		});		
 		
 		$("#coverflow-text").on('click', function() {
 			if ($("#coverflow-trackpad").is(":visible")) {
@@ -164,14 +170,20 @@ function init_selection() {
 			}, 1000);
 		}
 	})
+	
+	$trackpad.on('mousedown ', function(event){
+		  event.preventDefault();
+		  var message = 'event(coverflow-trackpad/enter,{"id":"coverflow-trackpad","targetid":"coverflow-trackpad"})';
+		  sendMessage(message, true);
+		});
 }
 
 function loadedMetadataCoverflow() {
 	$("#coverflow-currenttime").text(formatTime(0));
-	$("#coverflow-totaltime").text(formatTime($("#coverflow-audioplayer")[0].duration));
+	$("#coverflow-totaltime").text(formatTime($("#audiop")[0].duration));
 }
 
 function updateTimeCoverflow() {
-	$("#coverflow-currenttime").text(formatTime($("#coverflow-audioplayer")[0].currentTime));
-	$("#coverflow-seekbar").val((100 / $("#coverflow-audioplayer")[0].duration) * $("#coverflow-audioplayer")[0].currentTime);
+	$("#coverflow-currenttime").text(formatTime($("#audiop")[0].currentTime));
+	$("#coverflow-seekbar").val((100 / $("#audiop")[0].duration) * $("#audiop")[0].currentTime);
 }

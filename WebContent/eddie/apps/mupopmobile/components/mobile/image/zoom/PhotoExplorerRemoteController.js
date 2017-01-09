@@ -4,6 +4,7 @@ var $wrapper;
 var $trackpad;
 var ratio = 4 / 3;
 var timeout = null;
+var interval = 50;
 
 var pinching = false;
 var scale = null;
@@ -21,23 +22,23 @@ PhotoExplorerRemoteController.update = function(vars, data){
 
 		vars["loaded"] = true;	
 		
-		$("#audioplayer").on("loadedmetadata", loadedMetadata);
-		$("#audioplayer").on("timeupdate", updateTime);
-		$("#audioplayer").on('play', function() {
+		$("#audiop").on("loadedmetadata", loadedMetadata);
+		$("#audiop").on("timeupdate", updateTime);
+		$("#audiop").on('play', function() {
 			$("#play").addClass("fa-pause-circle");
 			$("#play").removeClass("fa-play-circle");
 		});
 	      
-		$("#audioplayer").on('pause', function() {
+		$("#audiop").on('pause', function() {
 			$("#play").addClass("fa-play-circle");
 			$("#play").removeClass("fa-pause-circle");
 		});
 		
 		$("#play").on('click', function() {
-			 if ($("#audioplayer")[0].paused) {
-				 $("#audioplayer")[0].play();
+			 if ($("#audiop")[0].paused) {
+				 $("#audiop")[0].play();
 			 } else {
-				 $("#audioplayer")[0].pause();
+				 $("#audiop")[0].pause();
 			 }
 		});
 		
@@ -54,38 +55,15 @@ PhotoExplorerRemoteController.update = function(vars, data){
 				$("#text").removeClass("fa-square-o");
 			}
 		});
-		
-		//IOS init for automatically playing audio
-		$("#trackpad").on("touchstart", initAudio);
 	}
 	
 	var command = data['command'];
 	var targetId = '#'+data['targetid']; 
 		
 	if (command == "update") {		
-		if ($("#audiosrc").attr("src") != data['src']) {		
-			$("#audiosrc").attr("src", data['src']);
-			$("#textreader_text").text(data['text']);
-			$("#audioplayer").trigger("load").trigger("play");
 			
-			$("#audioplayer").on('canplaythrough', audioLoaded);
-
-			// If the video is in the cache of the browser,
-			// the 'canplaythrough' event might have been triggered
-			// before we registered the event handler.
-			if ($("#audioplayer")[0].readyState > 3) {
-			  audioLoaded();
-			}
-		}	 else {
-			//triggered same audio again, this prevents infinite spinner
-			audioLoaded();
-		}	
 	}
 };
-
-function initAudio() {
-	$("#audioplayer").trigger("play");
-}
 
 function loadedMetadata() {
 	$("#currenttime").text(formatTime(0));
@@ -187,46 +165,56 @@ jQuery(window).on('resize', resize);
 
 function init_photoexplorer() {
 	resize();
-	
-	var hTrackpad = new Hammer(trackpad);
-	//var hTrackpad = new Hammer.Manager(trackpad);
 
-	//hTrackpad.add( new Hammer.Pinch());
-	//hTrackpad.add( new Hammer.Swipe());
+	var hTrackpad = new Hammer.Manager(trackpad);
+
+	hTrackpad.add( new Hammer.Tap());
+	hTrackpad.add( new Hammer.Swipe());
+	hTrackpad.add( new Hammer.Pinch());
+
+	/**
+	 * Tap 
+	 */
+	hTrackpad.on('tap', function(event){
+		var data = {
+			id: 'photoexplorer-trackpad',
+			targetid: 'photoexplorer-trackpad',
+			origin: {
+				x: 0,
+				y: 0
+			},
+			action: 'scale',
+			value: 1.0
+		};
+			
+		scale = 1;
+		lastScale = 1;
+		
+		var message = 'event(photoexplorer-trackpad/pinch, '+JSON.stringify(data)+')';
+		sendMessage(message);
+	});
 	
-	/*hTrackpad.get('pinch').set({ enable: true });*/
-	
+	/** 
+	 * Swipe gestures
+	 */
 	hTrackpad.on('swipeleft', function(event) {
+		event.preventDefault();
 		var message = 'event(photoexplorer-trackpad/swiperight,{"id":"photoexplorer-trackpad","targetid":"photoexplorer-trackpad"})';
 		sendMessage(message, true);
-		event.preventDefault();
-	})
+	});
 	
 	hTrackpad.on('swiperight', function(event) {
+		event.preventDefault();
 		var message = 'event(photoexplorer-trackpad/swipeleft,{"id":"photoexplorer-trackpad","targetid":"photoexplorer-trackpad"})';
 		sendMessage(message, true);
-		event.preventDefault();
-	})
-	/*
-	hTrackpad.on('pinchin', function(event) {
-		var message = 'event(photoexplorer-trackpad/pinchin,{"id":"photoexplorer-trackpad","targetid":"photoexplorer-trackpad"})';
-		sendMessage(message, true);
-		event.preventDefault();
-	})
-	
-	hTrackpad.on('pinchout', function(event) {
-		var message = 'event(photoexplorer-trackpad/pinchout,{"id":"photoexplorer-trackpad","targetid":"photoexplorer-trackpad"})';
-		sendMessage(message, true);
-		event.preventDefault();
-	})*/
+	});
 	
 	/**
 	 * Handle pinching gesture
 	 */
-	/*
+	
 	hTrackpad.on('pinchstart', function(event){
-		//if(getMode() === "transformer")
-			pinching = true;
+		pinching = true;
 	});
 	
 	hTrackpad.on('pinchend', function(event){
@@ -234,44 +222,42 @@ function init_photoexplorer() {
 	});
 	
 	hTrackpad.on('pinchin pinchout', function(event){
-		//if(getMode() === "transformer"){
-			var rect = trackpad.getBoundingClientRect();
+		var rect = trackpad.getBoundingClientRect();
 			
-			var pinchRect = getTouchRect(event.pointers);
+		var pinchRect = getTouchRect(event.pointers);
 			
-			var pinchXOrigin = pinchRect.left + (pinchRect.right - pinchRect.left) / 2;
-			var pinchYOrigin = pinchRect.top + (pinchRect.bottom - pinchRect.top) / 2;
+		var pinchXOrigin = pinchRect.left + (pinchRect.right - pinchRect.left) / 2;
+		var pinchYOrigin = pinchRect.top + (pinchRect.bottom - pinchRect.top) / 2;
+						
+		var relativeXOrigin = pinchXOrigin - rect.left;
+		var relativeYOrigin = pinchYOrigin - rect.top;
 			
+		var rectWidth = rect.right - rect.left;
+		var rectHeight = rect.bottom - rect.top;
 					
-			var relativeXOrigin = pinchXOrigin - rect.left;
-			var relativeYOrigin = pinchYOrigin - rect.top;
+		var xPercentage = relativeXOrigin / rectWidth * 100;
+		var yPercentage = relativeYOrigin / rectHeight * 100;		
 			
-			var rectWidth = rect.right - rect.left;
-			var rectHeight = rect.bottom - rect.top;
-					
-			var xPercentage = relativeXOrigin / rectWidth * 100;
-			var yPercentage = relativeYOrigin / rectHeight * 100;		
+		scale = lastScale ? event.scale * lastScale : event.scale;
 			
-			scale = lastScale ? event.scale * lastScale : event.scale;
+		var data = {
+			id: 'photoexplorer-trackpad',
+			targetid: 'photoexplorer-trackpad',
+			origin: {
+				x: Math.round(xPercentage),
+				y: Math.round(yPercentage)
+			},
+			action: 'scale',
+			value: scale
+		};
 			
-			var data = {
-				origin: {
-					x: Math.round(xPercentage),
-					y: Math.round(yPercentage)
-				},
-				action: 'scale(' + scale + ')'
-			};
-			
-			var message = "transformSlide(" + JSON.stringify(data) + ")";
-			
-			sendMessage(message);
-		//}
+		var message = 'event(photoexplorer-trackpad/pinch, '+JSON.stringify(data)+')';
+		sendMessage(message);
 	});
 	
 	hTrackpad.on('pinchend', function(event){
-		//if(getMode() === "transformer")
-			pinching = false;
-	});*/
+		pinching = false;
+	});
 }
 
 function getTouchRect(touches){

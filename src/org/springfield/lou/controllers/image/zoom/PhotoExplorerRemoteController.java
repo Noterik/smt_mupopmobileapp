@@ -53,8 +53,7 @@ public class PhotoExplorerRemoteController extends Html5Controller {
 	
 	screen.get("#photoexplorer-trackpad").on("swipeleft","swipeLeft", this);
 	screen.get("#photoexplorer-trackpad").on("swiperight","swipeRight", this);
-	screen.get("#photoexplorer-trackpad").on("pinchin","pinchIn", this);
-	screen.get("#photoexplorer-trackpad").on("pinchout","pinchOut", this);
+	screen.get("#photoexplorer-trackpad").on("pinch","pinch", this);
 	 
 	JSONObject d = new JSONObject();	
 	d.put("command","init");
@@ -63,21 +62,35 @@ public class PhotoExplorerRemoteController extends Html5Controller {
     
     public void swipeLeft(Screen s, JSONObject data) {
 	FsNode message = new FsNode("message",screen.getId());
-    	message.setProperty("action","left");
+    	message.setProperty("action","leftonzoom");
 	model.notify("@stationevents/fromclient",message);
     }
     
     public void swipeRight(Screen s, JSONObject data) {
 	FsNode message = new FsNode("message",screen.getId());
-    	message.setProperty("action","right");
+    	message.setProperty("action","rightonzoom");
 	model.notify("@stationevents/fromclient",message);
     }
     
-    public void pinchIn(Screen s, JSONObject data) {
-	System.out.println("Pinchin in photo explorer");
-    }
-    
-    public void pinchOut(Screen s, JSONObject data) {
-	System.out.println("Pinchout in photo explorer");
+    public void pinch(Screen s, JSONObject data) {
+	FsNode message = new FsNode("message",screen.getId());
+    	
+    	JSONObject origin = (JSONObject) data.get("origin");
+    	String  x = Long.toString((long) origin.get("x"));
+    	String  y = Long.toString((long) origin.get("y"));
+    	String value;
+    	
+    	try {
+    	    value = Double.toString((double) data.get("value"));
+    	} catch (ClassCastException e) {
+    	    value = Long.toString((long) data.get("value"));
+    	}
+    	
+    	
+    	message.setProperty("action","scale");
+    	message.setProperty("originX", x);
+    	message.setProperty("originY", y);
+    	message.setProperty("value", value);
+	model.notify("@stationevents/fromclient",message);
     }
 }

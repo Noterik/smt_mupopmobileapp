@@ -87,24 +87,24 @@ public class StationCodeSelectionRemoteController extends Html5Controller {
     	String trycode = alphacode+numbercode;
     	
     	FSList stations = model.getList("@stations"); // check all the active stations
-		List<FsNode> nodes = stations.getNodes();
-		if (nodes != null) {
-			for (Iterator<FsNode> iter = nodes.iterator(); iter.hasNext();) {
-				FsNode node = (FsNode) iter.next();
-		    	String correctcode = node.getProperty("codeselect");
-		    	if (correctcode!=null && correctcode.equals(trycode)) {
-		    		System.out.println("CORRECT CODE SELECTED !!!");
-		        	screen.removeContent(selector.substring(1));
-		        	model.setProperty("@stationid",node.getId());
-		        	FsNode message = new FsNode("message",screen.getId());
-		        	message.setProperty("request","station");
-		        	message.setProperty("@stationid", node.getId());
-		    		model.notify("@stationevents/fromclient",message);
-		    		return;
-		    	}
-			}
-		}
-		fillPage();
+	List<FsNode> nodes = stations.getNodes();
+	if (nodes != null) {
+	    for (Iterator<FsNode> iter = nodes.iterator(); iter.hasNext();) {
+		FsNode node = (FsNode) iter.next();
+		String correctcode = node.getProperty("codeselect");
+	    	if (correctcode!=null && correctcode.equals(trycode)) {
+	    	    System.out.println("CORRECT CODE SELECTED !!!");
+	    	    screen.removeContent(selector.substring(1));
+		    model.setProperty("@stationid",node.getId());
+		    FsNode message = new FsNode("message",screen.getId());
+		    message.setProperty("request","station");
+		    message.setProperty("@stationid", node.getId());
+		    model.notify("@stationevents/fromclient",message);
+		    return;
+	    	}
+	    }
+	}
+	fillPage();
      }
     
     private void fillAlphaCodes(JSONObject data) {
