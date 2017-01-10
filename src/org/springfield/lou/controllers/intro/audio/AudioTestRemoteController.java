@@ -62,6 +62,7 @@ public class AudioTestRemoteController extends Html5Controller {
 	}
 
 	public void onStartClicked(Screen s,JSONObject data) {
+		System.out.println("START CLICKED");
 	    screen.get(selector).remove();
 	    screen.get("#mobile").update(new JSONObject());
 	    FsNode message = new FsNode("message",screen.getId());

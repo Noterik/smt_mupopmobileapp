@@ -15,16 +15,16 @@ import org.springfield.lou.model.ModelEvent;
 import org.springfield.lou.screen.Screen;
 
 public class InteractiveVideoRemoteController extends Html5Controller  {
-	
+
 	FSList list;
 	String stationid;
 	String exhibitionid;
 	String timeline;
-	
+
 	public InteractiveVideoRemoteController() {
-		
+
 	}
-	
+
 	public void attach(String sel) {
 		selector = sel;
 		stationid = model.getProperty("@stationid");
@@ -39,18 +39,18 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
  		jso.put("url", audioUrl);
 		screen.get(selector).render(jso);
 		screen.get(selector).loadScript(this);
-		
+
 		model.notify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/userJoined");
-		
+
 		String isPlaying = model.getProperty("/shared/app/interactivevideo/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/isplaying");
 		if (isPlaying != null && isPlaying.equals("true"))
  			playAudio();
 		onClockUpdate(new ModelEvent());
-		*/
-		
+		 */
+
 		//screen.get("#language_select").on("click", "onLanguageSelect", this);
 		//screen.get("#audio_problem").on("click", "onAudioProblem", this);
-		
+
 		//add event listeners
 		//model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/play", "onPlayEvent", this);
 		//model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/pause", "onPauseEvent", this);
@@ -60,13 +60,13 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 
 		//time based event listeners
 		//model.onTimeLineNotify("/domain/mupop/user/daniel/exhibition/"+exhibitionid+"/station/"+stationid+"/video/1","/shared/mupop/exhibition/"+exhibitionid+"/station/"+ stationid+"/currenttime","starttime","duration","onTimeLineEvent",this);
-	
-    	FsNode message = new FsNode("message",screen.getId());
-    	message.setProperty("action","playrequest"); // lets ask the station for the audio we need to play and where to listen for events
+
+		FsNode message = new FsNode("message",screen.getId());
+		message.setProperty("action","playrequest"); // lets ask the station for the audio we need to play and where to listen for events
 		model.notify("@stationevents/fromclient",message);
 		model.onPropertiesUpdate("/screen/audiocommand","onAudioCommandFromServer", this);
 	}
-	
+
 	public void onAudioCommandFromServer(ModelEvent e) {
 		System.out.println("GOT BACK AUDIO COMMAND="+e);
 		FsPropertySet ps = (FsPropertySet)e.target;
@@ -76,17 +76,17 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 			System.out.println("AUDIO URL="+audiourl);
 			timeline = ps.getProperty("timeline");
 			System.out.println("AUDIO timeline="+timeline);
-	    	JSONObject audiocmd = new JSONObject();
-	    	audiocmd.put("action","play");
-	    	audiocmd.put("src",audiourl);
-	    	screen.get("#mobile").update(audiocmd);
+			JSONObject audiocmd = new JSONObject();
+			audiocmd.put("action","play");
+			audiocmd.put("src",audiourl);
+			screen.get("#mobile").update(audiocmd);
 			model.onTimeLineNotify(timeline,"/shared/mupop/exhibition/"+exhibitionid+"/station/"+ stationid+"/currenttime","starttime","duration","onTimeLineEvent",this);
 
 		}
 	}
-	
-	
-	
+
+
+
 	public FsNode getCurrentFsNode(double time) {
 		FsNode match = null;
 		double nextstarttime = 1000000000;
@@ -103,19 +103,19 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 		}
 		return match;
 	}
-	
-	
+
+
 	public void onLanguageSelect(Screen s, JSONObject data){
 		screen.get("#mobile").append("div", "languageselectionmupopremote", new LanguageSelectionRemoteControllerMupop());
 		screen.get(selector).remove();
 	}
-	
+
 	public void onAudioProblem(Screen s, JSONObject data){
 		System.out.println("AUDIO PROBLEM CLICKED!");
 		screen.get(selector).hide();
 		screen.get("#mobile").append("div", "audiocheck", new AudioCheckController());
 	}
-	
+
 	public void onTimeLineEvent(ModelEvent e) {
 		if (e.eventtype==ModelBindEvent.TIMELINENOTIFY_ENTER) {
 			if(e.getTargetFsNode().getName().equals("question")){
@@ -125,7 +125,7 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 				String questionpath=timeline+"['"+e.getTargetFsNode().getId()+"']";
 				model.setProperty("/screen['vars']/fullquestionpath",questionpath);
 				screen.get("#mobile").append("div", "questionnaire", new QuestionController());
-				
+
 			}
 		} else if (e.eventtype==ModelBindEvent.TIMELINENOTIFY_LEAVE) {
 			if(e.getTargetFsNode().getName().equals("question")){
@@ -136,33 +136,33 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 			}
 		}
 	}
-	
+
 	public void onPlayEvent(ModelEvent e){
 		System.out.println("Play Event");
 		playAudio();
-		
+
 	}
-	
+
 	public void onPauseEvent(ModelEvent e){
 		System.out.println("Pause Event");
 		pauseAudio();
-		
+
 	}
-	
+
 	public void pauseAudio(){
 		JSONObject nd = new JSONObject();
 		nd.put("action","pause");
 		nd.put("target", "audiop");
 		screen.get(selector).update(nd);
 	}
-	
+
 	public void playAudio(){
 		JSONObject nd = new JSONObject();
 		nd.put("action","play");
 		nd.put("target", "audiop");
 		screen.get(selector).update(nd);
 	}
-	
+
 	public void onClockUpdate(ModelEvent e) {
 		String stationid = model.getProperty("@stationid");
 		String exhibitionid = model.getProperty("@exhibitionid");
@@ -174,7 +174,7 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 		else 
 			time = Double.parseDouble(s);
 		FsNode fsn = getCurrentFsNode(time);
-		
+
 		nd.put("action","wantedtime");
 		nd.put("target", "audiop");
 		nd.put("wantedtime", model.getProperty("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/wantedtime"));
@@ -184,7 +184,7 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 			nd.put("endsAt", (fsn.getStarttime()));
 		screen.get(selector).update(nd);		
 	}
-	
+
 	public void onExhibitionEnd(ModelEvent e){
 		System.out.println("Remote:: Exhibition ended");
 		screen.get("#audiocheck").remove();
@@ -192,7 +192,7 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 		screen.get("#interactivevideoremote").remove();
 		screen.get("#mobile").append("div", "exhibitionend", new ExhibitionEndController());
 	}
-	
+
 	public void destroyed() {
 		super.destroyed();
 	}
