@@ -13,6 +13,7 @@
 		<videoid>/screen['vars']/videoid</videoid>
 		<oldroomid>/screen['vars']/oldroomid</oldroomid>
 		<roomname>/screen['vars']/roomname</roomname>
+		<appstate>/shared['app']/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/appstate</appstate>
 
 		<language_language_screen>/domain['mupop']/config['languages']/default['apps']/intro['languagescreen']</language_language_screen>
 		<language_audio_test_screen>/domain['mupop']/config['languages']/default['apps']/intro['audiotestscreen']</language_audio_test_screen>

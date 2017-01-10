@@ -148,18 +148,21 @@ function init_selection() {
 	}
 	
 	hTrackpad.on('swipeleft', function(event) {
+		console.log("swipe left");
 		var message = 'event(coverflow-trackpad/swiperight,{"id":"coverflow-trackpad","targetid":"coverflow-trackpad"})';
 		sendMessage(message, true);
 		event.preventDefault();
 	})
 	
 	hTrackpad.on('swiperight', function(event) {
+		console.log("swipe right");
 		var message = 'event(coverflow-trackpad/swipeleft,{"id":"coverflow-trackpad","targetid":"coverflow-trackpad"})';
 		sendMessage(message, true);
 		event.preventDefault();
 	})
 	
 	hTrackpad.on('tap', function(event) {
+		console.log("tap detected");
 		if (canTap) {
 			canTap = false;
 			var message = 'event(coverflow-trackpad/enter,{"id":"coverflow-trackpad","targetid":"coverflow-trackpad"})';
@@ -172,10 +175,11 @@ function init_selection() {
 	})
 	
 	$trackpad.on('mousedown ', function(event){
-		  event.preventDefault();
-		  var message = 'event(coverflow-trackpad/enter,{"id":"coverflow-trackpad","targetid":"coverflow-trackpad"})';
-		  sendMessage(message, true);
-		});
+		console.log("mousedown detected");  
+		event.preventDefault();
+		var message = 'event(coverflow-trackpad/enter,{"id":"coverflow-trackpad","targetid":"coverflow-trackpad"})';
+		sendMessage(message, true);
+	});
 }
 
 function loadedMetadataCoverflow() {
