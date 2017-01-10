@@ -167,7 +167,7 @@ public class MobileController extends Html5Controller {
 			} else if (app.equals("photoinfospots")) {
 				screen.get("#mobile").append("div","photoinfospotsremote",new PhotoInfoSpotsRemoteController());
 			} else if (app.equals("interactivevideo")) {
-				screen.get("#mobile").append("div","interactivevideoremoteholder", new InteractiveVideoHolderController());
+				screen.get("#mobile").append("div","interactivevideoremote", new InteractiveVideoRemoteController());
 			}
 		} else {
 			//TODO: should display error that no app was selected and curator should set it

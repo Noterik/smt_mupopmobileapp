@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 import org.springfield.fs.FSList;
 import org.springfield.fs.FSListManager;
 import org.springfield.fs.FsNode;
+import org.springfield.fs.FsPropertySet;
 import org.springfield.lou.controllers.Html5Controller;
 import org.springfield.lou.controllers.intro.language.LanguageSelectionRemoteControllerMupop;
 import org.springfield.lou.model.ModelBindEvent;
@@ -18,6 +19,7 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 	FSList list;
 	String stationid;
 	String exhibitionid;
+	String timeline;
 	
 	public InteractiveVideoRemoteController() {
 		
@@ -25,6 +27,9 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 	
 	public void attach(String sel) {
 		selector = sel;
+		stationid = model.getProperty("@stationid");
+		exhibitionid = model.getProperty("@exhibitionid");
+		/*
 		stationid = model.getProperty("@stationid");
 		exhibitionid = model.getProperty("@exhibitionid");
 		FsNode audio_settings = model.getNode("/domain/mupop/user/daniel/exhibition/"+exhibitionid+"/station/"+stationid+"/video/1/audio/1/");
@@ -41,21 +46,46 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 		if (isPlaying != null && isPlaying.equals("true"))
  			playAudio();
 		onClockUpdate(new ModelEvent());
+		*/
 		
-		screen.get("#language_select").on("click", "onLanguageSelect", this);
-		screen.get("#audio_problem").on("click", "onAudioProblem", this);
+		//screen.get("#language_select").on("click", "onLanguageSelect", this);
+		//screen.get("#audio_problem").on("click", "onAudioProblem", this);
 		
 		//add event listeners
-		model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/play", "onPlayEvent", this);
-		model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/pause", "onPauseEvent", this);
-		model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/wantedtime", "onClockUpdate", this);
-		model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/exhibitionEnded", "onExhibitionEnd", this);
-		list = FSListManager.get("/domain/mupop/user/daniel/exhibition/"+exhibitionid+"/station/"+stationid+"/video/1",false);
+		//model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/play", "onPlayEvent", this);
+		//model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/pause", "onPauseEvent", this);
+		//model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/wantedtime", "onClockUpdate", this);
+		//model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/exhibitionEnded", "onExhibitionEnd", this);
+		//list = FSListManager.get("/domain/mupop/user/daniel/exhibition/"+exhibitionid+"/station/"+stationid+"/video/1",false);
 
 		//time based event listeners
-		model.onTimeLineNotify("/domain/mupop/user/daniel/exhibition/"+exhibitionid+"/station/"+stationid+"/video/1","/shared/mupop/exhibition/"+exhibitionid+"/station/"+ stationid+"/currenttime","starttime","duration","onTimeLineEvent",this);
-		
+		//model.onTimeLineNotify("/domain/mupop/user/daniel/exhibition/"+exhibitionid+"/station/"+stationid+"/video/1","/shared/mupop/exhibition/"+exhibitionid+"/station/"+ stationid+"/currenttime","starttime","duration","onTimeLineEvent",this);
+	
+    	FsNode message = new FsNode("message",screen.getId());
+    	message.setProperty("action","playrequest"); // lets ask the station for the audio we need to play and where to listen for events
+		model.notify("@stationevents/fromclient",message);
+		model.onPropertiesUpdate("/screen/audiocommand","onAudioCommandFromServer", this);
 	}
+	
+	public void onAudioCommandFromServer(ModelEvent e) {
+		System.out.println("GOT BACK AUDIO COMMAND="+e);
+		FsPropertySet ps = (FsPropertySet)e.target;
+		String action = ps.getProperty("action");
+		if (action.equals("playaudio")) {
+			String audiourl = ps.getProperty("audiourl");
+			System.out.println("AUDIO URL="+audiourl);
+			timeline = ps.getProperty("timeline");
+			System.out.println("AUDIO timeline="+timeline);
+	    	JSONObject audiocmd = new JSONObject();
+	    	audiocmd.put("action","play");
+	    	audiocmd.put("src",audiourl);
+	    	screen.get("#mobile").update(audiocmd);
+			model.onTimeLineNotify(timeline,"/shared/mupop/exhibition/"+exhibitionid+"/station/"+ stationid+"/currenttime","starttime","duration","onTimeLineEvent",this);
+
+		}
+	}
+	
+	
 	
 	public FsNode getCurrentFsNode(double time) {
 		FsNode match = null;
@@ -89,10 +119,12 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 	public void onTimeLineEvent(ModelEvent e) {
 		if (e.eventtype==ModelBindEvent.TIMELINENOTIFY_ENTER) {
 			if(e.getTargetFsNode().getName().equals("question")){
-				pauseAudio();
+				//pauseAudio();
 				//start question controller
 				screen.get(selector).hide();
-				screen.get("#mobile").append("div", "questionnaire", new QuestionController(e.getTargetFsNode()));
+				String questionpath=timeline+"['"+e.getTargetFsNode().getId()+"']";
+				model.setProperty("/screen['vars']/fullquestionpath",questionpath);
+				screen.get("#mobile").append("div", "questionnaire", new QuestionController());
 				
 			}
 		} else if (e.eventtype==ModelBindEvent.TIMELINENOTIFY_LEAVE) {
@@ -100,7 +132,7 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 				//remove question controller and play
 				screen.get("#questionnaire").remove();
 				screen.get(selector).show();
-				playAudio();
+				//playAudio();
 			}
 		}
 	}
