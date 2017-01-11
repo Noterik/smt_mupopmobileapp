@@ -21,6 +21,7 @@
 package org.springfield.lou.controllers.image.zoom;
 
 import org.json.simple.JSONObject;
+import org.springfield.fs.FSList;
 import org.springfield.fs.FsNode;
 import org.springfield.lou.controllers.Html5Controller;
 import org.springfield.lou.screen.Screen;
@@ -42,10 +43,19 @@ public class PhotoExplorerRemoteController extends Html5Controller {
 	JSONObject data = new JSONObject();
 	
 	String path = model.getProperty("/screen/exhibitionpath");
+	String userLanguage = model.getProperty("@userlanguage");
+	String audiosrc = "";
 	
 	FsNode stationnode = model.getNode(path+"/station/"+model.getProperty("@stationid"));
 	if (stationnode != null) {
+	    FsNode item = model.getNode("@item");
+	    
 	    data.put("title", stationnode.getSmartProperty("en", "title"));
+	    audiosrc = item.getProperty("voiceover");
+	    
+	    FsNode language_content = model.getNode("@language_photoexplore_main_screen");
+	    data.put("helptext1", language_content.getSmartProperty(userLanguage, "pinch_help_text"));
+	    data.put("helptext2", language_content.getSmartProperty(userLanguage, "swipe_help_text"));
 	}
 
 	screen.get(selector).render(data);
@@ -55,6 +65,11 @@ public class PhotoExplorerRemoteController extends Html5Controller {
 	screen.get("#photoexplorer-trackpad").on("swiperight","swipeRight", this);
 	screen.get("#photoexplorer-trackpad").on("pinch","pinch", this);
 	 
+	JSONObject audiocmd = new JSONObject();
+	audiocmd.put("action","play");
+	audiocmd.put("src",audiosrc);
+	screen.get("#mobile").update(audiocmd);
+	
 	JSONObject d = new JSONObject();	
 	d.put("command","init");
 	screen.get(selector).update(d);

@@ -11,14 +11,18 @@
 		<roomid>/screen['vars']/roomid</roomid>
 		<imageid>/screen['vars']/imageid</imageid>
 		<videoid>/screen['vars']/videoid</videoid>
+		<contentrole>/screen['vars']/contentrole</contentrole>
+		<itemid>/shared['app']/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/itemid</itemid>
 		<oldroomid>/screen['vars']/oldroomid</oldroomid>
 		<roomname>/screen['vars']/roomname</roomname>
 		<appstate>/shared['app']/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/appstate</appstate>
+		<coverflowplayed>/screen['vars']/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/played</coverflowplayed>
 
 		<language_language_screen>/domain['mupop']/config['languages']/default['apps']/intro['languagescreen']</language_language_screen>
 		<language_audio_test_screen>/domain['mupop']/config['languages']/default['apps']/intro['audiotestscreen']</language_audio_test_screen>
 		<language_station_code_selection_screen>/domain['mupop']/config['languages']/default['apps']/intro['stationcodeselection']</language_station_code_selection_screen>
 		<language_photoexplore_coverflow_screen>/domain['mupop']/config['languages']/default['apps']/photoexplore['coverflow']</language_photoexplore_coverflow_screen>
+		<language_photoexplore_main_screen>/domain['mupop']/config['languages']/default['apps']/photoexplore['main']</language_photoexplore_main_screen>
 
 	 	<exhibitions>/domain['mupop']/user['@username']/exhibition</exhibitions>
 	    <exhibition>/domain['mupop']/user['@username']/exhibition['@exhibitionid']</exhibition>
@@ -35,8 +39,13 @@
 		<help_topics>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/help</help_topics>
 		<help_topic>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/help['@helpid']</help_topic>
 		
+		<contentnode>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/content['@contentrole']</contentnode>
+		
+		
 		<images>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/image</images>
 		<image>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/image['@imageid']</image>
+		
+		<item>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/content['@contentrole']/item['@itemid']</item>
 		
 		<video>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/video['@videoid']</video>
 

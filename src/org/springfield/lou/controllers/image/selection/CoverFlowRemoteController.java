@@ -46,11 +46,15 @@ public class CoverFlowRemoteController extends Html5Controller {
 	
 	deviceid = model.getProperty("@deviceid");	
 	String userLanguage = model.getProperty("@userlanguage");
+	String audiosrc = "";
 	
 	FsNode stationnode = model.getNode(path+"/station/"+model.getProperty("@stationid"));
 	if (stationnode != null) {
 	    JSONObject data = new JSONObject();
 	    data.put("title", stationnode.getSmartProperty("en", "title"));
+	    
+	    FsNode contentnode = model.getNode("@contentnode");
+	    audiosrc = contentnode.getProperty("voiceover");
 	    
 	    FsNode language_content = model.getNode("@language_photoexplore_coverflow_screen");
     	    data.put("helptext1", language_content.getSmartProperty(userLanguage, "swipe_help_text"));
@@ -68,11 +72,24 @@ public class CoverFlowRemoteController extends Html5Controller {
 	    screen.get("#coverflow-trackpad").on("enter","enter", this);
 	    screen.get("#coverflow-help").on("click", "helpClicked", this);
 	    screen.get("#coverflow_previous").on("click", "previousPage", this);
-			
+	    
+	    JSONObject audiocmd = new JSONObject();
+	    
+	    String played = model.getProperty("@coverflowplayed");
+	    
+	    //only play on first time in coverflow, otherwise getting very annoying!
+	    if (played == null) {
+		audiocmd.put("action","play");
+		model.setProperty("@coverflowplayed", "true");
+	    } else {
+		audiocmd.put("action","load");
+	    }
+	    audiocmd.put("src",audiosrc);
+	    screen.get("#mobile").update(audiocmd);
+	    
 	    JSONObject d = new JSONObject();	
 	    d.put("command","init");
-	    d.put("audiosrc", language_content.getSmartProperty(userLanguage, "coverflow_intro_audio"));
-	    screen.get(selector).update(d);
+	     screen.get(selector).update(d);
 	}
     }
 	

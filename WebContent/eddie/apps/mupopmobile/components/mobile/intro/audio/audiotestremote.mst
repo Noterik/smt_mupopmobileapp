@@ -19,6 +19,7 @@
 </div>
 <div class="audio-bar col-xs-12">
 	<div class="row">
+		<audio id="audiotest-audioplayer" src="{{audiosrc}}"></audio>
 		<div id="audiotest-currenttime" class="col-xs-2">
 			--:--
 		</div>

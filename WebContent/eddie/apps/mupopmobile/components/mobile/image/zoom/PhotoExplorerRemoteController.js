@@ -24,6 +24,8 @@ PhotoExplorerRemoteController.update = function(vars, data){
 		
 		$("#audiop").on("loadedmetadata", loadedMetadata);
 		$("#audiop").on("timeupdate", updateTime);
+
+
 		$("#audiop").on('play', function() {
 			$("#play").addClass("fa-pause-circle");
 			$("#play").removeClass("fa-play-circle");
@@ -67,26 +69,32 @@ PhotoExplorerRemoteController.update = function(vars, data){
 
 function loadedMetadata() {
 	$("#currenttime").text(formatTime(0));
-	$("#totaltime").text(formatTime($("#audioplayer")[0].duration));
+	$("#totaltime").text(formatTime($("#audiop")[0].duration));
 }
 
 function updateTime() {
-	$("#currenttime").text(formatTime($("#audioplayer")[0].currentTime));
-	$("#seekbar").val((100 / $("#audioplayer")[0].duration) * $("#audioplayer")[0].currentTime);
+	$("#currenttime").text(formatTime($("#audiop")[0].currentTime));
+	$("#seekbar").val((100 / $("#audiop")[0].duration) * $("#audiop")[0].currentTime);
 }
 
 function startHelp() {
 	setTimeout(function(){
-		$("#help-text").hide();
-		$("#move-pointer-animation").hide();
-		$("#help-button").show();
-	}, 7500);
+		$("#help-text1").hide();
+		$("#pinch-zoom-animation").hide();
+		$("#help-text2").show();
+		$("#swipe-animation").show();
+		setTimeout(function() {
+			$("#help-text2").hide();
+			$("#swipe-animation").hide();
+			$("#help-button").show();
+		}, 4000);
+	}, 5000);
 }
 
 $("#help-button").on('touchstart click', function () {
 	$("#help-button").hide();
-	$("#help-text").show();
-	$("#move-pointer-animation").show();
+	$("#help-text1").show();
+	$("#pinch-zoom-animation").show();
 	startHelp();
 });
 
@@ -171,6 +179,7 @@ function init_photoexplorer() {
 	hTrackpad.add( new Hammer.Tap());
 	hTrackpad.add( new Hammer.Swipe());
 	hTrackpad.add( new Hammer.Pinch());
+	//hTrackpad.add( new Hammer.Pan());
 
 	/**
 	 * Tap 
@@ -258,6 +267,29 @@ function init_photoexplorer() {
 	hTrackpad.on('pinchend', function(event){
 		pinching = false;
 	});
+	
+	/*hTrackpad.on('pan', function(event){
+		var rect = trackpad.getBoundingClientRect();
+		var x = ( pointer.clientX - rect.left ) / (rect.right - rect.left) * 100;
+		var y = ( pointer.clientY - rect.top ) / (rect.bottom - rect.top) * 100;
+		 
+		points.x = x;
+		points.y = y;
+		
+		var data = {
+			id: 'photoexplorer-trackpad',
+			targetid: 'photoexplorer-trackpad',
+			origin: {
+				x: Math.round(xPercentage),
+				y: Math.round(yPercentage)
+			},
+			action: 'scale',
+			value: scale
+		};
+	      
+		var message = 'event(photoexplorer-trackpad/move, '+JSON.stringify(data)+')';
+		sendMessage(message);
+	});*/
 }
 
 function getTouchRect(touches){

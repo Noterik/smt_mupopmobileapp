@@ -14,9 +14,11 @@
 <div class="contents col-xs-12 fill-height">
 	<div class="trackpad-wrapper-spotting">
 		<div id="trackpad" class="trackpad">
-			<div id="help-text">{{helptext}}</div>
+			<div id="help-text1">{{helptext1}}</div>
+			<div id="help-text2">{{helptext2}}</div>
 			<div id="help-button" class="fa fa-question-circle"></div>
-			<img class="img-responsive" id="move-pointer-animation" src="http://images1.noterik.com/mupop/move-pointer.gif"/>	
+			<img class="img-responsive" id="pinch-zoom-animation" src="http://images1.noterik.com/mupop/pinch-zoom.gif"/>	
+			<img class="img-responsive" id="swipe-animation" src="http://images1.noterik.com/mupop/left-right-swipe.gif"/>
 		</div>
 		<div id="textreader">
 		<h3>{{transcript}}</h3>

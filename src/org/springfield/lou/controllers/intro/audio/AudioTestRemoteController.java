@@ -47,6 +47,7 @@ public class AudioTestRemoteController extends Html5Controller {
 	    data.put("title", model.getProperty("@language_audio_test_screen/title", userLanguage));
 	    data.put("explanation", model.getProperty("@language_audio_test_screen/explanation", userLanguage));
 	    data.put("start", model.getProperty("@language_audio_test_screen/start", userLanguage));
+	    data.put("audiosrc", model.getProperty("@language_audio_test_screen/audio", userLanguage));
 	    
 	    screen.get(selector).render(data);
 	    screen.get(selector).loadScript(this);
@@ -57,7 +58,6 @@ public class AudioTestRemoteController extends Html5Controller {
 
 	    JSONObject d = new JSONObject();	
 	    d.put("command","init");
-	    d.put("audiosrc", model.getProperty("@language_audio_test_screen/audio", userLanguage));
 	    screen.get(selector).update(d);
 	}
 

@@ -47,8 +47,9 @@ public class MobileController extends Html5Controller {
 		oldstate = state;
 		System.out.println("Mobile STEP="+state);
 
+		model.setProperty("@contentrole", state); 	//state and contentrole are the same ????
 		if (state.equals("init")) { // init the exhibition and probably show language selector
-			initStep(); 
+		    initStep(); 
 		} else if (state.equals("audiocheck")) { // perform the asked audio request
 			audioCheckStep();
 		} else if (state.equals("stationselect")) { // check station selection method if more than one station
@@ -57,7 +58,8 @@ public class MobileController extends Html5Controller {
 			model.onNotify("@stationevents/fromclient","onStationEvent",this);
 			contentSelectStep();
 		} else if (state.equals("mainapp") || model.getProperty("@appstate").equals("mainapp")) { // check station selection method if more than one station
-			model.onNotify("@stationevents/fromclient","onStationEvent",this);
+		    	model.setProperty("@contentrole", "mainapp"); // due to possibility to go here from another state is appstate = mainapp 
+		    	model.onNotify("@stationevents/fromclient","onStationEvent",this);
 			mainAppStep();
 		} else if (state.equals("feedback")) { // check station selection method if more than one station
 			feedbackStep();
@@ -76,23 +78,36 @@ public class MobileController extends Html5Controller {
 		if (languageselect!=null && !languageselect.equals("")) {
 			// so exhibition wants language selector
 			// first lets check if user already has one selected if so we skip on init state
-			
-
-			
 			String userLanguage = model.getProperty("@userlanguage");
 
 			System.out.println("USERLANGUAGE FROM 'COOKIE' "+userLanguage);
-			userLanguage = null;
+			//userLanguage = null;
 			if (userLanguage==null || userLanguage.equals("")) {
 				if (languageselect.equals("default")) {
 					screen.get("#mobile").append("div", "languageselectionremote", new LanguageSelectionRemoteController());
 				} else if (languageselect.equals("flags")) {
 					screen.get("#mobile").append("div", "languageselectionmupopremote", new LanguageSelectionRemoteControllerMupop());
+				} else {
+				    //set default language, pick first one
+				    String languages = model.getProperty("@exhibition/availablelanguages");
+				    String[] languageList = languages.split(",");
+				    
+				    System.out.println("Picking first language from list "+languageList[0]);
+				    
+				    model.setProperty("@userlanguage",languageList[0]);
 				}
 				model.setProperty("/screen/state","audiocheck"); 
 				return;
 			} 	
-		} 
+		} else {
+		    //set default language, pick first one
+		    String languages = model.getProperty("@exhibition/availablelanguages");
+		    String[] languageList = languages.split(",");
+		    
+		    System.out.println("Picking first language from list "+languageList[0]);
+		    
+		    model.setProperty("@userlanguage",languageList[0]);
+		}
 		// move to the next logical state
 		model.setProperty("/screen/state","audiocheck"); 
 		return;
@@ -190,16 +205,20 @@ public class MobileController extends Html5Controller {
 	public void onStationEvent(ModelEvent e) {
 		FsNode message = e.getTargetFsNode();
 		String request = message.getProperty("request");
-
+		
 		if (request!=null) { 
+		    model.setProperty("@contentrole", request);
 			if (request.equals("init")) {
-				resetScreen();
+				resetScreen();				
 				stationSelectStep();
 			} else if (request.equals("contentselect")) {
 				resetScreen();
 				contentSelectStep();
 			} else if (request.equals("mainapp")) {
 				resetScreen();
+				model.setProperty("/screen/state","mainapp");
+				System.out.println("Setting item id "+message.asXML());
+				model.setProperty("@itemid", message.getProperty("itemid"));
 				mainAppStep();
 			}
 		}

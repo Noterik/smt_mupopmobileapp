@@ -17,14 +17,8 @@ CoverFlowRemoteController.update = function(vars, data){
 
 		vars["loaded"] = true;	
 
-		if (data['audiosrc'] != undefined) {
-			$("#audiop source").attr("src", data['audiosrc']);
-			$("#audiop")[0].pause();
-			$("#audiop")[0].load();
-			$("#audiop")[0].play();
-			$("#audiop").on("loadedmetadata", loadedMetadataCoverflow);
-			$("#audiop").on("timeupdate", updateTimeCoverflow);
-		}		
+		$("#audiop").on("loadedmetadata", loadedMetadataCoverflow);
+		$("#audiop").on("timeupdate", updateTimeCoverflow);
 		
 		$("#audiop").on('play', function() {
 			$("#coverflow-play").addClass("fa-pause-circle");
