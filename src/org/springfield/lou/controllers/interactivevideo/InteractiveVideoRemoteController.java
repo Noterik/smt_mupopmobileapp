@@ -20,6 +20,7 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 	String stationid;
 	String exhibitionid;
 	String timeline;
+	long duration = -1;
 
 	public InteractiveVideoRemoteController() {
 
@@ -29,17 +30,13 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 		selector = sel;
 		stationid = model.getProperty("@stationid");
 		exhibitionid = model.getProperty("@exhibitionid");
-		/*
-		stationid = model.getProperty("@stationid");
-		exhibitionid = model.getProperty("@exhibitionid");
-		FsNode audio_settings = model.getNode("/domain/mupop/user/daniel/exhibition/"+exhibitionid+"/station/"+stationid+"/video/1/audio/1/");
-		String audioUrl = audio_settings.getSmartProperty(model.getProperty("@userlanguage"), "url");
-		System.out.println("Audio URL: " + audioUrl);
+		
  		JSONObject jso= new JSONObject(); 
- 		jso.put("url", audioUrl);
-		screen.get(selector).render(jso);
-		screen.get(selector).loadScript(this);
+ 		screen.get(selector).render(jso);
+		
+		//screen.get(selector).loadScript(this);
 
+ 		/*
 		model.notify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/userJoined");
 
 		String isPlaying = model.getProperty("/shared/app/interactivevideo/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/isplaying");
@@ -54,7 +51,7 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 		//add event listeners
 		//model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/play", "onPlayEvent", this);
 		//model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/pause", "onPauseEvent", this);
-		//model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/wantedtime", "onClockUpdate", this);
+		model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/wantedtime", "onClockUpdate", this);
 		//model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/exhibitionEnded", "onExhibitionEnd", this);
 		//list = FSListManager.get("/domain/mupop/user/daniel/exhibition/"+exhibitionid+"/station/"+stationid+"/video/1",false);
 
@@ -75,6 +72,11 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 			String audiourl = ps.getProperty("audiourl");
 			System.out.println("AUDIO URL="+audiourl);
 			timeline = ps.getProperty("timeline");
+			try {
+				duration = Long.parseLong(ps.getProperty("duration"))/1000;
+			} catch(Exception e2) {
+				e2.printStackTrace();
+			}
 			System.out.println("AUDIO timeline="+timeline);
 			JSONObject audiocmd = new JSONObject();
 			audiocmd.put("action","play");
@@ -137,12 +139,15 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 		}
 	}
 
+	/*
 	public void onPlayEvent(ModelEvent e){
 		System.out.println("Play Event");
 		playAudio();
 
 	}
+	*/
 
+	/*
 	public void onPauseEvent(ModelEvent e){
 		System.out.println("Pause Event");
 		pauseAudio();
@@ -162,17 +167,30 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 		nd.put("target", "audiop");
 		screen.get(selector).update(nd);
 	}
+	*/
+	
 
+	public void onClockUpdate(ModelEvent event) {
+		System.out.println("WANTED TIME="+event.getTargetFsNode().asXML());
+		JSONObject audiocmd = new JSONObject();
+		audiocmd.put("action","wantedtime");
+		audiocmd.put("wantedtime",event.getTargetFsNode().getId());
+		screen.get("#mobile").update(audiocmd);
+	}
+	
+	
+	/*
 	public void onClockUpdate(ModelEvent e) {
 		String stationid = model.getProperty("@stationid");
 		String exhibitionid = model.getProperty("@exhibitionid");
 		JSONObject nd = new JSONObject();
 		String s = model.getProperty("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/curPlayTime");
 		double time = 0;
-		if (s==null)
+		if (s==null) {
 			s = "";
-		else 
+		} else { 
 			time = Double.parseDouble(s);
+		}
 		FsNode fsn = getCurrentFsNode(time);
 
 		nd.put("action","wantedtime");
@@ -184,6 +202,7 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 			nd.put("endsAt", (fsn.getStarttime()));
 		screen.get(selector).update(nd);		
 	}
+	*/
 
 	public void onExhibitionEnd(ModelEvent e){
 		System.out.println("Remote:: Exhibition ended");

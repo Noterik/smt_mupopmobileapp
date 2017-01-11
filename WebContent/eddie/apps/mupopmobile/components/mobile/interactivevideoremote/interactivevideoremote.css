@@ -1,0 +1,35 @@
+#interactive_video_remote_totalcounter {
+	position: absolute;
+	left:10%;
+	top: 10%;
+	width:80%;
+	height:20%;
+}
+
+#interactive_video_remote_duration_min_text {
+	position: absolute;
+	left:10%;
+	top: 20%;
+}
+
+#interactive_video_remote_duration_min{
+	position: absolute;
+	left:20%;
+	top: 20%;
+}
+
+#interactive_video_remote_duration_sec_text {
+	position: absolute;
+	left:40%;
+	top: 20%;
+}
+
+#interactive_video_remote_duration_sec {
+	position: absolute;
+	left:50%;
+	top: 20%;
+}
+
+
+
+

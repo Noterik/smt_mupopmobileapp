@@ -60,6 +60,8 @@ public class QuestionController extends Html5Controller{
 		data.put("answers", anwers);
 		screen.get(selector).render(data);
 		
+	
+		screen.get(".answer").on("click", "onAnswer", this);
 		
 		/*
 		String question_text = model.getNode(question_data.getPath()+"/text/1").getSmartProperty(languageCode, "value");

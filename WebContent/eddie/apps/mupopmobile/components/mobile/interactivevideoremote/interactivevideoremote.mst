@@ -1,12 +1,11 @@
-<div id=audio_counter_container class="header_video col-xs-12" data-audio-url="{{url}}">
-	<div id="duration_text" class="col-xs-12">Duration</div>
-	<div id="duration_timer" class="col-xs-12">
-		<div id="duration_min" class="col-xs-3">2</div>
-		<div id="duration_min_text" class="col-xs-3">MIN</div>
-		<div id="duration_sec" class="col-xs-3">36</div>
-		<div id="duration_sec_text" class="col-xs-3">SEC</div>	
-	</div>
+<div id="interactive_video_remote_totalcounter">
+	<div id="interactive_video_remote_duration_text">Duration</div>
+	<div id="interactive_video_remote_duration_min">2</div>
+	<div id="interactive_video_remote_duration_min_text">MIN</div>
+	<div id="interactive_video_remote_duration_sec"">36</div>
+	<div id="interactive_video_remote_duration_sec_text">SEC</div>	
 </div>
+
 <div id=options_container class="col-xs-12">
 	<div id="language_select" class="option_container col-xs-12">
 		<div id="language_select_image" class="col-xs-1 fa fa-language"></div>
