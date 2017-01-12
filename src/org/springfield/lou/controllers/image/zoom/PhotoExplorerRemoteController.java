@@ -53,9 +53,13 @@ public class PhotoExplorerRemoteController extends Html5Controller {
 	    data.put("title", stationnode.getSmartProperty("en", "title"));
 	    audiosrc = item.getProperty("voiceover");
 	    
+	    System.out.println("contentnode = "+item.asXML());
+	    
 	    FsNode language_content = model.getNode("@language_photoexplore_main_screen");
 	    data.put("helptext1", language_content.getSmartProperty(userLanguage, "pinch_help_text"));
 	    data.put("helptext2", language_content.getSmartProperty(userLanguage, "swipe_help_text"));
+	    data.put("transcript",  language_content.getSmartProperty(userLanguage, "photoexplore_transcript"));
+	    data.put("transcript-text", item.getProperty("transcript"));
 	}
 
 	screen.get(selector).render(data);
@@ -64,6 +68,7 @@ public class PhotoExplorerRemoteController extends Html5Controller {
 	screen.get("#photoexplorer-trackpad").on("swipeleft","swipeLeft", this);
 	screen.get("#photoexplorer-trackpad").on("swiperight","swipeRight", this);
 	screen.get("#photoexplorer-trackpad").on("pinch","pinch", this);
+	screen.get("#photoexplore_previous").on("click", "previousPage", this);
 	 
 	JSONObject audiocmd = new JSONObject();
 	audiocmd.put("action","play");
@@ -101,11 +106,23 @@ public class PhotoExplorerRemoteController extends Html5Controller {
     	    value = Long.toString((long) data.get("value"));
     	}
     	
-    	
     	message.setProperty("action","scale");
     	message.setProperty("originX", x);
     	message.setProperty("originY", y);
     	message.setProperty("value", value);
 	model.notify("@stationevents/fromclient",message);
+    }
+    
+    public void previousPage(Screen s, JSONObject data) {	
+	System.out.println("Previous page requested");
+
+	FsNode message = new FsNode("message",screen.getId());
+	message.setProperty("action","");
+	message.setProperty("request","contentselectforce");
+	model.notify("@stationevents/fromclient",message);
+	
+	FsNode m = new FsNode("message",screen.getId());
+	m.setProperty("request","contentselect");
+	model.notify("@stationevents/fromclient",m);
     }
 }

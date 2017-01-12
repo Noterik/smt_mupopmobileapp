@@ -206,6 +206,8 @@ public class MobileController extends Html5Controller {
 		FsNode message = e.getTargetFsNode();
 		String request = message.getProperty("request");
 		
+		System.out.println("Station event received "+message.asXML());
+		
 		if (request!=null) { 
 		    model.setProperty("@contentrole", request);
 			if (request.equals("init")) {

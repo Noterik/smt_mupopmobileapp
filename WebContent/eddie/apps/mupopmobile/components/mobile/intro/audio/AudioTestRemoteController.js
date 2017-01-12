@@ -2,6 +2,7 @@ var AudioTestRemoteController = function(options) {}; // needed for detection
 
 AudioTestRemoteController.update = function(vars, data){		
 	
+	$("#audiotest-audioplayer").load();
 	
 	$("#audiotest-audioplayer").on("loadedmetadata", loadedMetadataAudioTest);
 	$("#audiotest-audioplayer").on("timeupdate", updateTimeAudioTest);

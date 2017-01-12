@@ -16,6 +16,7 @@
 
 .font-settings {
 	font-family: akzidenz-grotesk-condensed,bebas_neueregular,Helvetica Neue,Arial,sans-serif;
+	font-size: 14px;
 }
 
 html, body {
@@ -988,7 +989,8 @@ h3 {
 /** Photo explore **/
 
 #photoexplore_previous {
-	visibility: hidden;
+	z-index: 999;
+	cursor: pointer;
 }
 
 #photoexplore_help {

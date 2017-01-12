@@ -1,5 +1,4 @@
-var MobileController = function(options) {
-}; // needed for detection
+var MobileController = function(options) { }; // needed for detection
 
 function initAudio() {
 	//we only need the init to be triggered once
@@ -125,7 +124,7 @@ MobileController.update = function(vars, data){
 			break;
 		default:
 			break;
-		}
+	}
 }
 
 $("#mobile").on("click", initAudio);

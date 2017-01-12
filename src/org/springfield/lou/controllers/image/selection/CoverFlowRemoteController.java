@@ -47,6 +47,7 @@ public class CoverFlowRemoteController extends Html5Controller {
 	deviceid = model.getProperty("@deviceid");	
 	String userLanguage = model.getProperty("@userlanguage");
 	String audiosrc = "";
+	String transcript = "";
 	
 	FsNode stationnode = model.getNode(path+"/station/"+model.getProperty("@stationid"));
 	if (stationnode != null) {
@@ -62,7 +63,7 @@ public class CoverFlowRemoteController extends Html5Controller {
 
     	    data.put("audio", language_content.getSmartProperty(userLanguage, "coverflow_intro_audio"));
 	    data.put("transcript",  language_content.getSmartProperty(userLanguage, "coverflow_transcript"));
-	    data.put("transcript-text", language_content.getSmartProperty(userLanguage, "coverflow_transcript_text"));
+	    data.put("transcript-text", contentnode.getProperty("transcript"));
 	    
 	    screen.get(selector).render(data);
 	    screen.get(selector).loadScript(this);
@@ -96,18 +97,21 @@ public class CoverFlowRemoteController extends Html5Controller {
     public void swipeLeft(Screen s, JSONObject data) {
     	FsNode message = new FsNode("message",screen.getId());
     	message.setProperty("action","left");
-	model.notify("@stationevents/fromclient",message);
+	System.out.println("Swipe left received "+message.asXML());
+    	model.notify("@stationevents/fromclient",message);
     }
 	
     public void swipeRight(Screen s, JSONObject data) {
     	FsNode message = new FsNode("message",screen.getId());
     	message.setProperty("action","right");
+    	System.out.println("Swipe left received "+message.asXML());
 	model.notify("@stationevents/fromclient",message);
     }
 	
     public void enter(Screen s, JSONObject data) {
     	FsNode message = new FsNode("message",screen.getId());
     	message.setProperty("action","enter");
+    	System.out.println("Swipe left received "+message.asXML());
 	model.notify("@stationevents/fromclient",message);
     }
 	

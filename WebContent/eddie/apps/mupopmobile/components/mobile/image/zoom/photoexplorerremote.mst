@@ -22,7 +22,7 @@
 		</div>
 		<div id="textreader">
 		<h3>{{transcript}}</h3>
-		<div id="textreader_text">{{text}}</div>
+		<div id="textreader_text">{{transcript-text}}</div>
 		</div>
 	</div>
 </div>
