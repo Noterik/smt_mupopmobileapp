@@ -1,5 +1,5 @@
 <div id="interactive_video_remote_totalcounter">
-	<div id="interactive_video_remote_duration_text">Alles gezien over</div>
+	<div id="interactive_video_remote_duration_text">afspeelduur</div>
 	<div id="interactive_video_remote_duration_min">2</div>
 	<div id="interactive_video_remote_duration_min_text">MIN</div>
 	<div id="interactive_video_remote_duration_sec"">36</div>

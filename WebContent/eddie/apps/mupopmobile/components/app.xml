@@ -88,7 +88,6 @@
 		<template>mobile/interactivevideoremote/interactivevideoremote.mst</template>
 		<style>mobile/interactivevideoremote/interactivevideoremote.css</style>
 		<controller id="InteractiveVideoRemoteController">
-			<javascript>mobile/interactivevideoremote/interactivevideoremote.js</javascript>
 		</controller>
 	</view>
 	

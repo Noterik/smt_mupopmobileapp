@@ -117,21 +117,12 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 	
 
 	public void onClockUpdate(ModelEvent event) {
-		System.out.println("WANTED TIME="+event.getTargetFsNode().asXML());
 		JSONObject audiocmd = new JSONObject();
 		audiocmd.put("action","wantedtime");
 		audiocmd.put("wantedtime",event.getTargetFsNode().getId());
 		screen.get("#mobile").update(audiocmd);
 	}
 	
-
-	public void onExhibitionEnd(ModelEvent e){
-		System.out.println("Remote:: Exhibition ended");
-		screen.get("#audiocheck").remove();
-		screen.get("#questionnaire").remove();
-		screen.get("#interactivevideoremote").remove();
-		screen.get("#mobile").append("div", "exhibitionend", new ExhibitionEndController());
-	}
 
 	public void destroyed() {
 		super.destroyed();
