@@ -4,7 +4,7 @@ var $wrapper;
 var $trackpad;
 var ratio = 4 / 3;
 var timeout = null;
-var interval = 50;
+var interval = 25;
 
 var pinching = false;
 var scale = null;

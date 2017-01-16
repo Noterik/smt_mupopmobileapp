@@ -1,4 +1,4 @@
-<div class="header col-xs-12">
+<div id="coverflow-header" class="header col-xs-12">
 	<div class="row">
 		<div id="coverflow_previous" class="col-xs-2">
 			<i class="fa fa-arrow-left"></i>

@@ -68,7 +68,7 @@ public class PhotoExplorerRemoteController extends Html5Controller {
 	screen.get("#photoexplorer-trackpad").on("swipeleft","swipeLeft", this);
 	screen.get("#photoexplorer-trackpad").on("swiperight","swipeRight", this);
 	screen.get("#photoexplorer-trackpad").on("pinch","pinch", this);
-	screen.get("#photoexplore_previous").on("click", "previousPage", this);
+	screen.get("#photoexplorer-header").on("mouseup", "previousPage", this);
 	 
 	JSONObject audiocmd = new JSONObject();
 	audiocmd.put("action","play");

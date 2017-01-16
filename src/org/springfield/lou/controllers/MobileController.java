@@ -33,7 +33,6 @@ public class MobileController extends Html5Controller {
 
 		model.onPropertyUpdate("/screen/state","onStateChange",this);
 		model.setProperty("/screen/state","init"); // will trigger a event 
-		//screen.get("#screen").track("location","onGPSLocation", this);
 		System.out.println("ATTACH DONE");
 		screen.get(selector).render();
 	}

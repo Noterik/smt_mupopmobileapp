@@ -668,7 +668,8 @@ html, body {
 }
 
 #coverflow_previous {
-	visibility: hidden;
+	z-index: 999;
+	cursor: pointer;
 }
 
 #coverflow-help {

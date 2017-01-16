@@ -72,7 +72,7 @@ public class CoverFlowRemoteController extends Html5Controller {
 	    screen.get("#coverflow-trackpad").on("swiperight","swipeRight", this);
 	    screen.get("#coverflow-trackpad").on("enter","enter", this);
 	    screen.get("#coverflow-help").on("click", "helpClicked", this);
-	    screen.get("#coverflow_previous").on("click", "previousPage", this);
+	    screen.get("#coverflow-header").on("mouseup", "previousPage", this);
 	    
 	    JSONObject audiocmd = new JSONObject();
 	    
@@ -122,12 +122,8 @@ public class CoverFlowRemoteController extends Html5Controller {
 	    
 	model.notify("@photoinfospots/help/page", node);
     }
-	
+    
     public void previousPage(Screen s, JSONObject data) {	
-	FsNode node = new FsNode("goto", "audiotest");
-	node.setProperty("deviceid", deviceid);
-	node.setProperty("originalcontroller", "coverflowremote");
-	    
-	model.notify("@photoinfospots/intro/audiotest", node);
+	model.setProperty("/screen/state","stationselect");
     }
 }
