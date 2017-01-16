@@ -7,9 +7,12 @@ import java.util.Iterator;
 import org.json.simple.JSONObject;
 import org.springfield.fs.FsNode;
 import org.springfield.lou.controllers.Html5Controller;
+import org.springfield.lou.model.ModelEvent;
 import org.springfield.lou.screen.Screen;
 
 public class QuestionController extends Html5Controller{
+	
+	int countdown = 0;
 	
 	public QuestionController(){
 	}
@@ -17,9 +20,7 @@ public class QuestionController extends Html5Controller{
 	public void attach(String sel) {
 		selector = sel;
 		String languageCode = model.getProperty("@userlanguage");
-		
 		String questionpath = model.getProperty("/screen['vars']/fullquestionpath");
-		System.out.println("QUESTIONPATH="+questionpath);
 		
 		FsNode questionnode = model.getNode(questionpath) ;
 		
@@ -58,49 +59,49 @@ public class QuestionController extends Html5Controller{
 			anwers.add(a);
 		}
 		data.put("answers", anwers);
+		
+		model.setProperty("/screen['vars']/correctanswer",questionnode.getProperty("correctanswer"));
+		
 		screen.get(selector).render(data);
 		
 	
-		screen.get(".answer").on("click", "onAnswer", this);
+		screen.get(".interactivevideo_answer").on("click", "onAnswer", this);
 		
-		/*
-		String question_text = model.getNode(question_data.getPath()+"/text/1").getSmartProperty(languageCode, "value");
-		String duration = model.getNode(question_data.getPath()).getProperty("duration");
-		JSONObject data = new JSONObject();
-		data.put("duration", duration);
-		data.put("question", question_text);
-		System.out.println(question_data.getPath()+"/text/1");
-		System.out.println(question_data.getPath()+"/text/1");
-		Iterator<FsNode> answers = model.getList(question_data.getPath()+"/answer").getNodes().iterator();
-		
-		
-		while(answers.hasNext()){
-			FsNode answer = answers.next();
-			JSONObject q = new JSONObject();
-			System.out.println(answer.getSmartProperty(languageCode, "value"));
-			q.put("name", answer.getSmartProperty(languageCode, "value"));
-			q.put("value", answer.getId());
-			anwers.add(q);
-		}
-
-		data.put("answers", anwers);
-		
-		screen.get(selector).parsehtml(data);
-		screen.get(selector).loadScript(this);
-		screen.get(".answer").on("click", "onAnswer", this);
-		
-		
-		
-		JSONObject nd = new JSONObject();
-		nd.put("action","setCountdown");
-		nd.put("duration", duration);
-		screen.get(selector).update(nd);
-		*/
+		countdown = 9;
+		model.onNotify("/shared[timers]/1second","on1SecondTimer",this); 
 	}
 	
+	public void on1SecondTimer(ModelEvent event) {
+		countdown--;
+		System.out.println("QUESTION COUNTER="+countdown);
+		if (countdown<0) countdown=0; // just in case looks ugly;
+		screen.get("#interactivevideo_questiontimer").html(""+countdown+" SEC");
+	}
+
+	
 	public void onAnswer(Screen s, JSONObject data){
-		System.out.println("answer given: " + data.get("id"));
-		screen.get(selector).remove();
-		screen.get("#interactivevideoremote").show();
+		String answer = (String)data.get("id");
+		answer = answer.substring(6);
+		System.out.println("answer given: " + answer);
+
+		try {
+			int score = Integer.parseInt(model.getProperty("/screen['vars']/score"));
+			if (answer.equals(model.getProperty("/screen['vars']/correctanswer"))) {
+				screen.get("#interactivevideo_questionfeedback").html("Goed beantwoord!!");
+				score++;
+				model.setProperty("/screen['vars']/score",""+score);
+			} else {
+				screen.get("#interactivevideo_questionfeedback").html("Sorry fout beantwoord");
+			}
+			screen.get("#answer1").hide();
+			screen.get("#answer2").hide();
+			screen.get("#answer3").hide();
+			screen.get("#answer4").hide();
+			screen.get("#interactivevideo_questionfeedback").show();
+	
+			// update the score on the main panel
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

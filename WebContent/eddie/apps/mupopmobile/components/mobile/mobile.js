@@ -76,6 +76,7 @@ MobileController.update = function(vars, data){
 				$("#audiop")[0].currentTime = newtime;
 	
 			} else {
+				
 			    var speedup = 1;
 			    if (delta<0) {
 			    	// console.log('neg='+delta);
@@ -101,9 +102,9 @@ MobileController.update = function(vars, data){
 					}
 				}
 				
-				// console.log('speedup='+speedup);
+			    console.log('speedup='+speedup);
 			   // so if are within 500ms lets speedup and see if we can catch it
-			   $("#audiop")[0].playbackRate = speedup;
+			  // $("#audiop")[0].playbackRate = speedup;
 			   
 			}		
 			break;

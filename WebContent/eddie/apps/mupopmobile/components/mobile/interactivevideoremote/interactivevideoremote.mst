@@ -1,18 +1,12 @@
 <div id="interactive_video_remote_totalcounter">
-	<div id="interactive_video_remote_duration_text">Duration</div>
+	<div id="interactive_video_remote_duration_text">Alles gezien over</div>
 	<div id="interactive_video_remote_duration_min">2</div>
 	<div id="interactive_video_remote_duration_min_text">MIN</div>
 	<div id="interactive_video_remote_duration_sec"">36</div>
 	<div id="interactive_video_remote_duration_sec_text">SEC</div>	
 </div>
 
-<div id=options_container class="col-xs-12">
-	<div id="language_select" class="option_container col-xs-12">
-		<div id="language_select_image" class="col-xs-1 fa fa-language"></div>
-		<div id="language_select_text" class="col-xs-9">LANGUAGE SELECT</div>
-	</div>
-	<div id="audio_problem" class="option_container col-xs-12">
-		<div id="audio_problem_text" class="col-xs-9">AUDIO PROBLEMS</div>
-		<div id="audio_problem_image" class="col-xs-1 fa fa-headphones"></div>
-	</div>
+<div id="interactive_video_remote_scorearea">
+	<div id="interactive_video_remote_score">Aantal goed - 0</div>
+	<div id="interactive_video_remote_numberofquestions">vraag 0 van 0</div>
 </div>

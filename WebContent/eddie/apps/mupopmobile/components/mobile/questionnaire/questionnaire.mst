@@ -1,17 +1,12 @@
-<div id="top_part">
-	<p id="question_text" class="header_video col-xs-12">{{question}}</p>
-	<div id="answers" class="col-xs-12">
-		{{#answers}}
-			<div id="{{value}}" class="answer col-xs-12">
-				<span class="answer-number"> {{value}}</span>
-				<span class="answer-text"> {{name}}</span>
-			</div>
-		{{/answers}}
-	</div>
+<div id="interactivevideo_top_part">
+	<div id="interactivevideo_question">{{question}}</div>
+	{{#answers}}
+		<div id="answer{{value}}" class="interactivevideo_answer">{{name}}</div>
+	{{/answers}}
+	<div id="interactivevideo_questionfeedback">Nog geen antwoord gegeven</div>
 </div>
-<div id="bottom_part">
-	<div id="question_timer_conainer" class="col-xs-12" data-time={{duration}}>
-		<div id="question_timer_text" class="col-xs-12">COUNTDOWN</div>
-		<div id="question_timer" class="col-xs-12">{{duration}}</div>
-	</div>
+
+<div id="interactivevideo_lower_part">
+		<div id="interactivevideo_questiontimerlabel">JE HEBT NOG</div>
+		<div id="interactivevideo_questiontimer">9 SEC</div>
 </div>

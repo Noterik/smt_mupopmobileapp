@@ -118,7 +118,6 @@
 		<template>mobile/questionnaire/questionnaire.mst</template>
 		<style>mobile/questionnaire/questionnaire.css</style>
 		<controller id="QuestionController">
-			<javascript>mobile/questionnaire/questionnaire.js</javascript>
 		</controller>
 	</view>
 	
