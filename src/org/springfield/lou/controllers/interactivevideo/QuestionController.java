@@ -13,6 +13,8 @@ import org.springfield.lou.screen.Screen;
 public class QuestionController extends Html5Controller{
 	
 	int countdown = 0;
+	String questionpath;
+	FsNode questionnode;
 	
 	public QuestionController(){
 	}
@@ -20,9 +22,9 @@ public class QuestionController extends Html5Controller{
 	public void attach(String sel) {
 		selector = sel;
 		String languageCode = model.getProperty("@userlanguage");
-		String questionpath = model.getProperty("/screen['vars']/fullquestionpath");
+		questionpath = model.getProperty("/screen['vars']/fullquestionpath");
 		
-		FsNode questionnode = model.getNode(questionpath) ;
+		questionnode = model.getNode(questionpath);
 		
 		Collection<JSONObject> anwers = new ArrayList<JSONObject>();
 		JSONObject data = new JSONObject();
@@ -83,6 +85,8 @@ public class QuestionController extends Html5Controller{
 		String answer = (String)data.get("id");
 		answer = answer.substring(6);
 		System.out.println("answer given: " + answer);
+		String ap = questionpath+"/correctanswers";
+		String tap = questionpath+"/totalanswers";
 
 		try {
 			int score = Integer.parseInt(model.getProperty("/screen['vars']/score"));
@@ -90,15 +94,42 @@ public class QuestionController extends Html5Controller{
 				screen.get("#interactivevideo_questionfeedback").html("Goed beantwoord!!");
 				score++;
 				model.setProperty("/screen['vars']/score",""+score);
+				Object cs = model.getProperty(ap);
+				if (cs!=null) {
+					String currentscorestring = (String)cs;
+					if (!currentscorestring.equals("")) {
+						int currentscore = Integer.parseInt(currentscorestring);
+						model.setProperty(ap,""+(currentscore+1));
+					} else {
+						model.setProperty(ap,"1");
+					}
+				} else {
+					model.setProperty(ap,"1");	
+				}
 			} else {
 				screen.get("#interactivevideo_questionfeedback").html("Sorry fout beantwoord");
+			}
+			Object cs = model.getProperty(tap);
+			if (cs!=null) {
+				String currenttotalstring = (String)cs;
+				if (!currenttotalstring.equals("")) {
+					int currenttotal = Integer.parseInt(currenttotalstring);
+					model.setProperty(tap,""+(currenttotal+1));
+					System.out.println("TA1");
+				} else {
+					model.setProperty(tap,"1");
+					System.out.println("TA2");
+				}
+			} else {
+				model.setProperty(tap,"1");
+				System.out.println("TA3");
 			}
 			screen.get("#answer1").hide();
 			screen.get("#answer2").hide();
 			screen.get("#answer3").hide();
 			screen.get("#answer4").hide();
 			screen.get("#interactivevideo_questionfeedback").show();
-	
+		
 			// update the score on the main panel
 		} catch(Exception e) {
 			e.printStackTrace();
