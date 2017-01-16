@@ -81,8 +81,10 @@ public class MobileController extends Html5Controller {
 			if (userLanguage==null || userLanguage.equals("")) {
 				if (languageselect.equals("default")) {
 					screen.get("#mobile").append("div", "languageselectionremote", new LanguageSelectionRemoteController());
+					return;
 				} else if (languageselect.equals("flags")) {
 					screen.get("#mobile").append("div", "languageselectionmupopremote", new LanguageSelectionRemoteControllerMupop());
+					return;
 				} else {
 				    //set default language, pick first one
 				    String languages = model.getProperty("@exhibition/availablelanguages");
@@ -235,5 +237,6 @@ public class MobileController extends Html5Controller {
 		screen.get("#photoexplorerremote").remove();
 		screen.get("#photoinfospotsremote").remove();
 		screen.get("#interactivevideoremoteholder").remove();
+		screen.get("#interactivevideoremote").remove();
 	}
 }

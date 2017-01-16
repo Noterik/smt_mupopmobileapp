@@ -33,7 +33,15 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 		exhibitionid = model.getProperty("@exhibitionid");
 		
  		JSONObject jso= new JSONObject(); 
+
+ 		FsNode stationnode = model.getNode("@station");
+ 		if (stationnode != null) { 		    
+ 		    jso.put("title", stationnode.getSmartProperty("nl", "title"));
+ 		}
+ 		
  		screen.get(selector).render(jso);
+ 		
+ 		screen.get("#interactive_video_remote_previous").on("mouseup", "previousPage", this);
 		
 		model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/wantedtime", "onClockUpdate", this);
 
@@ -126,5 +134,13 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 
 	public void destroyed() {
 		super.destroyed();
+	}
+	
+	public void previousPage(Screen s, JSONObject data) {	
+	    JSONObject message = new JSONObject();
+	    message.put("action", "pause");
+	    screen.get("#mobile").update(message);
+	    
+	    model.setProperty("/screen/state","stationselect");
 	}
 }

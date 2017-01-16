@@ -14,7 +14,7 @@ MobileController.update = function(vars, data){
 	console.log("action="+action);
 	switch (action) {
 		case "pause":
-			$("#audiop").pause();
+			$("#audiop").trigger("pause");
 			break;
 		case "play":
 			$("#audiop")[0].src = data['src'];

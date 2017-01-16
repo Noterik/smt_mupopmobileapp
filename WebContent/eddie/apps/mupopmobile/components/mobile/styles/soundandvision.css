@@ -998,6 +998,16 @@ h3 {
 	visibility: hidden;
 }
 
+/** Interactive video remote **/
+
+#interactive_video_remote_previous {
+	z-index: 999; 
+}
+
+#interactive_video_remote_title {
+	z-index: 999; 
+}
+
 #interactive_video_remote_totalcounter {
 	position: absolute;
 	background-color: #009fda;

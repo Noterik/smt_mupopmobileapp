@@ -1,3 +1,16 @@
+<div id="interactive_video_remote_header" class="header col-xs-12">
+	<div class="row">
+		<div id="interactive_video_remote_previous" class="col-xs-2">
+			<i class="fa fa-arrow-left"></i>
+		</div>
+		<div id="interactive_video_remote_title" class="col-xs-8 font-settings">
+			{{title}}
+		</div>
+		<div id="interactive_video_remote_help" class="col-xs-2">
+			<i class="fa fa-question-circle"></i>
+		</div>
+	</div>
+</div>
 <div id="interactive_video_remote_totalcounter">
 	<div id="interactive_video_remote_duration_text">afspeelduur</div>
 	<div id="interactive_video_remote_duration_min">2</div>
