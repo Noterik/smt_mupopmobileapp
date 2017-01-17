@@ -70,7 +70,7 @@ MobileController.update = function(vars, data){
 			 console.log('RT='+realtime+' ST='+streamtime+' CT='+curtime+' AT='+audiotime+' TG='+timegap+' ET='+expectedtime+" DELTA="+delta);
 			
 			// lets act on it 
-			if (delta<-1000 || delta>1000) {
+			if (delta<-250 || delta>250) {
 				var newtime = ((audiotime+delta)+200)/1000;
 				console.log('seekto='+newtime+' duration='+duration);
 				$("#audiop")[0].currentTime = newtime;
@@ -104,7 +104,7 @@ MobileController.update = function(vars, data){
 				
 			    console.log('speedup='+speedup);
 			   // so if are within 500ms lets speedup and see if we can catch it
-			  // $("#audiop")[0].playbackRate = speedup;
+			   //$("#audiop")[0].playbackRate = speedup;
 			   
 			}		
 			break;
