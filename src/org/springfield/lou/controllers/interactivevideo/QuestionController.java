@@ -75,7 +75,6 @@ public class QuestionController extends Html5Controller{
 	
 	public void on1SecondTimer(ModelEvent event) {
 		countdown--;
-		System.out.println("QUESTION COUNTER="+countdown);
 		if (countdown<0) countdown=0; // just in case looks ugly;
 		screen.get("#interactivevideo_questiontimer").html(""+countdown+" SEC");
 	}
