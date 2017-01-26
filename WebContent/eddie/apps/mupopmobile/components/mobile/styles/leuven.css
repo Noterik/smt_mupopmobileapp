@@ -598,3 +598,10 @@ html, body {
 	height: 0;
 	display: none;
 }
+
+/** Station code select **/
+
+#station_code_select_explanation {
+	padding-top: 15px;
+	text-align: center;
+}
