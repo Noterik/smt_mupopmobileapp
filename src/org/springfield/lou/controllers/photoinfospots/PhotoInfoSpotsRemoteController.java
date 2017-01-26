@@ -86,9 +86,9 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 			screen.get("#trackpad").track("mousemove","mouseMove", this); // track mouse move event on the #trackpad
 			screen.get("#trackpad").on("mouseup","mouseUp", this);
 			screen.get("#trackpad").on("touchend","mouseUp", this);
-			screen.get("#previous").on("click", "previousPage", this);
+			screen.get("#photoinfospots-header").on("mouseup", "previousPage", this);
 			screen.get("#zoomandaudiohelp").on("click", "helpPage", this);
-			screen.get("#audioplayer").on("loaded", "loaded", this);
+			screen.get("#audiop").on("loaded", "loaded", this);
 			screen.get("#pointer_icon").css("background-color","#"+mycolor);
 			model.onNotify("@photoinfospots/spot/audio", "onStartAudio",this);
 
@@ -120,14 +120,17 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 
 		if (action.equals("startaudio")) {
 			String url = message.getProperty("url");
-			System.out.println("START AUDIO="+url);
 			if (url != null) { // if audio found lets push it to the screen (so it plays)
 				JSONObject d = new JSONObject();
 				d.put("command", "update");
-				d.put("src", url);
 				String text = message.getProperty("text") == null ? "" : message.getProperty("text");
 				d.put("text", text);
 				screen.get(selector).update(d);
+				
+				JSONObject audiocmd = new JSONObject();
+				audiocmd.put("action","playonnew");
+				audiocmd.put("src",url);
+				screen.get("#mobile").update(audiocmd);
 			}
 		}		
 	}
@@ -158,19 +161,16 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 	}
 
 	public void previousPage(Screen s, JSONObject data) {
-		FSList imagesList = model.getList("@images");
+	    System.out.println("Previous page requested");
 
-		//with more then one image we can return to the image selection page
-		if (imagesList.size() > 1) {
-			FsNode node = new FsNode("coverflow", "requested");
-			model.notify("@photoinfospots/image/spotting", node);
-		} else {
-			FsNode node = new FsNode("goto", "audiotest");
-			node.setProperty("deviceid", deviceid);
-			node.setProperty("originalcontroller", "zoomandaudioremote");
-
-			model.notify("@photoinfospots/intro/audiotest", node);
-		}
+	    FsNode message = new FsNode("message",screen.getId());
+	    message.setProperty("action","");
+	    message.setProperty("request","contentselectforce");
+	    model.notify("@stationevents/fromclient",message);
+		
+	    FsNode m = new FsNode("message",screen.getId());
+	    m.setProperty("request","contentselect");
+	    model.notify("@stationevents/fromclient",m);
 	}
 
 	public void helpPage(Screen s, JSONObject data) {
@@ -182,6 +182,9 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 	}
 
 	public void loaded(Screen s, JSONObject data) {
+	    	//System.out.println("The following device has its audio loaded");
+	    	//System.out.println(data.toJSONString());
+	    	
 		FsNode node = new FsNode("audio", "loaded");
 		node.setProperty("deviceid", deviceid);
 

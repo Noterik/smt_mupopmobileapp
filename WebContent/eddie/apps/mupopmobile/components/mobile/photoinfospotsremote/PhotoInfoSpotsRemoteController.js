@@ -17,23 +17,23 @@ PhotoInfoSpotsRemoteController.update = function(vars, data){
 
 		vars["loaded"] = true;	
 		
-		$("#audioplayer").on("loadedmetadata", loadedMetadata);
-		$("#audioplayer").on("timeupdate", updateTime);
-		$("#audioplayer").on('play', function() {
+		$("#audiop").on("loadedmetadata", loadedMetadata);
+		$("#audiop").on("timeupdate", updateTime);
+		$("#audiop").on('play', function() {
 			$("#play").addClass("fa-pause-circle");
 			$("#play").removeClass("fa-play-circle");
 		});
 	      
-		$("#audioplayer").on('pause', function() {
+		$("#audiop").on('pause', function() {
 			$("#play").addClass("fa-play-circle");
 			$("#play").removeClass("fa-pause-circle");
 		});
 		
 		$("#play").on('click', function() {
-			 if ($("#audioplayer")[0].paused) {
-				 $("#audioplayer")[0].play();
+			 if ($("#audiop")[0].paused) {
+				 $("#audiop")[0].play();
 			 } else {
-				 $("#audioplayer")[0].pause();
+				 $("#audiop")[0].pause();
 			 }
 		});
 		
@@ -51,47 +51,28 @@ PhotoInfoSpotsRemoteController.update = function(vars, data){
 				$("#text").removeClass("fa-square-o");
 			}
 		});
-		
-		//IOS init for automatically playing audio
-		$("#trackpad").on("touchstart", initAudio);
 	}
 	
 	var command = data['command'];
 	var targetId = '#'+data['targetid']; 
 		
-	if (command == "update") {		
-		if ($("#audiosrc").attr("src") != data['src']) {		
-			$("#audiosrc").attr("src", data['src']);
+	if (command == "update") {	
 			$("#textreader_text").text(data['text']);
-			$("#audioplayer").trigger("load").trigger("play");
 			
-			$("#audioplayer").on('canplaythrough', audioLoaded);
-
-			// If the video is in the cache of the browser,
-			// the 'canplaythrough' event might have been triggered
-			// before we registered the event handler.
-			if ($("#audioplayer")[0].readyState > 3) {
-			  audioLoaded();
-			}
-		}	 else {
-			//triggered same audio again, this prevents infinite spinner
-			audioLoaded();
-		}	
+			$("#audiop").on('canplaythrough', audioLoaded);
 	}
 };
 
-function initAudio() {
-	$("#audioplayer").trigger("play");
-}
-
 function loadedMetadata() {
 	$("#currenttime").text(formatTime(0));
-	$("#totaltime").text(formatTime($("#audioplayer")[0].duration));
+	$("#totaltime").text(formatTime($("#audiop")[0].duration));
 }
 
 function updateTime() {
-	$("#currenttime").text(formatTime($("#audioplayer")[0].currentTime));
-	$("#seekbar").val((100 / $("#audioplayer")[0].duration) * $("#audioplayer")[0].currentTime);
+	//temp fix to prevent spinner from spinning, e.g. when audio was already loaded, not ideal here	
+	audioLoaded();
+	$("#currenttime").text(formatTime($("#audiop")[0].currentTime));
+	$("#seekbar").val((100 / $("#audiop")[0].duration) * $("#audiop")[0].currentTime);
 }
 
 function startHelp() {
@@ -167,7 +148,7 @@ function formatTime(time) {
 }
 
 function audioLoaded() {	
-	var message = 'event(audioplayer/loaded,{"id":"audioplayer","targetid":"audioplayer"})';
+	var message = 'event(audiop/loaded,{"id":"audiop","targetid":"audiop"})';
 	sendMessage(message, true);
 }
 

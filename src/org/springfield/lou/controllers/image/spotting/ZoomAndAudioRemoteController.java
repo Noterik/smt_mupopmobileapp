@@ -86,8 +86,8 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
 	    screen.get("#trackpad").track("mousemove","mouseMove", this); // track mouse move event on the #trackpad
 	    screen.get("#trackpad").on("mouseup","mouseUp", this);
 	    screen.get("#trackpad").on("touchend","mouseUp", this);
-	    screen.get("#previous").on("click", "previousPage", this);
-	    screen.get("#zoomandaudiohelp").on("click", "helpPage", this);
+	    screen.get("#photoexplorer-header").on("mouseup", "previousPage", this);
+	    //screen.get("#zoomandaudiohelp").on("click", "helpPage", this);
 	    screen.get("#audioplayer").on("loaded", "loaded", this);
 	    screen.get("#pointer_icon").css("background-color","#"+mycolor);
 	    model.onNotify("@photoinfospots/spot/audio", "onStartAudio",this);
@@ -157,19 +157,16 @@ public class ZoomAndAudioRemoteController extends Html5Controller {
     }
 	
     public void previousPage(Screen s, JSONObject data) {
-	FSList imagesList = model.getList("@images");
+	System.out.println("Previous page requested");
+
+	FsNode message = new FsNode("message",screen.getId());
+	message.setProperty("action","");
+	message.setProperty("request","contentselectforce");
+	model.notify("@stationevents/fromclient",message);
 	
-	//with more then one image we can return to the image selection page
-	if (imagesList.size() > 1) {
-	    FsNode node = new FsNode("coverflow", "requested");
-	    model.notify("@photoinfospots/image/spotting", node);
-	} else {
-	    FsNode node = new FsNode("goto", "audiotest");
-	    node.setProperty("deviceid", deviceid);
-	    node.setProperty("originalcontroller", "zoomandaudioremote");
-	    
-	    model.notify("@photoinfospots/intro/audiotest", node);
-	}
+	FsNode m = new FsNode("message",screen.getId());
+	m.setProperty("request","contentselect");
+	model.notify("@stationevents/fromclient",m);
     }
     
     public void helpPage(Screen s, JSONObject data) {

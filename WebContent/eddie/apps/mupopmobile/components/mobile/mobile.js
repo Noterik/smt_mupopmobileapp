@@ -20,6 +20,12 @@ MobileController.update = function(vars, data){
 			$("#audiop")[0].src = data['src'];
 			$("#audiop").trigger("play");
 			break;
+		case "playonnew": 
+			if ($("#audiop")[0].src != data['src']) {		
+				$("#audiop")[0].src = data['src'];
+				$("#audiop").trigger("play");
+			}
+			break;
 		case "load":
 			$("#audiop")[0].src = data['src'];
 			$("#audiop").trigger("load");

@@ -97,8 +97,7 @@ html, body {
 }
 
 #coverflow-help {
-	z-index: 999;
-	cursor: pointer;
+	visibility: hidden;
 }
 
 #help-text1 {
@@ -268,8 +267,7 @@ html, body {
 }
 
 #zoomandaudiohelp {
-	z-index: 999;
-	cursor: pointer;
+	visibility: hidden;
 }
 
 #pointer_icon {
@@ -376,13 +374,11 @@ html, body {
 }
 
 #audiotest_help {
-	z-index: 999;
-	cursor: pointer;
+	visibility: hidden;
 }
 
 #audiotest_previous {
-	z-index: 999;
-	cursor: pointer;
+	visibility: hidden;
 }
 
 #audio {

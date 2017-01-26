@@ -60,10 +60,12 @@ public class CoverFlowRemoteController extends Html5Controller {
 	    FsNode language_content = model.getNode("@language_photoexplore_coverflow_screen");
     	    data.put("helptext1", language_content.getSmartProperty(userLanguage, "swipe_help_text"));
     	    data.put("helptext2", language_content.getSmartProperty(userLanguage, "select_help_text"));
-
-    	    data.put("audio", language_content.getSmartProperty(userLanguage, "coverflow_intro_audio"));
-	    data.put("transcript",  language_content.getSmartProperty(userLanguage, "coverflow_transcript"));
-	    data.put("transcript-text", contentnode.getProperty("transcript"));
+	    
+	    if (audiosrc != null) {
+		data.put("audio", language_content.getSmartProperty(userLanguage, "coverflow_intro_audio"));
+		data.put("transcript",  language_content.getSmartProperty(userLanguage, "coverflow_transcript"));
+		data.put("transcript-text", contentnode.getProperty("transcript"));
+	    }
 	    
 	    screen.get(selector).render(data);
 	    screen.get(selector).loadScript(this);
@@ -78,15 +80,17 @@ public class CoverFlowRemoteController extends Html5Controller {
 	    
 	    String played = model.getProperty("@coverflowplayed");
 	    
-	    //only play on first time in coverflow, otherwise getting very annoying!
-	    if (played == null) {
-		audiocmd.put("action","play");
-		model.setProperty("@coverflowplayed", "true");
-	    } else {
-		audiocmd.put("action","load");
+	    if (audiosrc != null) {
+        	    //only play on first time in coverflow, otherwise getting very annoying!
+        	    if (played == null) {
+        		audiocmd.put("action","play");
+        		model.setProperty("@coverflowplayed", "true");
+        	    } else {
+        		audiocmd.put("action","load");
+        	    }
+        	    audiocmd.put("src",audiosrc);
+        	    screen.get("#mobile").update(audiocmd);
 	    }
-	    audiocmd.put("src",audiosrc);
-	    screen.get("#mobile").update(audiocmd);
 	    
 	    JSONObject d = new JSONObject();	
 	    d.put("command","init");
@@ -123,7 +127,8 @@ public class CoverFlowRemoteController extends Html5Controller {
 	model.notify("@photoinfospots/help/page", node);
     }
     
-    public void previousPage(Screen s, JSONObject data) {	
+    public void previousPage(Screen s, JSONObject data) {
+	System.out.println("Station select requested by mobile");
 	model.setProperty("/screen/state","stationselect");
     }
 }
