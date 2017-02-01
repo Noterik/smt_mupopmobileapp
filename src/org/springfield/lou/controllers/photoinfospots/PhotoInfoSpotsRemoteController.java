@@ -162,7 +162,11 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 
 	public void previousPage(Screen s, JSONObject data) {
 	    System.out.println("Previous page requested");
-
+	    
+	    JSONObject audiocmd = new JSONObject();
+	    audiocmd.put("action","pause");
+	    screen.get("#mobile").update(audiocmd);
+	    
 	    FsNode message = new FsNode("message",screen.getId());
 	    message.setProperty("action","");
 	    message.setProperty("request","contentselectforce");
