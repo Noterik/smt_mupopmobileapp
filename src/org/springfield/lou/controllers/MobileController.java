@@ -10,6 +10,7 @@ import org.springfield.lou.controllers.interactivevideo.InteractiveVideoRemoteCo
 import org.springfield.lou.controllers.intro.audio.AudioTestRemoteController;
 import org.springfield.lou.controllers.intro.language.LanguageSelectionRemoteController;
 import org.springfield.lou.controllers.intro.language.LanguageSelectionRemoteControllerMupop;
+import org.springfield.lou.controllers.intro.station.GlobalCodeSelectionRemoteController;
 import org.springfield.lou.controllers.intro.station.StationCodeSelectionRemoteController;
 import org.springfield.lou.controllers.intro.station.StationSelectionRemoteController;
 import org.springfield.lou.controllers.photoexplore.PhotoExploreRemoteController;
@@ -32,9 +33,15 @@ public class MobileController extends Html5Controller {
 		selector = sel;
 
 		model.onPropertyUpdate("/screen/state","onStateChange",this);
-		model.setProperty("/screen/state","init"); // will trigger a event 
+
 		System.out.println("ATTACH DONE");
 		screen.get(selector).render();
+		String exh = model.getProperty("@exhibitionid");
+		if (exh!=null && exh.equals("unknown")) {
+			model.setProperty("/screen/state","globalcodeselect"); // will trigger a event 
+		} else {
+			model.setProperty("/screen/state","init"); // will trigger a event 
+		}
 	}
 
 	public void onStateChange(ModelEvent event) {
@@ -42,10 +49,12 @@ public class MobileController extends Html5Controller {
 		if (oldstate.equals(state)) return;
 		oldstate = state;
 		System.out.println("Mobile STEP="+state);
-
+		System.out.println("APPSTATE="+model.getProperty("@appstate"));
 		model.setProperty("@contentrole", state); 	//state and contentrole are the same ????
 		if (state.equals("init")) { // init the exhibition and probably show language selector
 		    initStep(); 
+		} else if (state.equals("globalcodeselect")) { // pre-step global code select
+			globalSelectStep();
 		} else if (state.equals("audiocheck")) { // perform the asked audio request
 			audioCheckStep();
 		} else if (state.equals("stationselect")) { // check station selection method if more than one station
@@ -158,6 +167,11 @@ public class MobileController extends Html5Controller {
 			screen.get("#mobile").append("div", "stationcodeselectionremote", new StationCodeSelectionRemoteController());
 		}		    
 	}
+	
+	private void globalSelectStep() {
+		System.out.println("START GLOBAL CODESELECT");
+		screen.get("#mobile").append("div", "globalcodeselectionremote", new GlobalCodeSelectionRemoteController());		
+	}
 
 	private void contentSelectStep() {
 		resetScreen();
@@ -233,6 +247,7 @@ public class MobileController extends Html5Controller {
 		screen.get("#languageselectionmupopremote").remove();
 		screen.get("#stationselectionremote").remove();	
 		screen.get("#stationcodeselectionremote").remove();
+		screen.get("#globalcodeselectionremote").remove();
 		screen.get("#coverflowremote").remove();
 		screen.get("#photoexplorerremote").remove();
 		screen.get("#photoinfospotsremote").remove();

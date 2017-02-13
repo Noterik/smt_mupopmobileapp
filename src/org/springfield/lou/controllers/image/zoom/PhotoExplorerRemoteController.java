@@ -42,13 +42,13 @@ public class PhotoExplorerRemoteController extends Html5Controller {
 	selector = sel;
 	JSONObject data = new JSONObject();
 	
-	String path = model.getProperty("/screen/exhibitionpath");
 	String userLanguage = model.getProperty("@userlanguage");
 	String audiosrc = "";
 	
-	FsNode stationnode = model.getNode(path+"/station/"+model.getProperty("@stationid"));
+	FsNode stationnode = model.getNode("@station");
 	if (stationnode != null) {
 	    FsNode item = model.getNode("@item");
+	    System.out.println("ITEMNODE="+item.asXML());
 	    
 	    data.put("title", stationnode.getSmartProperty("en", "title"));
 	    audiosrc = item.getProperty("voiceover");
@@ -73,6 +73,7 @@ public class PhotoExplorerRemoteController extends Html5Controller {
 	JSONObject audiocmd = new JSONObject();
 	audiocmd.put("action","play");
 	audiocmd.put("src",audiosrc);
+	System.out.println("PLAAAAAY AUDIO="+audiosrc);
 	screen.get("#mobile").update(audiocmd);
 	
 	JSONObject d = new JSONObject();	

@@ -56,11 +56,10 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 
 		app = screen.getApplication();
 
-		String path = model.getProperty("/screen/exhibitionpath");
 		deviceid = model.getProperty("@deviceid");
 		userLanguage = model.getProperty("@userlanguage");
 
-		FsNode stationnode = model.getNode(path+"/station/"+model.getProperty("@stationid"));
+		FsNode stationnode = model.getNode("@station");
 		FsNode imagenode = model.getNode("@image");
 
 		if (stationnode != null) {

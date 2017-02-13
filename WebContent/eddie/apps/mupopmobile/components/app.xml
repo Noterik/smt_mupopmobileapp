@@ -1,4 +1,13 @@
 <app>
+
+	<jumper id="beta.mupop.net@/lou/mupop/">
+		<target>/lou/domain/mupop/user/noterik/html5application/mupopmobile?path=</target>
+	</jumper>
+	
+	<jumper id="mupop.net@/lou/mupop/">
+		<target>/lou/domain/mupop/user/noterik/html5application/mupopmobile?path=</target>
+	</jumper>
+	
 	<model id="default">
 		<userlanguage>/screen['profile']/language</userlanguage>
 		
@@ -173,6 +182,12 @@
 		<template>mobile/intro/station/stationcodeselectionremote.mst</template>
 		<style>mobile/intro/station/stationcodeselectionremote.css</style>
 		<controller id="StationCodeSelectionRemoteController"/>
+	</view>
+	
+	<view id="#globalcodeselectionremote">
+		<template>mobile/intro/station/globalcodeselectionremote.mst</template>
+		<style>mobile/intro/station/globalcodeselectionremote.css</style>
+		<controller id="GlobalCodeSelectionRemoteController"/>
 	</view>
 	
 	<view id="#helpremote">

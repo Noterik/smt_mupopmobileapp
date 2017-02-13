@@ -54,7 +54,7 @@ public class HelpRemoteController extends Html5Controller {
 	userLanguage = model.getProperty("@userlanguage");
 
 	FSList questions = model.getList("@help_topics");
-	FsNode exhibition = model.getNode(model.getProperty("/screen/exhibitionpath"));
+	FsNode exhibition = model.getNode("@exhibition");
 	
 	JSONObject data = new JSONObject();
 	

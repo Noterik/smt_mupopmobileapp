@@ -48,7 +48,7 @@ public class StationSelectionRemoteController extends Html5Controller {
     	String userLanguage = model.getProperty("@userlanguage");
 
     	FSList stations = model.getList("@stations");
-    	FsNode exhibition = model.getNode(model.getProperty("/screen/exhibitionpath"));
+    	FsNode exhibition = model.getNode("@exhibition");
     	if (stations != null) {   
     		JSONObject data = FSList.ArrayToJSONObject(stations.getNodes(), userLanguage, "labelid,name");
     		data.put("select_station", exhibition.getSmartProperty(userLanguage, "select_station"));

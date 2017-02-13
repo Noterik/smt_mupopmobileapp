@@ -1,0 +1,39 @@
+<div class="header col-xs-12">
+	<div class="row">
+		<div class="col-xs-2">
+		</div>
+		<div class="col-xs-8 font-settings">
+			{{title}}
+		</div>
+		<div class="col-xs-2">
+		</div>
+	</div>
+</div>
+<div id="station_code_select_explanation" class="col-xs-12 fill-height">
+global : {{explanation}}
+</div>
+
+<table id="codeselect-panel" class="table table-bordered">
+	<tbody>
+    	<tr>
+    		<td class="codeselect-button" id="codeselect-P1" scope="row">{{P1}}</td>
+      		<td class="codeselect-button" id="codeselect-P2">{{P2}}</td>
+      		<td class="codeselect-button" id="codeselect-P3">{{P3}}</td>
+    	</tr>
+    	<tr>
+    		<td class="codeselect-button" id="codeselect-P4" scope="row">{{P4}}</td>
+      		<td class="codeselect-button" id="codeselect-P5">{{P5}}</td>
+      		<td class="codeselect-button" id="codeselect-P6">{{P6}}</td>
+      	</tr>
+      	<tr>
+    		<td class="codeselect-button" id="codeselect-P7" scope="row">{{P7}}</td>
+      		<td class="codeselect-button" id="codeselect-P8">{{P8}}</td>
+      		<td class="codeselect-button" id="codeselect-P9">{{P9}}</td>
+      	</tr>
+      	<tr>
+    		<td class="codeselect-button" id="codeselect-P10" scope="row">{{P10}}</td>
+      		<td class="codeselect-button" id="codeselect-P11">{{P11}}</td>
+      		<td class="codeselect-button" id="codeselect-P12">{{P12}}</td>
+      	</tr>
+     </tbody>
+</table>
