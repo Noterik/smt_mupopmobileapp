@@ -94,6 +94,8 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 			JSONObject d = new JSONObject();	
 			d.put("command","init");
 			screen.get(selector).update(d);
+			
+ 
 		}
 	}
 
