@@ -3,14 +3,18 @@
 		<div class="col-xs-2">
 		</div>
 		<div class="col-xs-8 font-settings">
-			{{title}}
+	
 		</div>
 		<div class="col-xs-2">
 		</div>
 	</div>
 </div>
 <div id="station_code_select_explanation" class="col-xs-12 fill-height">
-global : {{explanation}}
+<br />
+Click here for MuPoP product <a href="http://www.mupop.net">website</a>
+<br />
+</br />
+Enter the code you see on the screen to select the station.
 </div>
 
 <table id="codeselect-panel" class="table table-bordered">
