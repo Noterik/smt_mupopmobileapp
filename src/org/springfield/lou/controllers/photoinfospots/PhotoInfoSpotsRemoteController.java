@@ -82,6 +82,8 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 			mycolor = getColor();
 
 			screen.get("#trackpad").track("mousemove","mouseMove", this); // track mouse move event on the #trackpad
+
+			
 			screen.get("#trackpad").on("mouseup","mouseUp", this);
 			screen.get("#trackpad").on("touchend","mouseUp", this);
 			screen.get("#photoinfospots-header").on("mouseup", "previousPage", this);

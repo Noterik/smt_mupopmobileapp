@@ -84,6 +84,13 @@
 		<controller id="PhotoExploreRemoteController">
 		</controller>
 	</view>
+	
+	<view id="#triviaremote">
+		<template>mobile/triviaremote/triviaremote.mst</template>
+		<style>mobile/triviaremote/triviaremote.css</style>
+		<controller id="TriviaRemoteController">
+		</controller>
+	</view>
 
 	<view id="#photoinfospotsremote">
 		<template>mobile/photoinfospotsremote/photoinfospotsremote.mst</template>

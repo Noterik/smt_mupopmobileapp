@@ -34,6 +34,7 @@ import org.springfield.lou.controllers.intro.station.StationCodeSelectionRemoteC
 import org.springfield.lou.controllers.intro.station.StationSelectionRemoteController;
 import org.springfield.lou.controllers.photoexplore.PhotoExploreRemoteController;
 import org.springfield.lou.controllers.photoinfospots.PhotoInfoSpotsRemoteController;
+import org.springfield.lou.controllers.trivia.TriviaRemoteController;
 import org.springfield.lou.model.ModelEvent;
 import org.springfield.lou.screen.Screen;
 
@@ -218,6 +219,8 @@ public class MobileController extends Html5Controller {
 				screen.get("#mobile").append("div","photoinfospotsremote",new PhotoInfoSpotsRemoteController());
 			} else if (app.equals("interactivevideo")) {
 				screen.get("#mobile").append("div","interactivevideoremote", new InteractiveVideoRemoteController());
+			} else if (app.equals("trivia")) {
+				screen.get("#mobile").append("div","triviaremote", new TriviaRemoteController());
 			}
 		} else {
 			//TODO: should display error that no app was selected and curator should set it
