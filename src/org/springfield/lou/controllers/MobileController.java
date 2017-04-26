@@ -66,9 +66,9 @@ public class MobileController extends Html5Controller {
 
 	public void onStateChange(ModelEvent event) {
 		String state = event.getTargetFsNode().getProperty("state");
-		if (oldstate.equals(state)) return;
-		oldstate = state;
 		System.out.println("Mobile STEP="+state);
+		if (oldstate.equals(state)) return;
+		oldstate = state;		
 		System.out.println("APPSTATE="+model.getProperty("@appstate"));
 		model.setProperty("@contentrole", state); 	//state and contentrole are the same ????
 		if (state.equals("init")) { // init the exhibition and probably show language selector
@@ -245,7 +245,8 @@ public class MobileController extends Html5Controller {
 		if (request!=null) { 
 		    model.setProperty("@contentrole", request);
 			if (request.equals("init")) {
-				resetScreen();				
+				resetScreen();	
+				model.setProperty("/screen/state","stationselect");
 				stationSelectStep();
 			} else if (request.equals("contentselect")) {
 				resetScreen();

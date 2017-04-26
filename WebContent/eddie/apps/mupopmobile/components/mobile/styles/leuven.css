@@ -397,6 +397,26 @@ html, body {
 	margin-right: auto;
 }
 
+@media only screen and (min-height: 400px) and (max-height: 499px) {
+    #headphones img {
+        width: 150px;
+        height: 149px;
+    }
+}
+
+@media only screen and (min-height: 320px) and (max-height: 399px) {
+    #headphones img {
+		width: 75px;
+        height: 74px;
+    }
+}
+
+@media only screen and (max-height: 319px) {
+    #headphones img {
+    	display: none;
+    }
+}
+
 #start {
 	padding: 3px 6px;
 	border-radius: 6px;
