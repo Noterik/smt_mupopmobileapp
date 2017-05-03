@@ -633,3 +633,70 @@ html, body {
 	width: 100%;
 	height: 100%;
 }
+
+
+#trivia_question {
+	position: absolute;
+	text-align: center;
+	top:5%;	
+	width:100%;
+}
+
+#trivia_questionfeedback {
+	display: none;
+	position: absolute;
+	text-align: center;
+	top:60%;	
+	width:100%;
+}
+
+#answer1 {
+	position: absolute;
+	border-radius: 2px;
+	border: 2px solid;
+	border-color: #cccccc;
+	background-color: #008fca;
+	text-align: center;
+	top:30%;	
+	left: 15%;
+	width:70%;
+}
+
+#answer2 {
+	position: absolute;
+	border-radius: 2px;
+	border: 2px solid;
+	border-color: #cccccc;
+	background-color: #008fca;
+	text-align: center;
+	top:45%;	
+	left: 15%;
+	width:70%;
+}
+
+#answer3 {
+	position: absolute;
+	border-radius: 2px;
+	border: 2px solid;
+	border-color: #cccccc;
+	background-color: #008fca;
+	text-align: center;
+	top:60%;	
+	left: 15%;
+	width:70%;
+}
+
+#answer4 {
+	position: absolute;
+	border-radius: 2px;
+	border: 2px solid;
+	border-color: #cccccc;
+	background-color: #008fca;
+	text-align: center;
+	top:75%;	
+	left: 15%;
+	width:70%;
+}
+
+
+

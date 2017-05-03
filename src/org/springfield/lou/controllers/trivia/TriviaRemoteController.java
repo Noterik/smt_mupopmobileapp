@@ -25,6 +25,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.jws.WebParam.Mode;
+
 import org.json.simple.JSONObject;
 import org.springfield.fs.FSList;
 import org.springfield.fs.FSListManager;
@@ -50,13 +52,18 @@ public class TriviaRemoteController extends Html5Controller  {
  	}
 	
 	public void onAppStateChange(ModelEvent event) {
+		model.setProperty("@itemid",event.getTargetFsNode().getProperty("itemid")); // why is this needed not in shared space?
+		System.out.println("eV="+event.getTargetFsNode().asXML());
 		fillPage();
 	}
 	
 	private void fillPage() {
 		model.setProperty("@contentrole","mainapp");
+		System.out.println("EXHIBITIONID="+model.getProperty("@exhibitionid"));	
+		System.out.println("STATIONID="+model.getProperty("@stationid"));	
+		System.out.println("ITEMID="+model.getProperty("@itemid"));	
 		FsNode item = model.getNode("@item");
-		System.out.println("ITEMID="+item);	
+		System.out.println("ITEM="+item);	
 		if (item!=null) {
 			System.out.println("ITEMNODE="+item.asXML());
 		}
@@ -101,7 +108,17 @@ public class TriviaRemoteController extends Html5Controller  {
 		}
 		data.put("answers", anwers);
  		screen.get(selector).render(data);
+ 		
+ 		
+		screen.get(".trivia_answer").on("mouseup","onAnswer",this);
 	}
 	
+	public void onAnswer(Screen s, JSONObject data) {
+		System.out.println("WOW="+data.toJSONString());
+		FsNode msgnode = new FsNode("msgnode","1");
+		msgnode.setProperty("value",(String)data.get("id"));
+		msgnode.setProperty("clientid",screen.getId());
+		model.notify("@itemanwser",msgnode);
+	}
  	 
 }
