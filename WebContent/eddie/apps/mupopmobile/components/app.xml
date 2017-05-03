@@ -22,6 +22,7 @@
 		<videoid>/screen['vars']/videoid</videoid>
 		<contentrole>/screen['vars']/contentrole</contentrole>
 		<itemid>/shared['app']/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/itemid</itemid>
+		<itemquestionid>/screen['vars']/itemquestionid</itemquestionid>
 		<oldroomid>/screen['vars']/oldroomid</oldroomid>
 		<roomname>/screen['vars']/roomname</roomname>
 		<appstate>/shared['app']/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/appstate</appstate>
@@ -55,6 +56,7 @@
 		<image>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/image['@imageid']</image>
 		
 		<item>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/content['@contentrole']/item['@itemid']</item>
+		<itemquestion>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/content['@contentrole']/item['@itemid']/question['@itemquestionid']</itemquestion>
 		
 		<video>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/video['@videoid']</video>
 

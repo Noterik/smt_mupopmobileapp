@@ -1,3 +1,8 @@
 <div id="trivia_input_container">
 	TRALALAAA
+	
+	<div id="trivia_question">{{question}}</div>
+	{{#answers}}
+		<div id="answer{{value}}" class="trivia_answer">{{name}}</div>
+	{{/answers}}
 </div>

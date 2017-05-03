@@ -21,6 +21,7 @@ package org.springfield.lou.controllers.trivia;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import org.springfield.fs.FsNode;
 import org.springfield.lou.application.Html5Application;
 import org.springfield.lou.application.Html5ApplicationInterface;
 import org.springfield.lou.controllers.Html5Controller;
+import org.springfield.lou.model.ModelEvent;
 import org.springfield.lou.screen.Screen;
 
 public class TriviaRemoteController extends Html5Controller  {
@@ -44,7 +46,62 @@ public class TriviaRemoteController extends Html5Controller  {
 		selector = sel;
 		System.out.println("TRIVIA STARTED");
  		screen.get(selector).render();
+		model.onNotify("@appstate", "onAppStateChange", this);
  	}
+	
+	public void onAppStateChange(ModelEvent event) {
+		fillPage();
+	}
+	
+	private void fillPage() {
+		model.setProperty("@contentrole","mainapp");
+		FsNode item = model.getNode("@item");
+		System.out.println("ITEMID="+item);	
+		if (item!=null) {
+			System.out.println("ITEMNODE="+item.asXML());
+		}
+		
+		Collection<JSONObject> anwers = new ArrayList<JSONObject>();
+		JSONObject data = new JSONObject();
+		model.setProperty("@itemquestionid","1");
+		FsNode questionnode = model.getNode("@itemquestion");
+		System.out.println("QUESTION="+questionnode.asXML());
+		
+		data.put("question", questionnode.getProperty("question"));
+		data.put("duration", questionnode.getProperty("duration"));
+		
+		JSONObject a = new JSONObject();
+		String a1 =questionnode.getProperty("answer1");
+		if (a1!=null && !a1.equals("")) {
+			a.put("name", a1);
+			a.put("value", "1");
+			anwers.add(a);
+		}
+		String a2 =questionnode.getProperty("answer2");
+		System.out.println("A2="+a2);
+		a = new JSONObject();
+		if (a2!=null && !a2.equals("")) {
+			a.put("name", a2);
+			a.put("value", "2");
+			anwers.add(a);
+		}
+		String a3 =questionnode.getProperty("answer3");
+		a = new JSONObject();
+		if (a3!=null && !a3.equals("")) {
+			a.put("name", a3);
+			a.put("value", "3");
+			anwers.add(a);
+		}
+		String a4 =questionnode.getProperty("answer4");
+		a = new JSONObject();
+		if (a4!=null && !a4.equals("")) {
+			a.put("name", a4);
+			a.put("value", "4");
+			anwers.add(a);
+		}
+		data.put("answers", anwers);
+ 		screen.get(selector).render(data);
+	}
 	
  	 
 }
