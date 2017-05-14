@@ -1,8 +1,103 @@
-<div id="trivia_input_container">
-	TRALALAAA
-	
-	<div id="trivia_question">{{question}}</div>
-	{{#answers}}
-		<div id="answer{{value}}" class="trivia_answer">{{name}}</div>
-	{{/answers}}
+<div id="trivia-header" class="trivia-header col-xs-12">
+	<div class="row">
+		<div class="col-xs-8">
+			MuPoP Trivia
+		</div>
+		<div id="trivia-header-playerinfo" class="col-xs-4">
+		{{#username}}
+		<span class="trivia-header-player">Player: </span>
+		<span class="trivia-header-username">{{username}}</span>
+		{{/username}}
+		</div>
+	</div>
 </div>
+
+{{^enter-username}}
+{{^player-removed}}
+<div class="col-xs-12 fill-height">
+	<div class="row trivia-question-area">
+		<div id="trivia-question-header" class="col-xs-12">
+			<i class="trivia-question-header-questionmark fa fa-question-circle fa-lg" aria-hidden="true"></i>
+			<span>Question</span>
+		</div>
+	
+		<div class="trivia_question col-xs-12">		
+			{{#question}}
+				{{question}}
+			{{/question}}
+			{{^question}}
+				Please wait for the next question to answer.
+			{{/question}}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 trivia-polling-buttons-container">
+			<form class="form-inline" onsubmit="return false">
+				<div class="row">
+					{{#answers}}
+					<div class="col-xs-12 trivia-polling-button-wrapper">					
+						<button id="trivia-polling-answer{{value}}" class="trivia-answer trivia-polling-button clickable form-control">
+							<img class="trivia-polling-button-img" id="trivia-phone-polling-image{{value}}" src="http://images1.noterik.com/mupop/check-icon-phone.png" />
+							{{name}}
+						</button>					
+					</div>
+					{{/answers}}
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{{/player-removed}}
+{{/enter-username}}
+
+{{#enter-username}}
+<div class="col-xs-12 fill-height">
+	<div class="row trivia-question-area">
+		<div id="trivia-question-header" class="col-xs-12">
+			<i class="trivia-question-header-questionmark fa fa-user-circle fa-lg" aria-hidden="true"></i>
+			<span>Welcome</span>
+		</div>
+		<div class="trivia_question col-xs-12">
+			Test your expertise in this trivia game. Answer questions correctly to gain points. Play together to gain points faster!<br/>
+			However failing a question will cause everybody to loose all points.
+		</div>
+		<div class="trivia_question col-xs-12">		
+			Choose your username:
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 trivia-polling-buttons-container">
+			<form class="form-inline" onsubmit="return false">
+				<div class="row">				
+					<div class="col-xs-12 trivia-polling-button-wrapper">					
+						<div class="trivia-row">
+							<input type="text" id="username" size="15" maxlength="15"></input>
+						</div>
+						<div class="trivia-row">
+							<button id="usernamecheck" class="clickable">Continue</button>
+						</div>
+						{{#reason}}
+						<div id="trivia-username-error" class="trivia-row">
+							{{reason}}
+						</div>
+						{{/reason}}					
+					</div>
+				</div>
+			</form>
+		</div>
+</div>
+{{/enter-username}}
+
+{{#player-removed}}
+	<div class="col-xs-12 fill-height">
+		<div class="row trivia-question-area">
+			<div id="trivia-question-header" class="col-xs-12">
+				<i class="trivia-question-header-questionmark fa fa-hourglass-end fa-lg" aria-hidden="true"></i>
+				<span>Game Over</span>
+			</div>
+			<div class="trivia_question col-xs-12">
+				You didn't answer the question in time. <a href="javascript:void(0)" onclick="location.reload(true)">Click here to try again</a>.
+			</div>
+		</div>
+	</div>
+{{/player-removed}}

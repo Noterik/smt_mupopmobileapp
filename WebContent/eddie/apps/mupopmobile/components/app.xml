@@ -10,10 +10,11 @@
 	
 	<model id="default">
 		<userlanguage>/screen['profile']/language</userlanguage>
-		
+
 		<username>/screen['profile']/username</username>
 		<color>/screen['profile']/color</color>
 		<deviceid>/screen['profile']/deviceid</deviceid>
+		<playername>/screen['profile']/playername</playername>
 		
 		<exhibitionid>/screen['vars']/exhibitionid</exhibitionid>
 		<stationid>/screen['vars']/stationid</stationid>
@@ -65,6 +66,8 @@
 		<exhibitionevents>/shared['exhibitionevents']/exhibition['@exhibitionid']</exhibitionevents>
 		
 		<photoinfospots>/shared['photoinfospots']/exhibition['@exhibitionid']/station['@stationid']</photoinfospots>
+	
+		<triviaplayerslist>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/players['list']</triviaplayerslist>
 	</model>
 
 	<view id="#screen">
@@ -92,6 +95,7 @@
 		<template>mobile/triviaremote/triviaremote.mst</template>
 		<style>mobile/triviaremote/triviaremote.css</style>
 		<controller id="TriviaRemoteController">
+			<javascript>mobile/triviaremote/TriviaRemoteController.js</javascript>
 		</controller>
 	</view>
 

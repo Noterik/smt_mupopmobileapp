@@ -43,6 +43,7 @@ public class MupopmobileApplication extends Html5Application {
 		this.addToRecoveryList("profile/language");
 		this.addToRecoveryList("profile/color");
 		this.addToRecoveryList("profile/deviceid");
+		this.addToRecoveryList("profile/playername");
 	}
 
 	public void onNewScreen(Screen s) {
