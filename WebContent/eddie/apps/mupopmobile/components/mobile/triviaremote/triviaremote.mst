@@ -58,6 +58,15 @@
 {{/player-removed}}
 {{#feedback}}
 <div id="trivia-feedback">
+	{{#answercorrect}}
+		<div id="trivia-feedback-answertext">You are correct !</div>
+	{{/answercorrect}}
+	{{^answercorrect}}
+		<div id="trivia-feedback-answertext">Sorry, your wrong points are gone !</div>
+	{{/answercorrect}}
+	<div id="trivia-feedback-scorelabel">your score</div>
+	<div id="trivia-feedback-score">{{score}}</div>
+	<div id="trivia-feedback-timerlabel">Next round in</div>
 	<div id="trivia-feedback-timer">{{timer}}</div>
 </div>
 {{/feedback}}

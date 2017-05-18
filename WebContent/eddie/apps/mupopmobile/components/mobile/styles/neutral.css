@@ -664,6 +664,41 @@ html, body {
 	color: #dddddd;
 }
 
+#trivia-feedback-answertext {
+	position: absolute;
+	top: 25%;
+	width: 100%;
+	text-align: center;
+}
+
+#trivia-feedback-scorelabel {
+	position: absolute;
+	width: 100%;
+	top: 35%;
+	text-align: center;
+}
+
+#trivia-feedback-score {
+	position: absolute;
+	width: 100%;
+	top: 40%;
+	text-align: center;
+}
+
+#trivia-feedback-timerlabel {
+	position: absolute;
+	top: 50%;
+	width: 100%;
+	text-align: center;
+}
+
+#trivia-feedback-timer {
+	position: absolute;
+	top: 55%;
+	width: 100%;
+	text-align: center;
+}
+
 #trivia-feedback {
 	position: absolute;
 	top: 45px;

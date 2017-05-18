@@ -35,7 +35,10 @@ import org.springfield.lou.screen.Screen;
 public class TriviaRemoteController extends Html5Controller {
 	
 	String correctanswer = "";
+	String score="";
+	String answerid;
 	boolean feedback = false;
+	boolean answercorrect = false;
 	String timeout;
 
 	public TriviaRemoteController() { }
@@ -90,7 +93,13 @@ public class TriviaRemoteController extends Html5Controller {
 			}
 			//player didn't answer, ask to join again
 			removePlayer();
-		} else if (command.equals("timer")) {
+		} else if (command.equals("scoreupdate")) {
+			System.out.println("SCOREUPDATE="+message.asXML());
+			score = message.getProperty("score");
+			System.out.println("SCORE="+score);
+			answerid= message.getProperty("answerid");
+			fillPage();
+		} else if (command.equals("timer")) {			
 			timeout = message.getProperty("timer");
 			screen.get("#trivia-timer").html(timeout);
 			screen.get("#trivia-feedback-timer").html(timeout);
@@ -162,6 +171,11 @@ public class TriviaRemoteController extends Html5Controller {
 		
 		correctanswer = questionnode.getProperty("correctanswer");
 		data.put("correctanswer", correctanswer);
+		if (answercorrect) {
+			data.put("answercorrect","true");
+		}
+		data.put("score",score);
+		System.out.println("CLIENT2="+score);
 		screen.get(selector).render(data);
 
 		screen.get(".trivia-answer").on("mouseup", "onAnswer", this);
@@ -184,8 +198,10 @@ public class TriviaRemoteController extends Html5Controller {
 		answer = answer.substring(21);
 		System.out.println("CORRECT ANSWER="+correctanswer+" ANSWER="+answer);
 		if (correctanswer.equals(answer)) {
+			answercorrect = true;
 			msgnode.setProperty("answer","correct");
 		} else {
+			answercorrect = false;
 			msgnode.setProperty("answer","false");
 		}
 		msgnode.setProperty("value", id);
