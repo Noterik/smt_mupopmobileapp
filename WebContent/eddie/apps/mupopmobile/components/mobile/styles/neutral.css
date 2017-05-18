@@ -16,7 +16,7 @@ html, body {
 }
 
 .header {
-	background-color: #33475a;
+	background-color: #7766cf;
 	height: 45px;
 	color: #fff;
 	text-align: center;
@@ -626,7 +626,7 @@ html, body {
 }
 
 .trivia-header {
-	background-color: #33475a;
+	background-color: #a9a7cd;
 	height: 45px;
 	color: #fff;
 	font-weight: 600;
@@ -652,8 +652,33 @@ html, body {
 	font-weight: 600;
 }
 
+
+#trivia-timer-container {
+	font-family: inherit;
+	font-size: 18px;
+	font-weight: 600;
+	text-align: center;
+}
+
+#trivia-cheat {
+	color: #dddddd;
+}
+
+#trivia-feedback {
+	position: absolute;
+	top: 45px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(173,163,207, .8);
+	color: #fff;
+	text-align: center;
+	font-size: 4vh;
+	z-index: 2000;
+}
+
 .trivia-question-header-questionmark {
-	color: #E7912C;
+	color: #908eb0;
 	margin-right: 4px;
 
 }
@@ -704,19 +729,19 @@ html, body {
 }
 
 #trivia-polling-answer1 {
-	background-color: #3498DB;
+	background-color: #a9a7cd;
 }
 
 #trivia-polling-answer2 {
-	background-color: #F1C40F;
+	background-color: #a9a7cd;
 }
 
 #trivia-polling-answer3 {
-	background-color: #9B59B6;
+	background-color: #a9a7cd;
 }
 
 #trivia-polling-answer4 {
-	background-color: #E67E22;
+	background-color: #a9a7cd;
 }
 
 .trivia-row {

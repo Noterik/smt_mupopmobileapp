@@ -5,7 +5,7 @@
 		</div>
 		<div id="trivia-header-playerinfo" class="col-xs-4">
 		{{#username}}
-		<span class="trivia-header-player">Player: </span>
+		<span class="trivia-header-player"></span>
 		<span class="trivia-header-username">{{username}}</span>
 		{{/username}}
 		</div>
@@ -13,6 +13,7 @@
 </div>
 
 {{^enter-username}}
+
 {{^player-removed}}
 <div class="col-xs-12 fill-height">
 	<div class="row trivia-question-area">
@@ -26,7 +27,7 @@
 				{{question}}
 			{{/question}}
 			{{^question}}
-				Please wait for the next question to answer.
+				You will join the next round, please wait
 			{{/question}}
 		</div>
 	</div>
@@ -47,7 +48,21 @@
 		</div>
 	</div>
 </div>
+<div id="trivia-timer-container">
+	{{#question}}
+	{{^feedback}}
+	Time left to answer <div id="trivia-timer">{{timer}}</div> 
+	{{/feedback}}
+	{{/question}}
+</div>
 {{/player-removed}}
+{{#feedback}}
+<div id="trivia-feedback">
+	<div id="trivia-feedback-timer">{{timer}}</div>
+</div>
+{{/feedback}}
+<div id="trivia-cheat">{{correctanswer}}</div>
+
 {{/enter-username}}
 
 {{#enter-username}}
