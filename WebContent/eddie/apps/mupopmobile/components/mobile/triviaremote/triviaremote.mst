@@ -51,7 +51,7 @@
 <div id="trivia-timer-container">
 	{{#question}}
 	{{^feedback}}
-	Time left to answer <div id="trivia-timer">{{timer}}</div> 
+	Seconds left to answer <div id="trivia-timer">{{timer}}</div> 
 	{{/feedback}}
 	{{/question}}
 </div>
@@ -66,7 +66,7 @@
 	{{/answercorrect}}
 	<div id="trivia-feedback-scorelabel">your score</div>
 	<div id="trivia-feedback-score">{{score}}</div>
-	<div id="trivia-feedback-timerlabel">Next round in</div>
+	<div id="trivia-feedback-timerlabel">Next round in seconds</div>
 	<div id="trivia-feedback-timer">{{timer}}</div>
 </div>
 {{/feedback}}
