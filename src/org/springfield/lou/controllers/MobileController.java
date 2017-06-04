@@ -35,6 +35,7 @@ import org.springfield.lou.controllers.intro.station.StationSelectionRemoteContr
 import org.springfield.lou.controllers.photoexplore.PhotoExploreRemoteController;
 import org.springfield.lou.controllers.photoinfospots.PhotoInfoSpotsRemoteController;
 import org.springfield.lou.controllers.trivia.TriviaRemoteController;
+import org.springfield.lou.controllers.whatwethink.WhatWeThinkRemoteController;
 import org.springfield.lou.model.ModelEvent;
 import org.springfield.lou.screen.Screen;
 
@@ -66,7 +67,7 @@ public class MobileController extends Html5Controller {
 
 	public void onStateChange(ModelEvent event) {
 		String state = event.getTargetFsNode().getProperty("state");
-		System.out.println("Mobile STEP="+state);
+		System.out.println("Mobile STEP="+state+" OLDSTATE="+oldstate);
 		if (oldstate.equals(state)) return;
 		oldstate = state;		
 		System.out.println("APPSTATE="+model.getProperty("@appstate"));
@@ -85,7 +86,7 @@ public class MobileController extends Html5Controller {
 		} else if (state.equals("mainapp") || model.getProperty("@appstate").equals("mainapp")) { // check station selection method if more than one station
 		    	model.setProperty("@contentrole", "mainapp"); // due to possibility to go here from another state is appstate = mainapp 
 		    	model.onNotify("@stationevents/fromclient","onStationEvent",this);
-			mainAppStep();
+		    	mainAppStep();
 		} else if (state.equals("feedback")) { // check station selection method if more than one station
 			feedbackStep();
 		}
@@ -221,6 +222,8 @@ public class MobileController extends Html5Controller {
 				screen.get("#mobile").append("div","interactivevideoremote", new InteractiveVideoRemoteController());
 			} else if (app.equals("trivia")) {
 				screen.get("#mobile").append("div","triviaremote", new TriviaRemoteController());
+			} else if (app.equals("whatwethink")) {
+				screen.get("#mobile").append("div","whatwethinkremote", new WhatWeThinkRemoteController());
 			}
 		} else {
 			//TODO: should display error that no app was selected and curator should set it

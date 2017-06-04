@@ -66,6 +66,7 @@
 		<exhibitionevents>/shared['exhibitionevents']/exhibition['@exhibitionid']</exhibitionevents>
 		
 		<photoinfospots>/shared['photoinfospots']/exhibition['@exhibitionid']/station['@stationid']</photoinfospots>
+		<whatwethinkdots>/shared['whatwethink']/exhibition['@exhibitionid']/station['@stationid']</whatwethinkdots>
 	
 		<triviaplayerslist>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/players['list']</triviaplayerslist>
 	</model>
@@ -88,6 +89,13 @@
 		<template>mobile/photoexploreremote/photoexploreremote.mst</template>
 		<style>mobile/photoexploreremote/photoexploreremote.css</style>
 		<controller id="PhotoExploreRemoteController">
+		</controller>
+	</view>
+	
+	<view id="#whatwethinkremote">
+		<template>mobile/whatwethinkremote/whatwethinkremote.mst</template>
+		<style>mobile/whatwethinkremote/whatwethinkremote.css</style>
+		<controller id="WhatWeThinkRemoteController">
 		</controller>
 	</view>
 	

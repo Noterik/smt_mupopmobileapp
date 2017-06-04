@@ -1,0 +1,13 @@
+<div id="whatwethink-question-row">
+	QUESTION {{question}}
+</div>
+
+<div id="whatwethink-statements-row">
+	<div id="whatwethink-statements-left-column">
+		A : {{answer1}}
+	</div>
+	<div id="whatwethink-statements-right-column">
+		B : {{answer2}}
+	</div>
+</div>
+<div id="whatwethink-statements-dot" style="background-color: red"></div>
