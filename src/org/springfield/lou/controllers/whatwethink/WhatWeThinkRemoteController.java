@@ -48,7 +48,6 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 	
 
 	public void attach(String sel) {
-		System.out.println("WWT MOBILE ATTACHED");
 		selector = sel;
 		username = "guest"+	screen.getCapabilities().getCapability("smt_browserid");
 		
@@ -99,16 +98,13 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 		FsNode message = e.getTargetFsNode();
 		
 		String command = message.getProperty("command");
-		//System.out.println("CLIENT COMMAND="+command);
 		if (command.equals("newquestion")) {
-			System.out.println(message.asXML());
 			//only target device that is addressed
 			String screenid = message.getProperty("screenid");
 			if (!screenid.equals("all") && !screenid.equals(screen.getId())) {
 				return;
 			}
 			model.setProperty("@itemid", message.getProperty("itemid")); // why is this needed not in shared space?
-			System.out.println("WWWWWWW="+ message.getProperty("itemquestionid"));
 			
 			model.setProperty("@itemquestionid", message.getProperty("itemquestionid"));
 			if (message.getProperty("feedback").equals("true")) {
@@ -119,7 +115,6 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 			String m = message.getProperty("color");
 			if (m!=null && !m.equals("")) {
 				mycolor = m;
-				System.out.println("MYCOLOR="+mycolor);
 			}
 			fillPage();
 		} else if (command.equals("remove")) {
@@ -130,9 +125,7 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 			//player didn't answer, ask to join again
 		//	removePlayer();
 		} else if (command.equals("scoreupdate")) {
-			System.out.println("SCOREUPDATE="+message.asXML());
 			score = message.getProperty("score");
-			System.out.println("SCORE="+score);
 			answerid= message.getProperty("answerid");
 			fillPage();
 		} else if (command.equals("timer")) {			
@@ -145,7 +138,6 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 			} else {
 				feedback=false;	
 			}
-			System.out.println("FEEDBACK UPDATE");
 			fillPage();
 		} else if (command.equals("feedbackstate")) {
 			if (message.getProperty("feedback").equals("true")) {

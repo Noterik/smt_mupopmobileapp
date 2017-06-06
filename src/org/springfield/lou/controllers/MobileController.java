@@ -55,7 +55,6 @@ public class MobileController extends Html5Controller {
 
 		model.onPropertyUpdate("/screen/state","onStateChange",this);
 
-		System.out.println("ATTACH DONE");
 		screen.get(selector).render();
 		String exh = model.getProperty("@exhibitionid");
 		if (exh!=null && exh.equals("unknown")) {
@@ -67,10 +66,8 @@ public class MobileController extends Html5Controller {
 
 	public void onStateChange(ModelEvent event) {
 		String state = event.getTargetFsNode().getProperty("state");
-		System.out.println("Mobile STEP="+state+" OLDSTATE="+oldstate);
 		if (oldstate.equals(state)) return;
 		oldstate = state;		
-		System.out.println("APPSTATE="+model.getProperty("@appstate"));
 		model.setProperty("@contentrole", state); 	//state and contentrole are the same ????
 		if (state.equals("init")) { // init the exhibition and probably show language selector
 		    initStep(); 
@@ -106,7 +103,6 @@ public class MobileController extends Html5Controller {
 			// first lets check if user already has one selected if so we skip on init state
 			String userLanguage = model.getProperty("@userlanguage");
 
-			System.out.println("USERLANGUAGE FROM 'COOKIE' "+userLanguage);
 			//userLanguage = null;
 			if (userLanguage==null || userLanguage.equals("")) {
 				if (languageselect.equals("default")) {
@@ -120,7 +116,6 @@ public class MobileController extends Html5Controller {
 				    String languages = model.getProperty("@exhibition/availablelanguages");
 				    String[] languageList = languages.split(",");
 				    
-				    System.out.println("Picking first language from list "+languageList[0]);
 				    
 				    model.setProperty("@userlanguage",languageList[0]);
 				}
@@ -132,7 +127,6 @@ public class MobileController extends Html5Controller {
 		    String languages = model.getProperty("@exhibition/availablelanguages");
 		    String[] languageList = languages.split(",");
 		    
-		    System.out.println("Picking first language from list "+languageList[0]);
 		    
 		    model.setProperty("@userlanguage",languageList[0]);
 		}
@@ -146,7 +140,6 @@ public class MobileController extends Html5Controller {
 		String audiocheck = model.getProperty("@exhibition/audiocheck");
 		if (audiocheck!=null && audiocheck.equals("true")) {
 			// set local action to perform audiocheck
-			System.out.println("AUDIOCHECK="+audiocheck);
 			screen.get("#mobile").append("div", "audiotestremote", new AudioTestRemoteController());
 
 			//screen.get("#mobile").append("div","headphonescheck", new HeadphonesController());
@@ -161,7 +154,6 @@ public class MobileController extends Html5Controller {
 		resetScreen();
 
 		String type = model.getProperty("@exhibition/stationselect");
-		System.out.println("MuPoP: station select step called ="+type);
 		//check if multiple stations are configured	
 
 		if (type==null || type.equals("") || type.equals("none")) {
@@ -181,16 +173,13 @@ public class MobileController extends Html5Controller {
 				}
 			}
 		} else if (type.equals("listview")) {
-			System.out.println("START LISTVIEW");
 			screen.get("#mobile").append("div", "stationselectionremote", new StationSelectionRemoteController());
 		} else if (type.equals("codeselect")) {
-			System.out.println("START CODESELECT");
 			screen.get("#mobile").append("div", "stationcodeselectionremote", new StationCodeSelectionRemoteController());
 		}		    
 	}
 	
 	private void globalSelectStep() {
-		System.out.println("START GLOBAL CODESELECT");
 		screen.get("#mobile").append("div", "globalcodeselectionremote", new GlobalCodeSelectionRemoteController());		
 	}
 
@@ -198,10 +187,8 @@ public class MobileController extends Html5Controller {
 		resetScreen();
 
 		String type = model.getProperty("@station/contentselect");
-		System.out.println("MuPoP: content select step called ="+type);
 		if (type!=null && !type.equals("")) {
 			if (type.equals("coverflow")) {
-				System.out.println("COVERFLOW WANTED");
 				screen.get("#mobile").append("div", "coverflowremote", new CoverFlowRemoteController());
 			}
 		}
@@ -212,7 +199,6 @@ public class MobileController extends Html5Controller {
 
 		FsNode stationnode = model.getNode("@station");	
 		String app =  stationnode.getProperty("app"); // get the app name
-		System.out.println("MuPoP mobile: mainapp select step called ="+app);
 		if (app!=null) {
 			if (app.equals("photoexplore")) {
 				screen.get("#mobile").append("div","photoexplorerremote",new PhotoExplorerRemoteController());
@@ -233,7 +219,6 @@ public class MobileController extends Html5Controller {
 
 	private void feedbackStep() {
 		String type = model.getProperty("@station/feedbackselect");
-		System.out.println("MuPoP: feedback step called ="+type);
 		if (type!=null && !type.equals("")) {
 
 		}
@@ -242,8 +227,6 @@ public class MobileController extends Html5Controller {
 	public void onStationEvent(ModelEvent e) {
 		FsNode message = e.getTargetFsNode();
 		String request = message.getProperty("request");
-		
-		System.out.println("Station event received "+message.asXML());
 		
 		if (request!=null) { 
 		    model.setProperty("@contentrole", request);
@@ -257,7 +240,6 @@ public class MobileController extends Html5Controller {
 			} else if (request.equals("mainapp")) {
 				resetScreen();
 				model.setProperty("/screen/state","mainapp");
-				System.out.println("Setting item id "+message.asXML());
 				model.setProperty("@itemid", message.getProperty("itemid"));
 				mainAppStep();
 			}
@@ -265,7 +247,7 @@ public class MobileController extends Html5Controller {
 	}
 
 	public void newGPSLocation(Screen s,JSONObject data) {
-		System.out.println("LOCATION="+data.toJSONString());
+		//System.out.println("LOCATION="+data.toJSONString());
 	}
 
 	private void resetScreen() {
