@@ -42,6 +42,7 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 	boolean answercorrect = false;
 	String timeout;
 	String username;
+	String mycolor;
 
 	public WhatWeThinkRemoteController() { }
 	
@@ -64,7 +65,8 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 	}
 	
 	 public void mouseMove(Screen s,JSONObject data) {
-	//	System.out.println("MOVE="+data.toJSONString());
+		if (feedback) return;
+		
 		Double screenXP;
 		if (data.get("screenXP") instanceof Double) {
 			screenXP=(Double)data.get("screenXP");
@@ -81,36 +83,43 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 			screenYP = new Double(l);
 		}
 		if (screenYP<50) {
-//			System.out.println("XP="+screenXP+" YP="+screenYP);
 			 screen.get("#whatwethink-statements-dot").css("top",""+screenYP+"%");
 			 screen.get("#whatwethink-statements-dot").css("left",""+screenXP+"%");
 			 
 			FsNode pnode = model.getNode("@whatwethinkdots/results/"+username); // based on a bug needs fixing
+
 			pnode.setProperty("x", ""+screenXP);
 			pnode.setProperty("y",""+screenYP*2);
-			pnode.setProperty("c","red");
+			pnode.setProperty("c",mycolor);
 			model.setProperty("@whatwethinkdots/changed",""+new Date().getTime()); // set dirty
 		}
-	//	System.out.println("BROWSERID="+username);
 	 }
 
 	public void onAppStateChange(ModelEvent e) {
 		FsNode message = e.getTargetFsNode();
 		
 		String command = message.getProperty("command");
-		System.out.println("CLIENT COMMAND="+command);
+		//System.out.println("CLIENT COMMAND="+command);
 		if (command.equals("newquestion")) {
+			System.out.println(message.asXML());
 			//only target device that is addressed
 			String screenid = message.getProperty("screenid");
 			if (!screenid.equals("all") && !screenid.equals(screen.getId())) {
 				return;
 			}
 			model.setProperty("@itemid", message.getProperty("itemid")); // why is this needed not in shared space?
+			System.out.println("WWWWWWW="+ message.getProperty("itemquestionid"));
+			
 			model.setProperty("@itemquestionid", message.getProperty("itemquestionid"));
 			if (message.getProperty("feedback").equals("true")) {
 				feedback=true;
 			} else {
 				feedback=false;	
+			}
+			String m = message.getProperty("color");
+			if (m!=null && !m.equals("")) {
+				mycolor = m;
+				System.out.println("MYCOLOR="+mycolor);
 			}
 			fillPage();
 		} else if (command.equals("remove")) {
@@ -128,9 +137,16 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 			fillPage();
 		} else if (command.equals("timer")) {			
 			timeout = message.getProperty("timer");
-			//screen.get("#trivia-timer").html(timeout);
-			//screen.get("#trivia-feedback-timer").html(timeout);
-			System.out.println("CLIENTTIMER="+timeout);
+			screen.get("#whatwethink-timer-one").html(timeout);
+			screen.get("#whatwethink-timer-two").html("next statement : "+timeout);
+		} else if (command.equals("feedbackstate")) {
+			if (message.getProperty("feedback").equals("true")) {
+				feedback=true;
+			} else {
+				feedback=false;	
+			}
+			System.out.println("FEEDBACK UPDATE");
+			fillPage();
 		} else if (command.equals("feedbackstate")) {
 			if (message.getProperty("feedback").equals("true")) {
 				feedback=true;
@@ -151,6 +167,7 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 			data.put("feedback","true");
 		}
 		data.put("timer",timeout);
+		data.put("timer2","next statement : "+timeout);
 
 		String playername = model.getProperty("@playername");
 		data.put("username", playername);
@@ -158,8 +175,10 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 		data.put("question", questionnode.getProperty("question"));
 		data.put("answer1", questionnode.getProperty("answer1"));
 		data.put("answer2", questionnode.getProperty("answer2"));
+		if (mycolor!=null) data.put("color", mycolor);
 
 		screen.get(selector).render(data);
+
  		screen.get("#mobile").track("mousemove","mouseMove", this);
 
 	}

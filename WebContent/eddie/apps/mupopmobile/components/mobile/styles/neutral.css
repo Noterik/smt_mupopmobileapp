@@ -804,7 +804,8 @@ html, body {
 
 #whatwethink-statements-row {
 	position: absolute;
-	font-size: 4vh;
+	font-size: 3vh;
+	color: #ffffff;
 	text-align: center;
 	vertical-align: text-center;
 	background-color: #000088;
@@ -846,4 +847,45 @@ html, body {
 			width: 30px;
 			height: 30px;
 			border-radius: 15px;
+}
+
+#whatwethink-feedback-container {
+	position: absolute;
+	border-radius: 5px;
+	background-color: #888888;
+	border: 2px solid #aaaaaa;
+	width: 96%;
+	height: 46%;
+	top: 2%;
+	left: 2%;
+	z-index: 1000;	
+}
+
+#whatwethink-timer-one {
+	position: absolute;
+	font-size: 5vh;
+	color : #ffffff;
+	text-align: center;
+	vertical-align: text-center;
+	border-radius: 10px;
+	background-color: #000000;
+	border: 2px solid #777777;
+	width: 20%;
+	height:10%;
+	top: 47%;
+	left:40%;
+	z-index: 1200;
+}
+
+#whatwethink-timer-two {
+	position: absolute;
+	font-size: 4vh;
+	color: white;
+	text-align: center;
+	vertical-align: text-center;
+	width: 90%;
+	height: 6%;
+	bottom: 10%;
+	left:5%;
+	z-index: 1200;
 }

@@ -10,4 +10,16 @@
 		B : {{answer2}}
 	</div>
 </div>
-<div id="whatwethink-statements-dot" style="background-color: red"></div>
+<div id="whatwethink-statements-dot" style="background-color: {{color}}"></div>
+
+{{^feedback}}
+	<div id="whatwethink-timer-one">{{timer}}</div> 
+{{/feedback}}
+
+{{#feedback}}
+<div id="whatwethink-feedback-container">
+	<div id="whatwethink-timer-two">
+		{{timer2}}
+	</div>
+</div>
+{{/feedback}}
