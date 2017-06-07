@@ -57,6 +57,36 @@ public class TriviaRemoteController extends Html5Controller {
 			screen.get(selector).render(data);
 			screen.get("#usernamecheck").on("mouseup", "username", "onUserName", this);
 		} else { // player name set, now we can really start
+		    
+		    	//check if we need to set player name in score list (can happen cause of other app already asked for username)
+		    	FSList players = model.getList("@triviaplayerslist/player");
+
+		    	boolean userFound = false;
+		    	
+			if (players.size() == 0) {
+			    // create players list
+			    FsNode newPlayerList = new FsNode("players", "list");
+			    model.putNode("@station", newPlayerList);
+			} else {
+			    // loop over all players to check if we have already this username
+			    for (Iterator<FsNode> iter = players.getNodes().iterator(); iter.hasNext();) {
+				FsNode player = (FsNode) iter.next();
+				String playerName = player.getProperty("name");
+
+				if (playerName.toLowerCase().equals(playername.toLowerCase())) {
+				    userFound = true;
+				}
+			    }
+			}
+			
+			if (!userFound) {
+			    // username available, store and continue
+			    FsNode newPlayer = new FsNode("player", playername.toLowerCase());
+			    newPlayer.setProperty("name", playername);
+			    newPlayer.setProperty("highscore", "0");
+			    model.putNode("@triviaplayerslist", newPlayer);
+			}
+			
 			data.put("username", playername);
 			screen.get(selector).render(data);
 
