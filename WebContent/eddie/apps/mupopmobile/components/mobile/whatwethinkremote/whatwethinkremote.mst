@@ -10,7 +10,7 @@
 		B : {{answer2}}
 	</div>
 </div>
-<div id="whatwethink-statements-dot" style="background-color: {{color}}"></div>
+<div id="whatwethink-statements-dot" style="background-color: {{color}};left:{{posx}}%;top: {{posy}}%;"></div>
 
 {{^feedback}}
 	<div id="whatwethink-timer-one">{{timer}}</div> 

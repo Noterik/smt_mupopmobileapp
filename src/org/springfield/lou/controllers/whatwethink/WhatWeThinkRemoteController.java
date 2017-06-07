@@ -43,6 +43,8 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 	String timeout;
 	String username;
 	String mycolor;
+	String posx=null;
+	String posy=null;
 
 	public WhatWeThinkRemoteController() { }
 	
@@ -88,7 +90,8 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 			FsNode pnode = model.getNode("@whatwethinkdots/results/"+username); // based on a bug needs fixing
 
 			pnode.setProperty("x", ""+screenXP);
-			pnode.setProperty("y",""+screenYP*2);
+			pnode.setProperty("y",""+screenYP);
+			pnode.setProperty("lastseen",""+new Date().getTime());
 			pnode.setProperty("c",mycolor);
 			model.setProperty("@whatwethinkdots/changed",""+new Date().getTime()); // set dirty
 		}
@@ -115,6 +118,21 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 			String m = message.getProperty("color");
 			if (m!=null && !m.equals("")) {
 				mycolor = m;
+			}
+			// move the dot back
+			FsNode player = model.getNode("@station/player['"+username+"']");
+			if (player!=null) {
+				String dataline = player.getProperty("pos_"+model.getProperty("@itemquestionid"));
+				System.out.println("DATALINE="+dataline);
+				if (dataline!=null && !dataline.equals("")) {
+					String[] parts = dataline.split(",");
+					 posx = parts[0];
+					 posy = parts[1];
+				}
+				m = player.getProperty("color");
+				if (m!=null && !m.equals("")) {
+					mycolor = m;
+				}
 			}
 			fillPage();
 		} else if (command.equals("remove")) {
@@ -168,6 +186,8 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 		data.put("answer1", questionnode.getProperty("answer1"));
 		data.put("answer2", questionnode.getProperty("answer2"));
 		if (mycolor!=null) data.put("color", mycolor);
+		if (posx!=null) data.put("posx", posx);
+		if (posy!=null) data.put("posy", posy);
 
 		screen.get(selector).render(data);
 
