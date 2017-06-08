@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import org.json.simple.JSONObject;
@@ -45,6 +46,7 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 	String mycolor;
 	String posx=null;
 	String posy=null;
+	FSList axis;
 
 	public WhatWeThinkRemoteController() { }
 	
@@ -112,6 +114,7 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 			model.setProperty("@itemquestionid", message.getProperty("itemquestionid"));
 			if (message.getProperty("feedback").equals("true")) {
 				feedback=true;
+
 			} else {
 				feedback=false;	
 			}
@@ -169,7 +172,7 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 
 	private void fillPage() {
 		model.setProperty("@contentrole", "mainapp");
-
+		if (axis==null) axis = model.getList("@itemaxis");
 		FsNode item = model.getNode("@item");
 
 		JSONObject data = new JSONObject();
@@ -179,16 +182,59 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 		data.put("timer",timeout);
 		data.put("timer2","next statement : "+timeout);
 
-		String playername = model.getProperty("@playername");
-		data.put("username", playername);
+		//String playername = model.getProperty("@playername");
+		//data.put("username", playername);
 		FsNode questionnode = model.getNode("@itemquestion");
+		
 		data.put("question", questionnode.getProperty("question"));
 		data.put("answer1", questionnode.getProperty("answer1"));
 		data.put("answer2", questionnode.getProperty("answer2"));
 		if (mycolor!=null) data.put("color", mycolor);
 		if (posx!=null) data.put("posx", posx);
 		if (posy!=null) data.put("posy", posy);
+		
+		// add axis info
+	
+		FSList axisnodes =new FSList();
+		List<FsNode> nodes = axis.getNodes();
+		if (nodes != null) {
+			
+			FsNode pnode = model.getNode("@station/player['"+username+"']");
+			System.out.println("pnode="+pnode+" username="+username);
+			int hm = 0;
+			double cf = 1;
+			for (Iterator<FsNode> iter = nodes.iterator(); iter.hasNext();) {
+				FsNode node = (FsNode) iter.next();
+				try {
+					//System.out.println("P="+pnode.asXML());
+					String m = pnode.getProperty("axis_"+node.getId());
+					System.out.println("M="+m+" "+pnode.asXML());
+					int mi = Integer.parseInt(m);
+					if (mi>hm) {
+						hm = mi;
+						cf = 50/hm;
+					}
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 
+			System.out.println("HIGHMARK="+hm+" cf="+cf);
+			for (Iterator<FsNode> iter = nodes.iterator(); iter.hasNext();) {
+				FsNode node = (FsNode) iter.next();
+				FsNode axisnode = new FsNode("axis",node.getId());
+				axisnode.setProperty("name", node.getProperty("name"));
+				axisnode.setProperty("color", node.getProperty("color"));
+				try {
+					String m = pnode.getProperty("axis_"+node.getId());
+					int mi = Integer.parseInt(m);
+					axisnode.setProperty("size", ""+(mi*cf));
+				} catch(Exception e) {}
+				axisnodes.addNode(axisnode);
+			}
+		}
+		data.put("axis",axisnodes.toJSONObject("en","name,color,size"));
+		
 		screen.get(selector).render(data);
 
  		screen.get("#mobile").track("mousemove","mouseMove", this);

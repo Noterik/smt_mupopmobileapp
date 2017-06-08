@@ -23,3 +23,17 @@
 	</div>
 </div>
 {{/feedback}}
+
+<div id="whatwethink-profile-container">
+	<div id="whatwethink-profile-axis-title">
+	Uw profile tot nu toe
+	</div>
+	{{#axis}}
+		{{#nodes}}
+			<div id="whatwethink-profile-axis-{{id}}" class="whatwethink-profile-axis" >
+				<div id="axis_{{id}}" style="width:{{size}}%;background-color: {{color}};float:left;">&nbsp;</div>
+				<div id="axis_{{id}}_label" style="float:left;margin-left: 10px;">{{name}}</div>
+			</div>
+		{{/nodes}}
+	{{/axis}}
+</div>
