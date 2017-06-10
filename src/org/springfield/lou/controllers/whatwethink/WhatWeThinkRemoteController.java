@@ -225,7 +225,8 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 		if (nodes != null) {
 			
 			FsNode pnode = model.getNode("@station/player['"+username+"']");
-			System.out.println("pnode="+pnode+" username="+username);
+			//System.out.println("pnode="+pnode+" username="+username);
+			//System.out.println("N="+pnode.asXML());
 			int hm = 0;
 			double cf = 1;
 			for (Iterator<FsNode> iter = nodes.iterator(); iter.hasNext();) {
@@ -242,7 +243,7 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 				}
 			}
 
-			System.out.println("HIGHMARK="+hm+" cf="+cf);
+			//System.out.println("HIGHMARK="+hm+" cf="+cf);
 			for (Iterator<FsNode> iter = nodes.iterator(); iter.hasNext();) {
 				FsNode node = (FsNode) iter.next();
 				FsNode axisnode = new FsNode("axis",node.getId());
