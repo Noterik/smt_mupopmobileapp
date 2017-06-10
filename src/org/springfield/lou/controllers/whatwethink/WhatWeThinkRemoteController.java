@@ -47,6 +47,11 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 	String posx=null;
 	String posy=null;
 	FSList axis;
+	String questionnumber="0";
+	int questioncount=-1;
+	String question="";
+	String answer1="";
+	String answer2="";
 
 	public WhatWeThinkRemoteController() { }
 	
@@ -109,9 +114,13 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 			if (!screenid.equals("all") && !screenid.equals(screen.getId())) {
 				return;
 			}
-			model.setProperty("@itemid", message.getProperty("itemid")); // why is this needed not in shared space?
+			question = message.getProperty("question");
+			answer1 = message.getProperty("answer1");
+			answer2 = message.getProperty("answer2");
 			
-			model.setProperty("@itemquestionid", message.getProperty("itemquestionid"));
+			//model.setProperty("@itemid", message.getProperty("itemid")); // why is this needed not in shared space?
+			
+			//model.setProperty("@itemquestionid", message.getProperty("itemquestionid"));
 			if (message.getProperty("feedback").equals("true")) {
 				feedback=true;
 
@@ -122,21 +131,34 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 			if (m!=null && !m.equals("")) {
 				mycolor = m;
 			}
+			
+			String qn = message.getProperty("questioncount");
+			try {
+				questioncount = Integer.parseInt(qn);
+			} catch(Exception e2) {
+				e2.printStackTrace();
+			}
+			questionnumber = message.getProperty("questionnumber");
+			
 			// move the dot back
 			FsNode player = model.getNode("@station/player['"+username+"']");
 			if (player!=null) {
-				String dataline = player.getProperty("pos_"+model.getProperty("@itemquestionid"));
-				System.out.println("DATALINE="+dataline);
-				if (dataline!=null && !dataline.equals("")) {
+				String dataline = player.getProperty("pos_"+questionnumber);
+				if (dataline!=null && !dataline.equals("") && dataline.indexOf("-1")==-1) {
 					String[] parts = dataline.split(",");
 					 posx = parts[0];
 					 posy = parts[1];
+				} else {
+					 posx = "-100";
+					 posy = "-100";
 				}
 				m = player.getProperty("color");
 				if (m!=null && !m.equals("")) {
 					mycolor = m;
 				}
 			}
+			
+
 			fillPage();
 		} else if (command.equals("remove")) {
 			//only target device that is addressed
@@ -152,7 +174,7 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 		} else if (command.equals("timer")) {			
 			timeout = message.getProperty("timer");
 			screen.get("#whatwethink-timer-one").html(timeout);
-			screen.get("#whatwethink-timer-two").html("next statement : "+timeout);
+			screen.get("#whatwethink-timer-two").html("volgende keuze in "+timeout+" sec");
 		} else if (command.equals("feedbackstate")) {
 			if (message.getProperty("feedback").equals("true")) {
 				feedback=true;
@@ -173,22 +195,25 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 	private void fillPage() {
 		model.setProperty("@contentrole", "mainapp");
 		if (axis==null) axis = model.getList("@itemaxis");
-		FsNode item = model.getNode("@item");
+		//FsNode item = model.getNode("@item");
 
 		JSONObject data = new JSONObject();
 		if (feedback) {
 			data.put("feedback","true");
 		}
 		data.put("timer",timeout);
-		data.put("timer2","next statement : "+timeout);
+		data.put("timer2","volgende keuze in "+timeout+" sec");
+		
 
 		//String playername = model.getProperty("@playername");
 		//data.put("username", playername);
-		FsNode questionnode = model.getNode("@itemquestion");
+		//FsNode questionnode = model.getNode("@itemquestion");
 		
-		data.put("question", questionnode.getProperty("question"));
-		data.put("answer1", questionnode.getProperty("answer1"));
-		data.put("answer2", questionnode.getProperty("answer2"));
+		data.put("question", question);
+		//data.put("questionid", questionnode.getId());
+		data.put("questionnumber", questionnumber);
+		data.put("answer1", answer1);
+		data.put("answer2", answer2);
 		if (mycolor!=null) data.put("color", mycolor);
 		if (posx!=null) data.put("posx", posx);
 		if (posy!=null) data.put("posy", posy);
@@ -206,9 +231,7 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 			for (Iterator<FsNode> iter = nodes.iterator(); iter.hasNext();) {
 				FsNode node = (FsNode) iter.next();
 				try {
-					//System.out.println("P="+pnode.asXML());
 					String m = pnode.getProperty("axis_"+node.getId());
-					System.out.println("M="+m+" "+pnode.asXML());
 					int mi = Integer.parseInt(m);
 					if (mi>hm) {
 						hm = mi;
@@ -228,11 +251,25 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 				try {
 					String m = pnode.getProperty("axis_"+node.getId());
 					int mi = Integer.parseInt(m);
-					axisnode.setProperty("size", ""+(mi*cf));
+					axisnode.setProperty("size", ""+((mi*cf)+1));
 				} catch(Exception e) {}
 				axisnodes.addNode(axisnode);
 			}
 		}
+		
+		int answercount=getAnswerCount();
+		
+		if (answercount==0) {
+			data.put("noanswer","true");
+		} else if(answercount<5) {
+			data.put("below5answer","true");
+		} else if (answercount<questioncount) {
+			data.put("enoughanswer","true");
+		} else {
+			data.put("allanswer","true");
+		}
+		data.put("answercount",""+answercount);
+		
 		data.put("axis",axisnodes.toJSONObject("en","name,color,size"));
 		
 		screen.get(selector).render(data);
@@ -240,6 +277,21 @@ public class WhatWeThinkRemoteController extends Html5Controller {
  		screen.get("#mobile").track("mousemove","mouseMove", this);
 
 	}
+	
+	private int getAnswerCount() {
+		int count = 0;
+		FsNode player = model.getNode("@station/player['"+username+"']");
+		for (int i=1;i<=questioncount;i++) {
+			if (player!=null) {
+				String dataline = player.getProperty("pos_"+i);
+				if (dataline!=null && dataline.indexOf("null")==-1 && dataline.indexOf("-1")==-1) {
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+	
 
 
 

@@ -1,5 +1,5 @@
 <div id="whatwethink-question-row">
-	QUESTION {{question}}
+	Uw {{questionnumber}}e keuze
 </div>
 
 <div id="whatwethink-statements-row">
@@ -18,6 +18,17 @@
 
 {{#feedback}}
 <div id="whatwethink-feedback-container">
+	{{#noanswer}}
+	We kunnen pas een profiel geven als we mistens 5
+	antwoorden van U hebben.
+	{{/noanswer}}
+	{{#below5answer}}
+	U hebt al {{answercount}} vragen beantwoord, We hebben er minimaal
+	5 nodig voor een goed profiel
+	{{/below5answer}}
+	{{#enoughanswer}}
+	{{answercount}} gegeven maar beantwoord er meer voor een beter profiel
+	{{/enoughanswer}}
 	<div id="whatwethink-timer-two">
 		{{timer2}}
 	</div>
@@ -26,7 +37,7 @@
 
 <div id="whatwethink-profile-container">
 	<div id="whatwethink-profile-axis-title">
-	Uw profile tot nu toe
+	Uw profiel tot nu toe
 	</div>
 	{{#axis}}
 		{{#nodes}}
