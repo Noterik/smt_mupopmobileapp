@@ -1,5 +1,5 @@
 <div id="whatwethink-question-row">
-	Uw {{questionnumber}}e keuze
+	{{questionnumber}}e keuze
 </div>
 
 <div id="whatwethink-statements-row" class="noevents">
@@ -20,16 +20,16 @@
 <div id="whatwethink-feedback-container">
 	{{#noanswer}}
 	We kunnen pas een profiel geven als we mistens 5
-	antwoorden van U hebben.
+	keuzes van U hebben.
 	{{/noanswer}}
 	{{#below5answer}}
-	U hebt al {{answercount}} vragen beantwoord, We hebben er minimaal
-	5 nodig voor een goed profiel
+	U heeft al {{answercount}} keuzes gemaakt, We hebben er minimaal
+	5 nodig om een profiel te maken
 	{{/below5answer}}
 	{{#enoughanswer}}
-	{{answercount}} gegeven maar beantwoord er meer voor een beter profiel
+	{{answercount}} keuzes gemaakt<br />maak er meer voor een beter profiel
 	{{/enoughanswer}}
-	{{#allanswer}} Alle vragen beantwoord maar aanpassen mag altijd{{/allanswer}}
+	{{#allanswer}} Alle keuzes bekend maar aanpassen mag altijd{{/allanswer}}
 	<div id="whatwethink-timer-two">
 		{{timer2}}
 	</div>
@@ -40,15 +40,13 @@
 
 	{{#noanswer}}
 		<div id="whatwethink-profile-axis-title">
-		Nog geen antwoorden. Kies gebied A of B
-		aan de bovenkant van het scherm. 
+
 		</div>
 	{{/noanswer}}
 
 	{{#below5answer}}
 		<div id="whatwethink-profile-axis-title">
-		Nog geen 5 antwoorden. Kies gebied A of B
-		aan de bovenkant van het scherm. 
+ 
 		</div>
 	{{/below5answer}}
 	
