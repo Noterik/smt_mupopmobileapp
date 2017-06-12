@@ -2,11 +2,11 @@
 	Uw {{questionnumber}}e keuze
 </div>
 
-<div id="whatwethink-statements-row">
-	<div id="whatwethink-statements-left-column">
+<div id="whatwethink-statements-row" class="noevents">
+	<div id="whatwethink-statements-left-column" class="noevents">
 		A : {{answer1}}
 	</div>
-	<div id="whatwethink-statements-right-column">
+	<div id="whatwethink-statements-right-column" class="noevents">
 		B : {{answer2}}
 	</div>
 </div>
@@ -29,6 +29,7 @@
 	{{#enoughanswer}}
 	{{answercount}} gegeven maar beantwoord er meer voor een beter profiel
 	{{/enoughanswer}}
+	{{#allanswer}} Alle vragen beantwoord maar aanpassen mag altijd{{/allanswer}}
 	<div id="whatwethink-timer-two">
 		{{timer2}}
 	</div>
@@ -36,6 +37,22 @@
 {{/feedback}}
 
 <div id="whatwethink-profile-container">
+
+	{{#noanswer}}
+		<div id="whatwethink-profile-axis-title">
+		Nog geen antwoorden. Kies gebied A of B
+		aan de bovenkant van het scherm. 
+		</div>
+	{{/noanswer}}
+
+	{{#below5answer}}
+		<div id="whatwethink-profile-axis-title">
+		Nog geen 5 antwoorden. Kies gebied A of B
+		aan de bovenkant van het scherm. 
+		</div>
+	{{/below5answer}}
+	
+	{{#enoughanswer}}
 	<div id="whatwethink-profile-axis-title">
 	Uw profiel tot nu toe
 	</div>
@@ -47,4 +64,20 @@
 			</div>
 		{{/nodes}}
 	{{/axis}}
+	{{/enoughanswer}}
+	{{#allanswer}}
+	<div id="whatwethink-profile-axis-title">
+	Uw profiel tot nu toe
+	</div>
+	{{#axis}}
+		{{#nodes}}
+			<div id="whatwethink-profile-axis-{{id}}" class="whatwethink-profile-axis" >
+				<div id="axis_{{id}}" style="width:{{size}}%;background-color: {{color}};float:left;">&nbsp;</div>
+				<div id="axis_{{id}}_label" style="float:left;margin-left: 10px;">{{name}}</div>
+			</div>
+		{{/nodes}}
+	{{/axis}}
+	{{/allanswer}}
+	
+	
 </div>

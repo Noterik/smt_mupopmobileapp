@@ -885,6 +885,10 @@ html, body {
 #whatwethink-profile-container {
 	position: absolute;
 	background-color: #6d7976;
+	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+	color: white;
+	font-size: 3vh;
+	
 	width: 100%;
 	height: 50%;
 	top: 50%;
@@ -945,4 +949,8 @@ html, body {
 	bottom: 10%;
 	left:5%;
 	z-index: 1200;
+}
+
+.noevents {
+  pointer-events: none;
 }

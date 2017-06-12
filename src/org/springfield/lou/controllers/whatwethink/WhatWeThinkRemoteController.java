@@ -259,7 +259,7 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 		}
 		
 		int answercount=getAnswerCount();
-		
+		//answercount=0;
 		if (answercount==0) {
 			data.put("noanswer","true");
 		} else if(answercount<5) {
@@ -276,8 +276,13 @@ public class WhatWeThinkRemoteController extends Html5Controller {
 		screen.get(selector).render(data);
 
  		screen.get("#mobile").track("mousemove","mouseMove", this);
+ 		screen.get("#mobile").on("mousedown","startMove",this);
 
 	}
+	
+	 public void startMove(Screen s,JSONObject data) {
+		 mouseMove(s, data);
+	 }
 	
 	private int getAnswerCount() {
 		int count = 0;
