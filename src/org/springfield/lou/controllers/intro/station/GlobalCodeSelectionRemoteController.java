@@ -19,6 +19,7 @@
 */
 package org.springfield.lou.controllers.intro.station;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -59,10 +60,16 @@ public class GlobalCodeSelectionRemoteController extends Html5Controller {
     	JSONObject data = new JSONObject();
     	
     	userLanguage = model.getProperty("@userlanguage");
+    	System.out.println("GLOBAL SELECT LANGUAGE="+userLanguage);
+    	if (userLanguage==null) {
+    		// force to set
+    		userLanguage = "nl";
+    	}
+
 
     	data.put("title", model.getProperty("@language_station_code_selection_screen/title", userLanguage));
     	data.put("explanation", model.getProperty("@language_station_code_selection_screen/explanation", userLanguage));
-
+    	System.out.println("GLOBAL SELECT LANGUAGE2="+userLanguage);
     	if (toggle) {
     		fillNumberCodes(data);
     	} else {
@@ -70,14 +77,17 @@ public class GlobalCodeSelectionRemoteController extends Html5Controller {
     	}
     	toggle = !toggle;
     	
+    	System.out.println("GLOBAL DATA="+data);
     	screen.get(selector).render(data);
     	screen.get(".codeselect-button").on("click", "onCodeSelectSelected", this);
     }
     
     public void onCodeSelectSelected(Screen s, JSONObject data) {
+    	long starttime = new Date().getTime();
     	JSONObject audiocmd = new JSONObject();
     	audiocmd.put("action","play");
 		audiocmd.put("src","http://betadash.mupop.net/eddie/sounds/click.mp3");
+		System.out.println("PLAY AUDIO="+audiocmd.toJSONString());
 		screen.get("#mobile").update(audiocmd);
 		
 	String buttonid = (String) data.get("id");
@@ -90,6 +100,7 @@ public class GlobalCodeSelectionRemoteController extends Html5Controller {
     	
     	String trycode = alphacode+numbercode;
     	
+    /*	
     FSList users = model.getList("/domain['mupop']/user");
 	List<FsNode> usernodes = users.getNodes(); 
 	if (usernodes != null) {
@@ -135,8 +146,42 @@ public class GlobalCodeSelectionRemoteController extends Html5Controller {
 	    	    }
 	    	}
 	    }
+    	long endtime = new Date().getTime();
+    	System.out.println("CHECK TIME="+(endtime-starttime));
 	}
+	*/
+    	FSList joincodes = model.getList("@joincodes"); // check all the active stations
+    	if (joincodes != null) {
+    		System.out.println("MOBILD CODE CHECK1="+joincodes.size());
+    		for (Iterator<FsNode> iter = joincodes.getNodes().iterator(); iter.hasNext();) {
+    			FsNode node = (FsNode) iter.next();
+    			String correctcode = node.getProperty("codeselect");
+    	    	if (correctcode!=null && correctcode.equals(trycode)) {
+    	    	    System.out.println("CORRECT CODE SELECTED !!!");
+    	    	    	String exhibitionid = node.getProperty("exhibitionid");
+    	    	    	String stationid = node.getProperty("stationid");
+    	    	    	String userid = node.getProperty("userid");
+    	    	    	System.out.println("U="+userid+" E="+exhibitionid+" S="+stationid);
+			    	    screen.removeContent(selector.substring(1));
+			    	    model.setProperty("@username",userid);
+			    	    model.setProperty("@exhibitionid",exhibitionid);
+			    	    model.setProperty("@stationid",stationid);
+			    		String style = model.getProperty("@exhibition/style");
+			    		if (style==null || style.equals("")) {
+			    			style="neutral";
+			    		}
+			    		screen.loadStyleSheet("mobile/styles/"+style+".css");
+			    	    FsNode message = new FsNode("message",screen.getId());
+			    	    message.setProperty("request","station");
+			    	    message.setProperty("@stationid", stationid);
+			    	    model.notify("@stationevents/fromclient",message);
+    	    	    return;
+    	    	}
+    		}
+    	}
     	
+    	
+    	/*
     FSList stations = model.getList("@stations"); // check all the active stations
 	List<FsNode> nodes = stations.getNodes();
 	if (nodes != null) {
@@ -155,7 +200,10 @@ public class GlobalCodeSelectionRemoteController extends Html5Controller {
 	    	}
 	    }
 	}
+	*/
 	fillPage();
+	long endtime = new Date().getTime();
+	System.out.println("CHECK TIME2="+(endtime-starttime));
      }
     
     private void fillAlphaCodes(JSONObject data) {

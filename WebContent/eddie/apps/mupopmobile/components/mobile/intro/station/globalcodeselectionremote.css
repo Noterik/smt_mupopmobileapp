@@ -1,4 +1,5 @@
 #codeselect-panel {
+	color: black;
 	position: absolute;
 	top:40%;
 	height:60%;
@@ -8,6 +9,7 @@
 }
 
 .codeselect-button {
+	color: black;
 	display: table-cell;
 	text-align: center;
 	vertical-align: middle !important;

@@ -66,6 +66,7 @@
 		<stationevents>/shared['exhibitionevents']/exhibition['@exhibitionid']/station['@stationid']</stationevents>
 		<exhibitionevents>/shared['exhibitionevents']/exhibition['@exhibitionid']</exhibitionevents>
 		
+		<joincodes>/shared['joincodes']</joincodes>
 		<photoinfospots>/shared['photoinfospots']/exhibition['@exhibitionid']/station['@stationid']</photoinfospots>
 		<whatwethinkdots>/shared['whatwethink']/exhibition['@exhibitionid']/station['@stationid']</whatwethinkdots>
 		<itemaxis>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/content['@contentrole']/axis</itemaxis>
@@ -174,6 +175,12 @@
 		<controller id="ZoomAndAudioRemoteController">
 			<javascript>mobile/image/spotting/ZoomAndAudioRemoteController.js</javascript>
 		</controller>
+	</view>
+	
+	<view id="#globallanguageselectionremote">
+		<template>mobile/intro/language/globallanguageselectionremote.mst</template>
+		<style>mobile/intro/language/globallanguageselectionremote.css</style>
+		<controller id="GlobalLanguageSelectionRemoteController"/>
 	</view>
 	
 	<view id="#languageselectionremote">

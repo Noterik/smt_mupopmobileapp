@@ -1,0 +1,18 @@
+<div class="header col-xs-12">
+	<div class="row">
+		<div id="languageselection_previous" class="col-xs-2">
+		</div>
+		<div class="col-xs-8 font-settings">
+			{{title}}
+		</div>
+		<div id="audiotest_help" class="col-xs-2">
+		</div>
+	</div>
+</div>
+<div id="languages" class="col-xs-12 fill-height">
+	{{#nodes}}
+		{{#language_name}}
+			<div id="{{id}}" class="row language">{{language_name}}</div>
+		{{/language_name}}
+	{{/nodes}}
+</div>

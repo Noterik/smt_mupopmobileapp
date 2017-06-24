@@ -4,10 +4,10 @@
 
 <div id="whatwethink-statements-row" class="noevents">
 	<div id="whatwethink-statements-left-column" class="noevents">
-		A : {{answer1}}
+		A 
 	</div>
 	<div id="whatwethink-statements-right-column" class="noevents">
-		B : {{answer2}}
+		B
 	</div>
 </div>
 <div id="whatwethink-statements-dot" style="background-color: {{color}};left:{{posx}}%;top: {{posy}}%;"></div>

@@ -55,9 +55,11 @@ public class CoverFlowRemoteController extends Html5Controller {
 			audiosrc = contentnode.getProperty("voiceover");
 
 			FsNode language_content = model.getNode("@language_photoexplore_coverflow_screen");
-			data.put("helptext1", language_content.getSmartProperty(userLanguage, "swipe_help_text"));
-			data.put("helptext2", language_content.getSmartProperty(userLanguage, "select_help_text"));
-
+			if (language_content!=null) {
+				data.put("helptext1", language_content.getSmartProperty(userLanguage, "swipe_help_text"));
+				data.put("helptext2", language_content.getSmartProperty(userLanguage, "select_help_text"));
+			}
+			
 			if (audiosrc != null) {
 				data.put("audio", language_content.getSmartProperty(userLanguage, "coverflow_intro_audio"));
 				data.put("transcript",  language_content.getSmartProperty(userLanguage, "coverflow_transcript"));

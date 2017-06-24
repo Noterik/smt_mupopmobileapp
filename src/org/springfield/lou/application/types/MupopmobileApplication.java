@@ -61,17 +61,22 @@ public class MupopmobileApplication extends Html5Application {
 		
 
 		String path = s.getParameter("path");
-		
+		System.out.println("A0");
 		System.out.println("NEW SCREEN CALLED"+path);
 		if (path!=null) {
+			System.out.println("A1");
 			if (path.equals("")) {
+				System.out.println("A11");
 				s.getModel().setProperty("@username","unknown");
 				s.getModel().setProperty("@exhibitionid","unknown");
+				System.out.println("A12");
 				s.get("#screen").append("div","mobile",new MobileController());
+				System.out.println("A13");
 			} else {
 				System.out.println("OLD METHOD JUMPER OR URL IS WRONG !");
 			}
 		} else {
+			System.out.println("B1");
 			String u = s.getParameter("u");
 			String e = s.getParameter("e");
 			System.out.println("USER="+u+" EX="+e);

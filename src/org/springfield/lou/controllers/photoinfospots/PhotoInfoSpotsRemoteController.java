@@ -47,6 +47,7 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 	private String mycolor = "#888888";
 	String deviceid;
 	String userLanguage;
+	boolean voicecoverplayed = false;
 
 	public PhotoInfoSpotsRemoteController() { }
 
@@ -95,7 +96,12 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 			JSONObject d = new JSONObject();	
 			d.put("command","init");
 			screen.get(selector).update(d);
-			
+			FsPropertySet ps = new FsPropertySet(); // send message to server we joined
+			ps.setProperty("deviceid", deviceid); // so we can send audio for example
+			ps.setProperty("language", userLanguage);
+			ps.setProperty("action", "joined");
+			System.out.println("SENDING JOOOOOOOOOOOOOOOOOOOIN");
+			model.setProperties("@photoinfospots/state", ps);
  
 		}
 	}
@@ -114,13 +120,28 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 		FsNode message = e.getTargetFsNode();
 
 		//only reach device that triggered this event
-		if (!message.getProperty("deviceid").equals(deviceid)) {
+		if (!message.getProperty("deviceid").equals(deviceid) && !message.getProperty("deviceid").equals("all")) {
 			return;
 		}
 
+		
 		String action = message.getProperty("action");
-
-		if (action.equals("startaudio")) {
+		if (action.equals("startaudiovoiceover")) {
+			if (!voicecoverplayed) {
+				String path = message.getProperty("exhibitionpath");
+				path +="/"+userLanguage+"_voiceover";
+				System.out.println("WANT TO GET URL FROM ="+path);
+				String url = model.getProperty(path);
+				System.out.println("URL FOUND="+url);
+				if (url != null) { // if audio found lets push it to the screen (so it plays)
+					JSONObject audiocmd = new JSONObject();
+					audiocmd.put("action","playonnew");
+					audiocmd.put("src",url);
+					screen.get("#mobile").update(audiocmd);
+				}
+				voicecoverplayed = true;
+			}
+		} else if (action.equals("startaudio")) {
 			String url = message.getProperty("url");
 			if (url != null) { // if audio found lets push it to the screen (so it plays)
 				JSONObject d = new JSONObject();

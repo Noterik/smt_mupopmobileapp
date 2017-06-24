@@ -27,6 +27,7 @@ import org.springfield.lou.controllers.image.selection.CoverFlowRemoteController
 import org.springfield.lou.controllers.image.zoom.PhotoExplorerRemoteController;
 import org.springfield.lou.controllers.interactivevideo.InteractiveVideoRemoteController;
 import org.springfield.lou.controllers.intro.audio.AudioTestRemoteController;
+import org.springfield.lou.controllers.intro.language.GlobalLanguageSelectionRemoteController;
 import org.springfield.lou.controllers.intro.language.LanguageSelectionRemoteController;
 import org.springfield.lou.controllers.intro.language.LanguageSelectionRemoteControllerMupop;
 import org.springfield.lou.controllers.intro.station.GlobalCodeSelectionRemoteController;
@@ -56,23 +57,29 @@ public class MobileController extends Html5Controller {
 		model.onPropertyUpdate("/screen/state","onStateChange",this);
 
 		screen.get(selector).render();
+	    screen.get(selector).loadScript(this);
 		String exh = model.getProperty("@exhibitionid");
 		if (exh!=null && exh.equals("unknown")) {
-			model.setProperty("/screen/state","globalcodeselect"); // will trigger a event 
+//			model.setProperty("/screen/state","globalcodeselect"); // will trigger a event 
+			model.setProperty("/screen/state","globallanguageselect"); // will trigger a event 
 		} else {
 			model.setProperty("/screen/state","init"); // will trigger a event 
 		}
+		System.out.println("C1");
 	}
 
 	public void onStateChange(ModelEvent event) {
 		String state = event.getTargetFsNode().getProperty("state");
 		if (oldstate.equals(state)) return;
 		oldstate = state;		
+		System.out.println("STATE="+state);
 		model.setProperty("@contentrole", state); 	//state and contentrole are the same ????
 		if (state.equals("init")) { // init the exhibition and probably show language selector
 		    initStep(); 
 		} else if (state.equals("globalcodeselect")) { // pre-step global code select
 			globalSelectStep();
+		} else if (state.equals("globallanguageselect")) { // pre-step global code select
+			globalLanguageStep();
 		} else if (state.equals("audiocheck")) { // perform the asked audio request
 			audioCheckStep();
 		} else if (state.equals("stationselect")) { // check station selection method if more than one station
@@ -91,6 +98,7 @@ public class MobileController extends Html5Controller {
 	}
 
 	private void initStep() {
+		System.out.println("INIT STEP CALLED");
 		String style = model.getProperty("@exhibition/style");
 		if (style==null || style.equals("")) {
 			style="neutral";
@@ -179,7 +187,19 @@ public class MobileController extends Html5Controller {
 		}		    
 	}
 	
+	private void globalLanguageStep() {
+		String userLanguage = model.getProperty("@userlanguage");
+		userLanguage = null;
+		String style="neutral";
+		screen.loadStyleSheet("mobile/styles/"+style+".css");
+		screen.get("#mobile").append("div", "globallanguageselectionremote", new GlobalLanguageSelectionRemoteController());
+	}
+	
 	private void globalSelectStep() {
+		System.out.println("C2");
+		String style="neutral";
+		screen.loadStyleSheet("mobile/styles/"+style+".css");
+		System.out.println("C21");	
 		screen.get("#mobile").append("div", "globalcodeselectionremote", new GlobalCodeSelectionRemoteController());		
 	}
 
