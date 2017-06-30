@@ -1,14 +1,28 @@
 <div id="photoinfospots-header" class="header col-xs-12">
 	<div class="row">
+		{{#previous}}
 		<div id="previous" class="col-xs-2">
-			<i class="fa fa-arrow-left"></i>
+			<i class="fa fa-list-ul"></i>
 		</div>
+		{{/previous}}
+		{{^previous}}
+		<div id="previous" class="col-xs-2">
+				&nbsp;
+		</div>
+		{{/previous}}
+		
 		<div class="col-xs-8">
 			{{title}}
 		</div>
+		
+		<div id="screenbutton" class="col-xs-2">
+			<i class="fa fa-desktop"></i>
+		</div>
+		
 		<div id="zoomandaudiohelp" class="col-xs-2">
 			<i class="fa fa-question-circle"></i>
 		</div>
+		
 	</div>
 </div>
 <div class="contents col-xs-12 fill-height">

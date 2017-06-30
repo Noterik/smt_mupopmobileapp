@@ -60,8 +60,8 @@ public class MobileController extends Html5Controller {
 	    screen.get(selector).loadScript(this);
 		String exh = model.getProperty("@exhibitionid");
 		if (exh!=null && exh.equals("unknown")) {
-//			model.setProperty("/screen/state","globalcodeselect"); // will trigger a event 
-			model.setProperty("/screen/state","globallanguageselect"); // will trigger a event 
+			model.setProperty("/screen/state","globalcodeselect"); // will trigger a event 
+			//model.setProperty("/screen/state","globallanguageselect"); // will trigger a event 
 		} else {
 			model.setProperty("/screen/state","init"); // will trigger a event 
 		}
@@ -190,16 +190,15 @@ public class MobileController extends Html5Controller {
 	private void globalLanguageStep() {
 		String userLanguage = model.getProperty("@userlanguage");
 		userLanguage = null;
-		String style="neutral";
+		String style="leuven"; // very temp hack
 		screen.loadStyleSheet("mobile/styles/"+style+".css");
 		screen.get("#mobile").append("div", "globallanguageselectionremote", new GlobalLanguageSelectionRemoteController());
 	}
 	
 	private void globalSelectStep() {
-		System.out.println("C2");
-		String style="neutral";
+		resetScreen();
+		String style="leuven"; // very temp hack
 		screen.loadStyleSheet("mobile/styles/"+style+".css");
-		System.out.println("C21");	
 		screen.get("#mobile").append("div", "globalcodeselectionremote", new GlobalCodeSelectionRemoteController());		
 	}
 
@@ -252,8 +251,9 @@ public class MobileController extends Html5Controller {
 		    model.setProperty("@contentrole", request);
 			if (request.equals("init")) {
 				resetScreen();	
-				model.setProperty("/screen/state","stationselect");
-				stationSelectStep();
+				//model.setProperty("/screen/state","stationselect");
+				//stationSelectStep();
+				model.setProperty("/screen/state","globalcodeselect");
 			} else if (request.equals("contentselect")) {
 				resetScreen();
 				contentSelectStep();

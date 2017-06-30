@@ -68,6 +68,11 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 			String title = stationnode.getSmartProperty(userLanguage, "title");
 			String helptext = stationnode.getSmartProperty(userLanguage, "hotspots_help_text");
 			String transcript = stationnode.getSmartProperty(userLanguage, "hotspot_transcript");
+	    	String type = model.getProperty("@station/contentselect");
+	    	System.out.println("TYPE CONTENT="+type);
+	    	if (type!=null && !type.equals("none")) {
+	    		data.put("previous","true");
+	    	}
 			data.put("title", title);
 			data.put("helptext", helptext);
 			data.put("transcript", transcript);
@@ -87,7 +92,9 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 			
 			screen.get("#trackpad").on("mouseup","mouseUp", this);
 			screen.get("#trackpad").on("touchend","mouseUp", this);
-			screen.get("#photoinfospots-header").on("mouseup", "previousPage", this);
+			//screen.get("#photoinfospots-header").on("mouseup", "previousPage", this);
+			screen.get("#previous").on("mouseup", "previousPage", this);
+			screen.get("#screenbutton").on("mouseup", "onScreenButton", this);
 			screen.get("#zoomandaudiohelp").on("click", "helpPage", this);
 			screen.get("#audiop").on("loaded", "loaded", this);
 			screen.get("#pointer_icon").css("background-color","#"+mycolor);
@@ -181,6 +188,22 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 		screen.get("#pointer_icon").css("left",(rx)+"px");
 		screen.get("#pointer_icon").css("top",(ry)+"px"); // comp back for the top shift
 		screen.get("#pointer_icon").css("background-color", mycolor);
+	}
+	
+	public void onScreenButton(Screen s, JSONObject data) {
+	    System.out.println("Screen button pressed");
+    	JSONObject audiocmd = new JSONObject();
+    	audiocmd.put("action","play");
+		audiocmd.put("src","http://mupop.net/eddie/sounds/silent.m4a");
+		System.out.println("PLAY AUDIO="+audiocmd.toJSONString());
+		screen.get("#mobile").update(audiocmd);
+	    
+		/*
+	    JSONObject audiocmd = new JSONObject();
+	    audiocmd.put("action","pause");
+	    screen.get("#mobile").update(audiocmd);
+	    */
+		model.setProperty("/screen/state","globalcodeselect");
 	}
 
 	public void previousPage(Screen s, JSONObject data) {

@@ -28,6 +28,29 @@ html, body {
     text-transform: uppercase;	
 }
 
+#flags {
+	position: absolute;
+	width: 100%;
+	height: 43px;
+	right: -65px;
+	top: -6px;
+	overflow: hidden;
+}
+
+
+.flag {
+	opacity: 0.8;
+	width: 40px;
+	height: 30px;
+	margin-left: 15px;
+	box-shadow: 4px 4px 4px #605c05;
+}
+
+.flag_selecte {
+	opacity: 1;
+	box-shadow: 1px 1px 1px  #605c05;
+}
+
 #help_questions {
 	padding: 0;
 }
@@ -94,6 +117,10 @@ html, body {
 #coverflow_previous {
 	z-index: 999;
 	cursor: pointer;
+	font-size: 5vh;
+	margin-top: -8px;
+	right: 10px;
+	
 }
 
 #coverflow-help {
@@ -264,7 +291,18 @@ html, body {
 #previous {
 	z-index: 999;
 	cursor: pointer;
+	font-size: 5vh;
+	margin-top: -8px;
 }
+
+#screenbutton {
+	z-index: 999;
+	cursor: pointer;
+	font-size: 5vh;
+	margin-top: -8px;
+	right: 10px;
+}
+
 
 #zoomandaudiohelp {
 	visibility: hidden;

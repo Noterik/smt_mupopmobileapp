@@ -67,9 +67,7 @@ public class GlobalLanguageSelectionRemoteController extends Html5Controller {
 	
     public void onLanguageSelected(Screen s,JSONObject data) {
     	screen.removeContent(selector.substring(1));
-    	System.out.println("WOW="+(String)data.get("id"));
     	model.setProperty("@userlanguage",(String)data.get("id"));
-
 		model.setProperty("/screen/state","globalcodeselect"); 
     }
     

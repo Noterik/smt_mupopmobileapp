@@ -60,16 +60,22 @@ public class GlobalCodeSelectionRemoteController extends Html5Controller {
     	JSONObject data = new JSONObject();
     	
     	userLanguage = model.getProperty("@userlanguage");
-    	System.out.println("GLOBAL SELECT LANGUAGE="+userLanguage);
     	if (userLanguage==null) {
     		// force to set
-    		userLanguage = "nl";
+    		userLanguage = "en";
     	}
 
 
     	data.put("title", model.getProperty("@language_station_code_selection_screen/title", userLanguage));
     	data.put("explanation", model.getProperty("@language_station_code_selection_screen/explanation", userLanguage));
-    	System.out.println("GLOBAL SELECT LANGUAGE2="+userLanguage);
+  
+    	if (userLanguage.equals("en")) {
+    		data.put("linktext","Click here for MuPoP product");
+    		data.put("codetext","Enter the code you see on the big screen to continue");
+    	} else if (userLanguage.equals("nl")) {
+       		data.put("linktext","Druk hier voor MuPoP produkt");   		
+    		data.put("codetext","Geef de code in die op het grote scherm staat om verder te gaan");
+    	}
     	if (toggle) {
     		fillNumberCodes(data);
     	} else {
@@ -77,20 +83,30 @@ public class GlobalCodeSelectionRemoteController extends Html5Controller {
     	}
     	toggle = !toggle;
     	
-    	System.out.println("GLOBAL DATA="+data);
     	screen.get(selector).render(data);
+    	
+    	// set the correct flag based on preset;
+    	String langcode = "#flag_"+model.getProperty("@userlanguage");
+    	System.out.println("LANGRENDER="+langcode);
+    	screen.get(langcode).css("opacity","1");
+    	screen.get(langcode).css("box-shadow","1px 1px 1px  #605c05");
+    	
+
     	screen.get(".codeselect-button").on("click", "onCodeSelectSelected", this);
+    	screen.get(".flag").on("click", "onFlagSelected", this);
+    }
+    
+    public void onFlagSelected(Screen s, JSONObject data) {
+    	String langcode = (String)data.get("id");
+    	langcode = langcode.substring(5);
+    	System.out.println("FLAG SELECTED="+langcode);
+    	model.setProperty("@userlanguage",langcode);
+    	toggle = !toggle; // reverse the toggle back!
+    	fillPage();
     }
     
     public void onCodeSelectSelected(Screen s, JSONObject data) {
-    	long starttime = new Date().getTime();
-    	JSONObject audiocmd = new JSONObject();
-    	audiocmd.put("action","play");
-		audiocmd.put("src","http://betadash.mupop.net/eddie/sounds/click.mp3");
-		System.out.println("PLAY AUDIO="+audiocmd.toJSONString());
-		screen.get("#mobile").update(audiocmd);
-		
-	String buttonid = (String) data.get("id");
+    	String buttonid = (String) data.get("id");
     	String value = codes.get(buttonid);
     	if (toggle) {
     		alphacode = value;
@@ -99,69 +115,15 @@ public class GlobalCodeSelectionRemoteController extends Html5Controller {
     	}
     	
     	String trycode = alphacode+numbercode;
-    	
-    /*	
-    FSList users = model.getList("/domain['mupop']/user");
-	List<FsNode> usernodes = users.getNodes(); 
-	if (usernodes != null) {
-	    for (Iterator<FsNode> iter = usernodes.iterator(); iter.hasNext();) {
-	    	FsNode node = (FsNode) iter.next();
-	    	String userid=node.getId();
-	    	//System.out.println("USERID="+userid);
-	        FSList exhibitions = model.getList("/domain['mupop']/user['"+userid+"']/exhibition");
-	    	List<FsNode> exhibitionnodes = exhibitions.getNodes(); 
-	    	if (exhibitionnodes != null) {
-	    	    for (Iterator<FsNode> iter2 = exhibitionnodes.iterator(); iter2.hasNext();) {
-	    	    	FsNode enode = (FsNode) iter2.next();
-	    	    	String estate = enode.getProperty("state");
-	    	    	if (estate!=null && estate.equals("on")) {
-	    	    		String exhibitionid=enode.getId();
-	    		        FSList stations = model.getList("/domain['mupop']/user['"+userid+"']/exhibition['"+exhibitionid+"']/station");
-	    		    	List<FsNode> stationnodes = stations.getNodes(); 
-	    		    	if (stationnodes != null) {
-	    		    	    for (Iterator<FsNode> iter3 = stationnodes.iterator(); iter3.hasNext();) {
-	    		    			FsNode snode = (FsNode) iter3.next();
-	    		    			String correctcode = snode.getProperty("codeselect");
-	    			    	    System.out.println("CHECK CODE "+trycode+" "+correctcode);
-	    				    	if (correctcode!=null && correctcode.equals(trycode)) {
-	    				    	    System.out.println("CORRECT CODE SELECTED !!!");
-	    				    	    screen.removeContent(selector.substring(1));
-	    				    	    model.setProperty("@username",userid);
-	    				    	    model.setProperty("@exhibitionid",exhibitionid);
-	    				    	    model.setProperty("@stationid",snode.getId());
-	    				    		String style = model.getProperty("@exhibition/style");
-	    				    		if (style==null || style.equals("")) {
-	    				    			style="neutral";
-	    				    		}
-	    				    		screen.loadStyleSheet("mobile/styles/"+style+".css");
-	    				    	    FsNode message = new FsNode("message",screen.getId());
-	    				    	    message.setProperty("request","station");
-	    				    	    message.setProperty("@stationid", snode.getId());
-	    				    	    model.notify("@stationevents/fromclient",message);
-	    				    	    return;
-	    				    	}
-	    		    	    }
-	    		    	}
-	    	    	}
-	    	    }
-	    	}
-	    }
-    	long endtime = new Date().getTime();
-    	System.out.println("CHECK TIME="+(endtime-starttime));
-	}
-	*/
     	FSList joincodes = model.getList("@joincodes"); // check all the active stations
     	if (joincodes != null) {
-    		System.out.println("MOBILD CODE CHECK1="+joincodes.size());
     		for (Iterator<FsNode> iter = joincodes.getNodes().iterator(); iter.hasNext();) {
     			FsNode node = (FsNode) iter.next();
     			String correctcode = node.getProperty("codeselect");
     	    	if (correctcode!=null && correctcode.equals(trycode)) {
-    	    	    System.out.println("CORRECT CODE SELECTED !!!");
     	    	    	String exhibitionid = node.getProperty("exhibitionid");
     	    	    	String stationid = node.getProperty("stationid");
     	    	    	String userid = node.getProperty("userid");
-    	    	    	System.out.println("U="+userid+" E="+exhibitionid+" S="+stationid);
 			    	    screen.removeContent(selector.substring(1));
 			    	    model.setProperty("@username",userid);
 			    	    model.setProperty("@exhibitionid",exhibitionid);
@@ -179,31 +141,7 @@ public class GlobalCodeSelectionRemoteController extends Html5Controller {
     	    	}
     		}
     	}
-    	
-    	
-    	/*
-    FSList stations = model.getList("@stations"); // check all the active stations
-	List<FsNode> nodes = stations.getNodes();
-	if (nodes != null) {
-	    for (Iterator<FsNode> iter = nodes.iterator(); iter.hasNext();) {
-		FsNode node = (FsNode) iter.next();
-		String correctcode = node.getProperty("codeselect");
-	    	if (correctcode!=null && correctcode.equals(trycode)) {
-	    	    System.out.println("CORRECT CODE SELECTED !!!");
-	    	    screen.removeContent(selector.substring(1));
-	    	    model.setProperty("@stationid",node.getId());
-	    	    FsNode message = new FsNode("message",screen.getId());
-	    	    message.setProperty("request","station");
-	    	    message.setProperty("@stationid", node.getId());
-	    	    model.notify("@stationevents/fromclient",message);
-	    	    return;
-	    	}
-	    }
-	}
-	*/
-	fillPage();
-	long endtime = new Date().getTime();
-	System.out.println("CHECK TIME2="+(endtime-starttime));
+    	fillPage();
      }
     
     private void fillAlphaCodes(JSONObject data) {

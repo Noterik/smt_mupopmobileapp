@@ -128,6 +128,6 @@ public class CoverFlowRemoteController extends Html5Controller {
 
 	public void previousPage(Screen s, JSONObject data) {
 		System.out.println("Station select requested by mobile");
-		model.setProperty("/screen/state","stationselect");
+		model.setProperty("/screen/state","globalcodeselect");
 	}
 }
