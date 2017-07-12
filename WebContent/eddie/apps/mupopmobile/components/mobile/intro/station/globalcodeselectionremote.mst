@@ -16,7 +16,7 @@
 	</div>
 </div>
 <div id="station_code_select_explanation" class="col-xs-12 fill-height">
-<br />{{linktext}} <a href=\"http://www.mupop.net\">website</a>
+<br />{{linktext}} <a href="http://www.mupop.net">website</a>
 <br />
 </br />
 {{codetext}}

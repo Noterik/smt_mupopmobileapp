@@ -53,12 +53,12 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 
 	public void attach(String sel) {
 		selector = sel;
-
+		System.out.println("ATTACH INFOSPOT1");
 		app = screen.getApplication();
 
 		deviceid = model.getProperty("@deviceid");
 		userLanguage = model.getProperty("@userlanguage");
-
+		System.out.println("USERLANG="+userLanguage);
 		FsNode stationnode = model.getNode("@station");
 		FsNode imagenode = model.getNode("@image");
 
