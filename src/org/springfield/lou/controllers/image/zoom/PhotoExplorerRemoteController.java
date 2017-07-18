@@ -59,6 +59,13 @@ public class PhotoExplorerRemoteController extends Html5Controller {
 	    data.put("helptext2", language_content.getSmartProperty(userLanguage, "swipe_help_text"));
 	    data.put("transcript",  language_content.getSmartProperty(userLanguage, "photoexplore_transcript"));
 	    data.put("transcript-text", item.getProperty("transcript"));
+	    
+    	String type = model.getProperty("@station/contentselect");
+    	System.out.println("TYPE CONTENT="+type);
+    	if (type!=null && !type.equals("none")) {
+    		data.put("previous","true");
+    	}
+	
 	}
 
 	screen.get(selector).render(data);

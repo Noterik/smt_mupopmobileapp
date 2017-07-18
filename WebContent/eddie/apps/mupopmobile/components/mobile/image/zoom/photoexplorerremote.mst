@@ -1,11 +1,23 @@
 <div id="photoexplorer-header" class="header col-xs-12">
 	<div class="row">
-		<div id="photoexplore_previous" class="col-xs-2">
-			<i class="fa fa-arrow-left"></i>
+		{{#previous}}
+		<div id="previous" class="col-xs-2">
+			<i class="fa fa-list-ul"></i>
 		</div>
+		{{/previous}}
+		{{^previous}}
+		<div id="previous" class="col-xs-2">
+				&nbsp;
+		</div>
+		{{/previous}}
 		<div class="col-xs-8 font-settings">
 			{{title}}
 		</div>
+		
+		<div id="screenbutton" class="col-xs-2">
+			<i class="fa fa-desktop"></i>
+		</div>
+		
 		<div id="photoexplore_help" class="col-xs-2">
 			<i class="fa fa-question-circle"></i>
 		</div>

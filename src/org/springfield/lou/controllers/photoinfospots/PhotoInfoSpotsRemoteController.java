@@ -107,7 +107,6 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 			ps.setProperty("deviceid", deviceid); // so we can send audio for example
 			ps.setProperty("language", userLanguage);
 			ps.setProperty("action", "joined");
-			System.out.println("SENDING JOOOOOOOOOOOOOOOOOOOIN");
 			model.setProperties("@photoinfospots/state", ps);
  
 		}
@@ -207,8 +206,6 @@ public class PhotoInfoSpotsRemoteController extends Html5Controller {
 	}
 
 	public void previousPage(Screen s, JSONObject data) {
-	    System.out.println("Previous page requested");
-	    
 	    JSONObject audiocmd = new JSONObject();
 	    audiocmd.put("action","pause");
 	    screen.get("#mobile").update(audiocmd);

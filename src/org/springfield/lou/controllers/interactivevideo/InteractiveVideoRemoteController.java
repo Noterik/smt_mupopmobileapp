@@ -57,10 +57,16 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
  		if (stationnode != null) { 		    
  		    jso.put("title", stationnode.getSmartProperty("nl", "title"));
  		}
+    	String type = model.getProperty("@station/contentselect");
+    	if (type!=null && !type.equals("none")) {
+    		jso.put("previous","true");
+    	}
  		
  		screen.get(selector).render(jso);
  		
- 		screen.get("#interactive_video_remote_previous").on("mouseup", "previousPage", this);
+ 		//screen.get("#interactive_video_remote_previous").on("mouseup", "previousPage", this);
+		screen.get("#previous").on("mouseup", "previousPage", this);
+		screen.get("#screenbutton").on("mouseup", "onScreenButton", this);
 		
 		model.onNotify("/shared/exhibition/"+exhibitionid+"/station/"+ stationid +"/vars/wantedtime", "onClockUpdate", this);
 
@@ -156,10 +162,28 @@ public class InteractiveVideoRemoteController extends Html5Controller  {
 	}
 	
 	public void previousPage(Screen s, JSONObject data) {	
-	    JSONObject message = new JSONObject();
-	    message.put("action", "pause");
-	    screen.get("#mobile").update(message);
+	    JSONObject audiocmd = new JSONObject();
+	    audiocmd.put("action","pause");
+	    screen.get("#mobile").update(audiocmd);
 	    
-	    model.setProperty("/screen/state","stationselect");
+	    FsNode message = new FsNode("message",screen.getId());
+	    message.setProperty("action","");
+	    message.setProperty("request","contentselectforce");
+	    model.notify("@stationevents/fromclient",message);
+		
+	    FsNode m = new FsNode("message",screen.getId());
+	    m.setProperty("request","contentselect");
+	    model.notify("@stationevents/fromclient",m);
+
+	}
+	
+	public void onScreenButton(Screen s, JSONObject data) {
+	    System.out.println("Screen button pressed");
+    	JSONObject audiocmd = new JSONObject();
+    	audiocmd.put("action","play");
+		audiocmd.put("src","http://mupop.net/eddie/sounds/silent.m4a");
+		System.out.println("PLAY AUDIO="+audiocmd.toJSONString());
+		screen.get("#mobile").update(audiocmd);
+		model.setProperty("/screen/state","globalcodeselect");
 	}
 }
