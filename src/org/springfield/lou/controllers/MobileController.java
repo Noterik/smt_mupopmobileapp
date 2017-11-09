@@ -35,6 +35,7 @@ import org.springfield.lou.controllers.intro.station.StationCodeSelectionRemoteC
 import org.springfield.lou.controllers.intro.station.StationSelectionRemoteController;
 import org.springfield.lou.controllers.photoexplore.PhotoExploreRemoteController;
 import org.springfield.lou.controllers.photoinfospots.PhotoInfoSpotsRemoteController;
+import org.springfield.lou.controllers.photozoom.PhotoZoomRemoteController;
 import org.springfield.lou.controllers.trivia.TriviaRemoteController;
 import org.springfield.lou.controllers.whatwethink.WhatWeThinkRemoteController;
 import org.springfield.lou.model.ModelEvent;
@@ -223,6 +224,8 @@ public class MobileController extends Html5Controller {
 				screen.get("#mobile").append("div","photoexplorerremote",new PhotoExplorerRemoteController());
 			} else if (app.equals("photoinfospots")) {
 				screen.get("#mobile").append("div","photoinfospotsremote",new PhotoInfoSpotsRemoteController());
+			} else if (app.equals("photozoom")) {
+				screen.get("#mobile").append("div","photozoomremote",new PhotoZoomRemoteController());
 			} else if (app.equals("interactivevideo")) {
 				screen.get("#mobile").append("div","interactivevideoremote", new InteractiveVideoRemoteController());
 			} else if (app.equals("trivia")) {
@@ -279,6 +282,7 @@ public class MobileController extends Html5Controller {
 		screen.get("#coverflowremote").remove();
 		screen.get("#photoexplorerremote").remove();
 		screen.get("#photoinfospotsremote").remove();
+		screen.get("#photozoomremote").remove();
 		screen.get("#interactivevideoremoteholder").remove();
 		screen.get("#interactivevideoremote").remove();
 	}

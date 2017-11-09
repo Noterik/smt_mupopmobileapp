@@ -1,0 +1,265 @@
+/* 
+* 
+* Copyright (c) 2017 Noterik B.V.
+* 
+* This file is part of MuPoP framework
+*
+* MuPoP framework is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* MuPoP framework is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with MuPoP framework .  If not, see <http://www.gnu.org/licenses/>.
+*/
+package org.springfield.lou.controllers.photozoom;
+
+import java.awt.Color;
+import java.util.Random;
+
+import org.json.simple.JSONObject;
+import org.springfield.fs.FSList;
+import org.springfield.fs.FsNode;
+import org.springfield.fs.FsPropertySet;
+import org.springfield.lou.application.Html5ApplicationInterface;
+import org.springfield.lou.controllers.Html5Controller;
+import org.springfield.lou.model.ModelEvent;
+import org.springfield.lou.screen.Screen;
+
+/**
+ * ZoomAndAudioRemoteController.java
+ * 
+ * @author Pieter van Leeuwen
+ * @copyright Copyright: Noterik B.V. 2016
+ * @package org.springfield.lou.controllers.image.spotting
+ * 
+ */
+public class PhotoZoomRemoteController extends Html5Controller {
+
+	private Html5ApplicationInterface app;
+	double lastx = -1;
+	double lasty = -1;
+	private String mycolor = "#888888";
+	String deviceid;
+	String userLanguage;
+	boolean voicecoverplayed = false;
+
+	public PhotoZoomRemoteController() { }
+
+	public void attach(String sel) {
+		selector = sel;
+		System.out.println("ATTACH INFOSPOT1");
+		app = screen.getApplication();
+
+		deviceid = model.getProperty("@deviceid");
+		userLanguage = model.getProperty("@userlanguage");
+		System.out.println("USERLANG="+userLanguage);
+		FsNode stationnode = model.getNode("@station");
+		FsNode imagenode = model.getNode("@image");
+
+		if (stationnode != null) {
+			JSONObject data = new JSONObject();
+
+			String title = stationnode.getSmartProperty(userLanguage, "title");
+			String helptext = stationnode.getSmartProperty(userLanguage, "hotspots_help_text");
+			String transcript = stationnode.getSmartProperty(userLanguage, "hotspot_transcript");
+	    	String type = model.getProperty("@station/contentselect");
+	    	System.out.println("TYPE CONTENT="+type);
+	    	if (type!=null && !type.equals("none")) {
+	    		data.put("previous","true");
+	    	}
+			data.put("title", title);
+			data.put("helptext", helptext);
+			data.put("transcript", transcript);
+			if (imagenode != null) {
+				data.put("external-website", imagenode.getProperty("external-website"));
+				data.put("audiourl", imagenode.getProperty("audiourl"));
+				data.put("text", imagenode.getSmartProperty(userLanguage, "text"));
+			}
+
+			screen.get(selector).render(data);
+			screen.get(selector).loadScript(this);
+
+			mycolor = getColor();
+
+			screen.get("#trackpad").track("mousemove","mouseMove", this); // track mouse move event on the #trackpad
+
+			
+			screen.get("#trackpad").on("mouseup","mouseUp", this);
+			screen.get("#trackpad").on("touchend","mouseUp", this);
+			//screen.get("#photozoom-header").on("mouseup", "previousPage", this);
+			screen.get("#previous").on("mouseup", "previousPage", this);
+			screen.get("#screenbutton").on("mouseup", "onScreenButton", this);
+			screen.get("#zoomandaudiohelp").on("click", "helpPage", this);
+			screen.get("#audiop").on("loaded", "loaded", this);
+			screen.get("#pointer_icon").css("background-color","#"+mycolor);
+			model.onNotify("@photozoom/spot/audio", "onStartAudio",this);
+
+			JSONObject d = new JSONObject();	
+			d.put("command","init");
+			screen.get(selector).update(d);
+			FsPropertySet ps = new FsPropertySet(); // send message to server we joined
+			ps.setProperty("deviceid", deviceid); // so we can send audio for example
+			ps.setProperty("language", userLanguage);
+			ps.setProperty("action", "joined");
+			model.setProperties("@photozoom/state", ps);
+ 
+		}
+	}
+
+	public void mouseUp(Screen s, JSONObject data) {
+		FsPropertySet ps = new FsPropertySet(); // send them as a set so we get 1 event
+		ps.setProperty("x", "" + lastx); // we should support auto convert
+		ps.setProperty("y", "" + lasty);
+		ps.setProperty("deviceid", deviceid);
+		ps.setProperty("language", userLanguage);
+		ps.setProperty("action", "up");
+		model.setProperties("@photozoom/spot/move", ps);
+	}
+
+	public void onStartAudio(ModelEvent e) {
+		FsNode message = e.getTargetFsNode();
+
+		//only reach device that triggered this event
+		if (!message.getProperty("deviceid").equals(deviceid) && !message.getProperty("deviceid").equals("all")) {
+			return;
+		}
+
+		
+		String action = message.getProperty("action");
+		if (action.equals("startaudiovoiceover")) {
+			if (!voicecoverplayed) {
+				String path = message.getProperty("exhibitionpath");
+				path +="/"+userLanguage+"_voiceover";
+				System.out.println("WANT TO GET URL FROM ="+path);
+				String url = model.getProperty(path);
+				System.out.println("URL FOUND="+url);
+				if (url != null) { // if audio found lets push it to the screen (so it plays)
+					JSONObject audiocmd = new JSONObject();
+					audiocmd.put("action","playonnew");
+					audiocmd.put("src",url);
+					screen.get("#mobile").update(audiocmd);
+				}
+				voicecoverplayed = true;
+			}
+		} else if (action.equals("startaudio")) {
+			String url = message.getProperty("url");
+			if (url != null) { // if audio found lets push it to the screen (so it plays)
+				JSONObject d = new JSONObject();
+				d.put("command", "update");
+				String text = message.getProperty("text") == null ? "" : message.getProperty("text");
+				d.put("text", text);
+				screen.get(selector).update(d);
+				
+				JSONObject audiocmd = new JSONObject();
+				audiocmd.put("action","playonnew");
+				audiocmd.put("src",url);
+				screen.get("#mobile").update(audiocmd);
+			}
+		}		
+	}
+
+	public void mouseMove(Screen s, JSONObject data) {
+		double width = ((long) data.get("width")) * 1.0;
+		double height = ((long) data.get("height")) * 1.0;
+
+		double rx = data.get("screenX").toString().indexOf(".") > -1 ? (double) data.get("screenX") : ((long) data.get("screenX")) * 1.0;
+		double ry = data.get("screenY").toString().indexOf(".") > -1 ? (double) data.get("screenY") : ((long) data.get("screenY")) * 1.0;
+
+		lastx = (rx / width) * 100; 
+		lasty = (ry / height) * 100;	
+
+		FsPropertySet ps = new FsPropertySet(); // send them as a set so we get 1 event
+		ps.setProperty("x", "" + lastx); // we should support auto convert
+		ps.setProperty("y", "" + lasty);
+		ps.setProperty("color", mycolor);
+		ps.setProperty("deviceid", deviceid);
+		ps.setProperty("language", userLanguage);
+		ps.setProperty("action", "move");
+		model.setProperties("@photozoom/spot/move", ps);
+
+		//Update position on triggering screen
+		screen.get("#pointer_icon").css("left",(rx)+"px");
+		screen.get("#pointer_icon").css("top",(ry)+"px"); // comp back for the top shift
+		screen.get("#pointer_icon").css("background-color", mycolor);
+	}
+	
+	public void onScreenButton(Screen s, JSONObject data) {
+	    System.out.println("Screen button pressed");
+    	JSONObject audiocmd = new JSONObject();
+    	audiocmd.put("action","play");
+		audiocmd.put("src","http://mupop.net/eddie/sounds/silent.m4a");
+		System.out.println("PLAY AUDIO="+audiocmd.toJSONString());
+		screen.get("#mobile").update(audiocmd);
+	    
+		/*
+	    JSONObject audiocmd = new JSONObject();
+	    audiocmd.put("action","pause");
+	    screen.get("#mobile").update(audiocmd);
+	    */
+		model.setProperty("/screen/state","globalcodeselect");
+	}
+
+	public void previousPage(Screen s, JSONObject data) {
+	    JSONObject audiocmd = new JSONObject();
+	    audiocmd.put("action","pause");
+	    screen.get("#mobile").update(audiocmd);
+	    
+	    FsNode message = new FsNode("message",screen.getId());
+	    message.setProperty("action","");
+	    message.setProperty("request","contentselectforce");
+	    model.notify("@stationevents/fromclient",message);
+		
+	    FsNode m = new FsNode("message",screen.getId());
+	    m.setProperty("request","contentselect");
+	    model.notify("@stationevents/fromclient",m);
+	}
+
+	public void helpPage(Screen s, JSONObject data) {
+		FsNode node = new FsNode("help", "requested");
+		node.setProperty("deviceid", deviceid);
+		node.setProperty("originalcontroller", "zoomandaudioremote");
+
+		model.notify("@photozoom/help/page", node);
+	}
+
+	public void loaded(Screen s, JSONObject data) {
+	    	//System.out.println("The following device has its audio loaded");
+	    	//System.out.println(data.toJSONString());
+	    	
+		FsNode node = new FsNode("audio", "loaded");
+		node.setProperty("deviceid", deviceid);
+
+		model.notify("@photozoom/spotting/player", node);
+	}
+
+	private String getColor() {     
+		String color;
+		String colorProperty = model.getProperty("@color");
+
+		if (colorProperty != null) {
+			color = colorProperty;
+		} else {		
+			color = generateColor();
+			model.setProperty("@color", color);
+		}	    
+		return color;
+	}
+
+	private String generateColor() {	    
+		//to get rainbow, pastel colors
+		Random random = new Random();
+		final float hue = random.nextFloat();
+		// Saturation between 0.6 and 0.8
+		final float saturation = (random.nextInt(2000) + 6000) / 10000f;
+		final float luminance = 0.9f;
+		final Color color = Color.getHSBColor(hue, saturation, luminance);
+
+		return "#"+Integer.toHexString(color.getRGB()).substring(2);
+	}
+}
