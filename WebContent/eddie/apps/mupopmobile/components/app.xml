@@ -122,7 +122,7 @@
 	<view id="#photozoomremote">
 		<template>mobile/photozoomremote/photozoomremote.mst</template>
 		<style>mobile/photozoomremote/photozoomremote.css</style>
-		<controller id="PhotoZoomController">
+		<controller id="PhotoZoomRemoteController">
 			<javascript>mobile/photozoomremote/PhotoZoomRemoteController.js</javascript>
 		</controller>
 	</view>
