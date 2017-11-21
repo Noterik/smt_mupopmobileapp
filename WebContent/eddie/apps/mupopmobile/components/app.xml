@@ -68,6 +68,7 @@
 		
 		<joincodes>/shared['joincodes']</joincodes>
 		<photoinfospots>/shared['photoinfospots']/exhibition['@exhibitionid']/station['@stationid']</photoinfospots>
+		<photozoom>/shared['photozoom']/exhibition['@exhibitionid']/station['@stationid']</photozoom>
 		<whatwethinkdots>/shared['whatwethink']/exhibition['@exhibitionid']/station['@stationid']</whatwethinkdots>
 		<itemaxis>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/content['@contentrole']/axis</itemaxis>
 	
@@ -115,6 +116,14 @@
 		<style>mobile/photoinfospotsremote/photoinfospotsremote.css</style>
 		<controller id="PhotoInfoSpotsRemoteController">
 			<javascript>mobile/photoinfospotsremote/PhotoInfoSpotsRemoteController.js</javascript>
+		</controller>
+	</view>
+	
+	<view id="#photozoomremote">
+		<template>mobile/photozoomremote/photozoomremote.mst</template>
+		<style>mobile/photozoomremote/photozoomremote.css</style>
+		<controller id="PhotoZoomRemoteController">
+			<javascript>mobile/photozoomremote/PhotoZoomRemoteController.js</javascript>
 		</controller>
 	</view>
 	
