@@ -46,7 +46,14 @@ public class PhotoExplorerRemoteController extends Html5Controller {
 	
 	FsNode stationnode = model.getNode("@station");
 	if (stationnode != null) {
+
+		//<item>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/content['@contentrole']/item['@itemid']</item>
+	    if (model.getProperty("@itemid")==null) {
+			model.setProperty("@itemid","one");
+	    }
+	    System.out.println("I2="+model.getProperty("@contentrole"));
 	    FsNode item = model.getNode("@item");
+	    System.out.println("ITEM="+item);
 	    System.out.println("ITEMNODE="+item.asXML());
 	    
 	    data.put("title", stationnode.getSmartProperty("en", "title"));

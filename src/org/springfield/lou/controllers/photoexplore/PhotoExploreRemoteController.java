@@ -40,20 +40,22 @@ public class PhotoExploreRemoteController extends Html5Controller  {
 	FsViewPort viewport;
 	
 	public PhotoExploreRemoteController() {
+		System.out.println("PHOTO EXPLORE STARTED CONST");
 	}
 	
 	public void attach(String sel) {
 		selector = sel;
-		System.out.println("PHOTO EXPLORE STARTED");
+		System.out.println("PHOTO EXPLORE STARTED2");
  		screen.get(selector).parsehtml(new JSONObject());
+
  		screen.get("#photoexploreremote_trackarea").track("mousemove","mouseMove", this);
 		screen.get("#photoexploreremote_trackarea").on("touchend","touchEnd",this);
 		screen.get("#photoexploreremote_trackarea").on("touchstart","touchStart",this);
 		screen.get("#photoexploreremote_trackarea").on("mousedown","startDrag",this);
 		screen.get("#photoexploreremote_trackarea").on("mouseup","stopDrag",this);
- 		
- 		viewport = new FsViewPort(screen,"#photoexploreremote_trackarea","@stationevents");
 
+ 		viewport = new FsViewPort(screen,"#photoexploreremote_trackarea","@stationevents");
+	
 	}
 	
 	 public void mouseMove(Screen s,JSONObject data) {

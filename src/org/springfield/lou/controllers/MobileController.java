@@ -221,6 +221,7 @@ public class MobileController extends Html5Controller {
 		String app =  stationnode.getProperty("app"); // get the app name
 		if (app!=null) {
 			if (app.equals("photoexplore")) {
+				System.out.println("START EXPLORE");
 				screen.get("#mobile").append("div","photoexplorerremote",new PhotoExplorerRemoteController());
 			} else if (app.equals("photoinfospots")) {
 				screen.get("#mobile").append("div","photoinfospotsremote",new PhotoInfoSpotsRemoteController());
