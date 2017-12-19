@@ -6,12 +6,12 @@
 
 @font-face {
     font-family: akzidenz-grotesk-condensed;
-    src: url(http://images1.noterik.com/mupop/fonts/akzidenz-grotesk-condensed.woff);
+    src: url(/eddie/apps/mupopmobile/css/akzidenz-grotesk-condensed.woff);
 }
 
 @font-face {
 	font-family: bebas_neueregular;
-	src: url(http://images1.noterik.com/mupop/fonts/BebasNeue-webfont.woff);
+	src: url(/eddie/apps/mupopmobile/css/BebasNeue-webfont.woff);
 }
 
 .font-settings {

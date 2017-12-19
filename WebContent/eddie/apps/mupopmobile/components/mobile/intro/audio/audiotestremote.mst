@@ -14,7 +14,7 @@
 <div id="audio" class="col-xs-12 fill-height">
 	{{explanation}}
 	<div id="headphones" class="col-xs-12">
-		<img class="img-responsive" src="http://images1.noterik.com/mupop/headphones.png"/>
+		<img class="img-responsive" src="/eddie/apps/mupopmobile/img/headphones.png"/>
 	</div>
 </div>
 <div class="audio-bar col-xs-12">

@@ -38,7 +38,7 @@
 					{{#answers}}
 					<div class="col-xs-12 trivia-polling-button-wrapper">					
 						<button id="trivia-polling-answer{{value}}" class="trivia-answer trivia-polling-button clickable form-control">
-							<img class="trivia-polling-button-img" id="trivia-phone-polling-image{{value}}" src="http://images1.noterik.com/mupop/check-icon-phone.png" />
+							<img class="trivia-polling-button-img" id="trivia-phone-polling-image{{value}}" src="/eddie/apps/mupopmobile/img/check-icon-phone.png" />
 							{{name}}
 						</button>					
 					</div>
