@@ -23,7 +23,7 @@ import org.json.simple.JSONObject;
 import org.springfield.fs.FSList;
 import org.springfield.fs.FsNode;
 import org.springfield.lou.controllers.Html5Controller;
-import org.springfield.lou.controllers.image.selection.CoverFlowRemoteController;
+import org.springfield.lou.controllers.image.selection.*;
 import org.springfield.lou.controllers.image.zoom.PhotoExplorerRemoteController;
 import org.springfield.lou.controllers.interactivevideo.InteractiveVideoRemoteController;
 import org.springfield.lou.controllers.intro.audio.AudioTestRemoteController;
@@ -210,6 +210,8 @@ public class MobileController extends Html5Controller {
 		if (type!=null && !type.equals("")) {
 			if (type.equals("coverflow")) {
 				screen.get("#mobile").append("div", "coverflowremote", new CoverFlowRemoteController());
+			} else if (type.equals("selectionmap")) {
+				screen.get("#mobile").append("div", "selectionmapremote", new SelectionMapRemoteController());
 			}
 		}
 	}

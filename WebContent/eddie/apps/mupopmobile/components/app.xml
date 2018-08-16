@@ -3,11 +3,11 @@
 	<jumper id="beta.mupop.net@/lou/mupop/">
 		<target>/lou/domain/mupop/user/noterik/html5application/mupopmobile?path=</target>
 	</jumper>
-	
+
 	<jumper id="mupop.net@/lou/mupop/">
 		<target>/lou/domain/mupop/user/noterik/html5application/mupopmobile?path=</target>
 	</jumper>
-	
+
 	<model id="default">
 		<userlanguage>/screen['profile']/language</userlanguage>
 
@@ -15,7 +15,7 @@
 		<color>/screen['profile']/color</color>
 		<deviceid>/screen['profile']/deviceid</deviceid>
 		<playername>/screen['profile']/playername</playername>
-		
+
 		<exhibitionid>/screen['vars']/exhibitionid</exhibitionid>
 		<stationid>/screen['vars']/stationid</stationid>
 		<roomid>/screen['vars']/roomid</roomid>
@@ -35,43 +35,44 @@
 		<language_photoexplore_coverflow_screen>/domain['mupop']/config['languages']/default['apps']/photoexplore['coverflow']</language_photoexplore_coverflow_screen>
 		<language_photoexplore_main_screen>/domain['mupop']/config['languages']/default['apps']/photoexplore['main']</language_photoexplore_main_screen>
 
-	 	<exhibitions>/domain['mupop']/user['@username']/exhibition</exhibitions>
-	    <exhibition>/domain['mupop']/user['@username']/exhibition['@exhibitionid']</exhibition>
-	    
-	    <languages>/domain['mupop']/config['languages']/default</languages>
-	    <language>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/languages['@languageid']</language>
-	    
-	  	<rooms>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/room</rooms>
-	    <room>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/room['@roomid']</room>
-	    
+		<exhibitions>/domain['mupop']/user['@username']/exhibition</exhibitions>
+		<exhibition>/domain['mupop']/user['@username']/exhibition['@exhibitionid']</exhibition>
+
+		<languages>/domain['mupop']/config['languages']/default</languages>
+		<language>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/languages['@languageid']</language>
+
+		<rooms>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/room</rooms>
+		<room>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/room['@roomid']</room>
+
 		<stations>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station</stations>
 		<station>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']</station>
-		
+
 		<help_topics>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/help</help_topics>
 		<help_topic>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/help['@helpid']</help_topic>
-		
+
 		<contentnode>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/content['@contentrole']</contentnode>
-		
-		
+
+
 		<images>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/image</images>
 		<image>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/image['@imageid']</image>
-		
+
 		<item>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/content['@contentrole']/item['@itemid']</item>
 		<itemquestions>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/content['@contentrole']/item['@itemid']/question</itemquestions>
 		<itemquestion>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/content['@contentrole']/item['@itemid']/question['@itemquestionid']</itemquestion>
 		<itemanwser>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/content['@contentrole']/item['@itemid']/answer['1']</itemanwser>
-		
+
 		<video>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/video['@videoid']</video>
 
 		<stationevents>/shared['exhibitionevents']/exhibition['@exhibitionid']/station['@stationid']</stationevents>
 		<exhibitionevents>/shared['exhibitionevents']/exhibition['@exhibitionid']</exhibitionevents>
-		
+
 		<joincodes>/shared['joincodes']</joincodes>
 		<photoinfospots>/shared['photoinfospots']/exhibition['@exhibitionid']/station['@stationid']</photoinfospots>
 		<photozoom>/shared['photozoom']/exhibition['@exhibitionid']/station['@stationid']</photozoom>
 		<whatwethinkdots>/shared['whatwethink']/exhibition['@exhibitionid']/station['@stationid']</whatwethinkdots>
 		<itemaxis>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/content['@contentrole']/axis</itemaxis>
-	
+		<selectionmapspot>/shared['selectionmapspot']/exhibition['@exhibitionid']/station['@stationid']</selectionmapspot>
+
 		<triviaplayerslist>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/players['list']</triviaplayerslist>
 	</model>
 
@@ -80,7 +81,7 @@
 		<controller id="ScreenController">
 		</controller>
 	</view>
-	
+
 	<view id="#mobile">
 		<template>mobile/mobile.mst</template>
 		<style>mobile/mobile.css</style>
@@ -88,21 +89,21 @@
 			<javascript>mobile/mobile.js</javascript>
 		</controller>
 	</view>
-	
+
 	<view id="#photoexploreremote">
 		<template>mobile/photoexploreremote/photoexploreremote.mst</template>
 		<style>mobile/photoexploreremote/photoexploreremote.css</style>
 		<controller id="PhotoExploreRemoteController">
 		</controller>
 	</view>
-	
+
 	<view id="#whatwethinkremote">
 		<template>mobile/whatwethinkremote/whatwethinkremote.mst</template>
 		<style>mobile/whatwethinkremote/whatwethinkremote.css</style>
 		<controller id="WhatWeThinkRemoteController">
 		</controller>
 	</view>
-	
+
 	<view id="#triviaremote">
 		<template>mobile/triviaremote/triviaremote.mst</template>
 		<style>mobile/triviaremote/triviaremote.css</style>
@@ -118,7 +119,7 @@
 			<javascript>mobile/photoinfospotsremote/PhotoInfoSpotsRemoteController.js</javascript>
 		</controller>
 	</view>
-	
+
 	<view id="#photozoomremote">
 		<template>mobile/photozoomremote/photozoomremote.mst</template>
 		<style>mobile/photozoomremote/photozoomremote.css</style>
@@ -126,14 +127,14 @@
 			<javascript>mobile/photozoomremote/PhotoZoomRemoteController.js</javascript>
 		</controller>
 	</view>
-	
+
 	<view id="#interactivevideoremote">
 		<template>mobile/interactivevideoremote/interactivevideoremote.mst</template>
 		<style>mobile/interactivevideoremote/interactivevideoremote.css</style>
 		<controller id="InteractiveVideoRemoteController">
 		</controller>
 	</view>
-	
+
 	<view id="#interactivevideoremoteholder">
 		<template>mobile/interactivevideoremote/holder/holder.mst</template>
 		<style>mobile/interactivevideoremote/holder/holder.css</style>
@@ -141,7 +142,7 @@
 			<javascript>mobile/interactivevideoremote/holder/holder.js</javascript>
 		</controller>
 	</view>
-	
+
 	<view id="#headphonescheck">
 		<template>mobile/headphonescheck/headphonescheck.mst</template>
 		<style>mobile/headphonescheck/headphonescheck.css</style>
@@ -149,27 +150,27 @@
 			<javascript>mobile/headphonescheck/headphonescheck.js</javascript>
 		</controller>
 	</view>
-	
+
 	<view id="#audiocheck">
 		<template>mobile/audiocheck/audiocheck.mst</template>
 		<style>mobile/audiocheck/audiocheck.css</style>
-		<controller id="AudioCheckController"/>
+		<controller id="AudioCheckController" />
 	</view>
-	
+
 	<view id="#questionnaire">
 		<template>mobile/questionnaire/questionnaire.mst</template>
 		<style>mobile/questionnaire/questionnaire.css</style>
 		<controller id="QuestionController">
 		</controller>
 	</view>
-	
+
 	<view id="#exhibitionend">
 		<template>mobile/exhibitionend/exhibitionend.mst</template>
 		<style>mobile/exhibitionend/exhibitionend.css</style>
-		<controller id="ExhibitionEndController"/>
+		<controller id="ExhibitionEndController" />
 	</view>
 
-	
+
 	<view id="#coverflowremote">
 		<template>mobile/image/selection/coverflowremote.mst</template>
 		<style>mobile/image/selection/coverflowremote.css</style>
@@ -178,6 +179,13 @@
 		</controller>
 	</view>
 	
+	<view id="#selectionmapremote">
+		<template>mobile/image/selection/selectionmapremote.mst</template>
+		<style>mobile/image/selection/selectionmapremote.css</style>
+		<controller id="SelectionMapRemoteController">
+		</controller>
+	</view>
+
 	<view id="#zoomandaudioremote">
 		<template>mobile/image/spotting/zoomandaudioremote.mst</template>
 		<style>mobile/image/spotting/zoomandaudioremote.css</style>
@@ -185,25 +193,25 @@
 			<javascript>mobile/image/spotting/ZoomAndAudioRemoteController.js</javascript>
 		</controller>
 	</view>
-	
+
 	<view id="#globallanguageselectionremote">
 		<template>mobile/intro/language/globallanguageselectionremote.mst</template>
 		<style>mobile/intro/language/globallanguageselectionremote.css</style>
-		<controller id="GlobalLanguageSelectionRemoteController"/>
+		<controller id="GlobalLanguageSelectionRemoteController" />
 	</view>
-	
+
 	<view id="#languageselectionremote">
 		<template>mobile/intro/language/languageselectionremote.mst</template>
 		<style>mobile/intro/language/languageselectionremote.css</style>
-		<controller id="LanguageSelectionRemoteController"/>
+		<controller id="LanguageSelectionRemoteController" />
 	</view>
-	
+
 	<view id="#languageselectionmupopremote">
 		<template>mobile/intro/languagemupop/languageselectionremote.mst</template>
 		<style>mobile/intro/languagemupop/languageselectionremote.css</style>
-		<controller id="LanguageSelectionRemoteControllerMupop"/>
+		<controller id="LanguageSelectionRemoteControllerMupop" />
 	</view>
-	
+
 	<view id="#audiotestremote">
 		<template>mobile/intro/audio/audiotestremote.mst</template>
 		<style>mobile/intro/audio/audiotestremote.css</style>
@@ -211,30 +219,30 @@
 			<javascript>mobile/intro/audio/AudioTestRemoteController.js</javascript>
 		</controller>
 	</view>
-	
+
 	<view id="#stationselectionremote">
 		<template>mobile/intro/station/stationselectionremote.mst</template>
 		<style>mobile/intro/station/stationselectionremote.css</style>
-		<controller id="StationSelectionRemoteController"/>
+		<controller id="StationSelectionRemoteController" />
 	</view>
-	
+
 	<view id="#stationcodeselectionremote">
 		<template>mobile/intro/station/stationcodeselectionremote.mst</template>
 		<style>mobile/intro/station/stationcodeselectionremote.css</style>
-		<controller id="StationCodeSelectionRemoteController"/>
+		<controller id="StationCodeSelectionRemoteController" />
 	</view>
-	
+
 	<view id="#globalcodeselectionremote">
 		<template>mobile/intro/station/globalcodeselectionremote.mst</template>
 		<style>mobile/intro/station/globalcodeselectionremote.css</style>
-		<controller id="GlobalCodeSelectionRemoteController"/>
+		<controller id="GlobalCodeSelectionRemoteController" />
 	</view>
-	
+
 	<view id="#helpremote">
 		<template>mobile/help/helpremote.mst</template>
 		<style>mobile/help/helpremote.css</style>
 	</view>
-	
+
 	<view id="#photoexplorerremote">
 		<template>mobile/image/zoom/photoexplorerremote.mst</template>
 		<style>mobile/image/zoom/photoexplorerremote.css</style>

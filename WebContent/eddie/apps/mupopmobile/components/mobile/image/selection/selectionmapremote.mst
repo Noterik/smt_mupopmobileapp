@@ -1,0 +1,78 @@
+<div id="photoinfospots-header" class="header col-xs-12">
+	<div class="row">
+		{{#previous}}
+		<div id="previous" class="col-xs-2">
+			<i class="fa fa-list-ul"></i>
+		</div>
+		{{/previous}}
+		{{^previous}}
+		<div id="previous" class="col-xs-2">
+				&nbsp;
+		</div>
+		{{/previous}}
+		
+		<div class="col-xs-8">
+			{{title}}
+		</div>
+		
+		<div id="screenbutton" class="col-xs-2">
+			<i class="fa fa-desktop"></i>
+		</div>
+		
+		<div id="zoomandaudiohelp" class="col-xs-2">
+			<i class="fa fa-question-circle"></i>
+		</div>
+		
+	</div>
+</div>
+<div class="contents col-xs-12 fill-height">
+	<div class="trackpad-wrapper-spotting">
+		<div id="trackpad" class="trackpad">
+			<div id="help-text">{{helptext}}</div>
+			<div id="help-button" class="fa fa-question-circle"></div>
+			<img class="img-responsive" id="move-pointer-animation" src="/eddie/apps/mupopmobile/img/move-pointer.gif"/>	
+			<div id="pointer_icon" class="pointer-icon" style="background-color: {{color}}"></div>
+		</div>
+		<div id="textreader">
+		<h3>{{transcript}}</h3>
+		<div id="textreader_text">{{text}}</div>
+		</div>
+	</div>
+</div>
+<div class="audio-bar col-xs-12">
+	<div class="row">
+		<div id="currenttime" class="col-xs-2">
+			--:--
+		</div>
+		<div id="progress-bar" class="col-xs-8">
+			<input id="seekbar" value="0" min="0" step="0.01" type="range">
+		</div>
+		<div id="totaltime" class="col-xs-2">
+			--:--
+		</div>
+	</div>
+</div>
+<div class="controls col-xs-12">
+	<div class="row">
+		<div class="col-xs-2">
+			{{#external-website}}
+			<a href="{{external-website}}" id="external-website" target="_blank">
+				<i class="fa fa-info-circle fa-2x icon-background"></i>
+			</a>{{/external-website}}
+		</div>
+		<div class="col-xs-2">
+		</div>
+		<div class="col-xs-4">
+			  <i id="play" class="fa fa-play-circle fa-4x icon-background"></i>
+			</span>
+		</div>
+		<div class="col-xs-2">
+		</div>
+		<div class="col-xs-2">
+			<i id="text" class="fa fa-book fa-2x icon-background"></i>
+		</div>
+	</div>
+</div>
+
+
+
