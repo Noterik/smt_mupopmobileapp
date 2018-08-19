@@ -1182,3 +1182,192 @@ h3 {
 	top: 50%;
 	width: 100%;
 }
+
+#quizremote {
+	position: absolute;
+	width: 100%;
+	height: 100%;	
+}
+
+.quiz-header {
+	background-color: #348dd5;
+	height: 45px;
+	color: #fff;
+	font-weight: 600;
+	padding-top: 12px;
+}
+
+#quiz-header-playerinfo {
+	text-align: right;
+	font-weight: 400;
+}
+
+.quiz-header-player {
+	color: #99bbd0;
+}
+
+#quiz-game-question-header {
+	position: absolute;
+	background-color: #344659;	
+	bottom: 70%;
+	height: 40%;
+	width: 100%;
+	left:0px;
+	font-size: 4vh;
+	padding-top: 20%;
+	padding-left: 13%;
+	color: white;
+}
+
+#quiz-game-answer1_container {
+	background-color: #d55743;
+	text-decoration: underline;
+	font-size: 12vh;
+	padding-top: 7%;
+	padding-left: 19%;
+	color: white;
+	position: absolute;
+	left: 0%;
+	bottom: 40%;
+	height: 30%;
+	width:50%;
+}
+
+#quiz-game-answer2_container {
+	background-color: #31678e;
+	position: absolute;
+	text-decoration: underline;
+	font-size: 12vh;
+	padding-top: 7%;
+	padding-left: 22%;
+	color: white;
+	left: 50%;
+	bottom: 40%;
+	height: 30%;
+	width:50%;
+}
+
+#quiz-game-answer3_container {
+	background-color: #50ac8f;
+	position: absolute;
+	text-decoration: underline;
+	font-size: 12vh;
+	padding-top: 7%;
+	padding-left: 19%;
+	color: white;
+	left: 0%;
+	bottom: 10%;
+	height: 30%;
+	width:50%;
+}
+
+#quiz-game-answer4_container {
+	background-color: #e69534;
+	position: absolute;
+	text-decoration: underline;
+	font-size: 12vh;
+	padding-top: 7%;
+	padding-left: 22%;
+	color: white;
+	left: 50%;
+	bottom: 10%;
+	height: 30%;
+	width:50%;
+}
+
+
+#quiz-game-answer1_containerwhite {
+	background-color: white;
+	text-decoration: underline;
+	font-size: 12vh;
+	padding-top: 7%;
+	padding-left: 19%;
+	color: grey;
+	position: absolute;
+	left: 0%;
+	bottom: 40%;
+	height: 30%;
+	width:50%;
+}
+
+#quiz-game-answer2_containerwhite {
+	background-color: white;
+	position: absolute;
+	text-decoration: underline;
+	font-size: 12vh;
+	padding-top: 7%;
+	padding-left: 22%;
+	color: grey;
+	left: 50%;
+	bottom: 40%;
+	height: 30%;
+	width:50%;
+}
+
+#quiz-game-answer3_containerwhite {
+	background-color: white;
+	position: absolute;
+	text-decoration: underline;
+	font-size: 12vh;
+	padding-top: 7%;
+	padding-left: 19%;
+	color: grey;
+	left: 0%;
+	bottom: 10%;
+	height: 30%;
+	width:50%;
+}
+
+#quiz-game-answer4_containerwhite {
+	background-color: white;
+	position: absolute;
+	text-decoration: underline;
+	font-size: 12vh;
+	padding-top: 7%;
+	padding-left: 22%;
+	color: grey;
+	left: 50%;
+	bottom: 10%;
+	height: 30%;
+	width:50%;
+}
+
+#quiz-game-correct {
+	position: absolute;
+	background-color: #1cbb9b;
+	color: white;
+	left:0px;
+	width: 100%;
+	height: 100%;
+}
+
+#quiz-game-correctlogo {
+	padding-left: 35%;
+	font-size: 20vh;
+}
+
+#quiz-game-correcttext {
+	padding-left: 20%;
+	font-size: 8vh;
+}
+
+#quiz-game-wronglogo {
+	padding-left: 35%;
+	font-size: 20vh;
+}
+
+#quiz-game-wrongtext {
+	padding-left: 20%;
+	font-size: 8vh;
+}
+
+#quiz-game-wrong {
+	position: absolute;
+	left:0px;
+	color: white;
+	font-size: 20vh;
+	background-color: #e74b3c;
+	width: 100%;
+	height: 100%;
+}
+

@@ -74,6 +74,7 @@
 		<selectionmapspot>/shared['selectionmapspot']/exhibition['@exhibitionid']/station['@stationid']</selectionmapspot>
 
 		<triviaplayerslist>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/players['list']</triviaplayerslist>
+		<quizslide>/shared['exhibitionevents']/exhibition['@exhibitionid']/station['@stationid']/quiz</quizslide>
 	</model>
 
 	<view id="#screen">
@@ -101,6 +102,13 @@
 		<template>mobile/whatwethinkremote/whatwethinkremote.mst</template>
 		<style>mobile/whatwethinkremote/whatwethinkremote.css</style>
 		<controller id="WhatWeThinkRemoteController">
+		</controller>
+	</view>
+	
+	<view id="#quizremote">
+		<template>mobile/quizremote/quizremote.mst</template>
+		<style>mobile/quizremote/quizremote.css</style>
+		<controller id="QuizRemoteController">
 		</controller>
 	</view>
 

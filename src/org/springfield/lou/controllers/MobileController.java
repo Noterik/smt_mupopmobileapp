@@ -37,6 +37,7 @@ import org.springfield.lou.controllers.photoexplore.PhotoExploreRemoteController
 import org.springfield.lou.controllers.photoinfospots.PhotoInfoSpotsRemoteController;
 import org.springfield.lou.controllers.photozoom.PhotoZoomRemoteController;
 import org.springfield.lou.controllers.trivia.TriviaRemoteController;
+import org.springfield.lou.controllers.quiz.QuizRemoteController;
 import org.springfield.lou.controllers.whatwethink.WhatWeThinkRemoteController;
 import org.springfield.lou.model.ModelEvent;
 import org.springfield.lou.screen.Screen;
@@ -56,6 +57,7 @@ public class MobileController extends Html5Controller {
 		selector = sel;
 
 		model.onPropertyUpdate("/screen/state","onStateChange",this);
+
 
 		screen.get(selector).render();
 	    screen.get(selector).loadScript(this);
@@ -221,9 +223,9 @@ public class MobileController extends Html5Controller {
 
 		FsNode stationnode = model.getNode("@station");	
 		String app =  stationnode.getProperty("app"); // get the app name
+		System.out.println("WANTED APP="+app);
 		if (app!=null) {
 			if (app.equals("photoexplore")) {
-				System.out.println("START EXPLORE");
 				screen.get("#mobile").append("div","photoexplorerremote",new PhotoExplorerRemoteController());
 			} else if (app.equals("photoinfospots")) {
 				screen.get("#mobile").append("div","photoinfospotsremote",new PhotoInfoSpotsRemoteController());
@@ -233,6 +235,8 @@ public class MobileController extends Html5Controller {
 				screen.get("#mobile").append("div","interactivevideoremote", new InteractiveVideoRemoteController());
 			} else if (app.equals("trivia")) {
 				screen.get("#mobile").append("div","triviaremote", new TriviaRemoteController());
+			} else if (app.equals("quiz")) {
+				screen.get("#mobile").append("div","quizremote", new QuizRemoteController()); 
 			} else if (app.equals("whatwethink")) {
 				screen.get("#mobile").append("div","whatwethinkremote", new WhatWeThinkRemoteController());
 			}
@@ -252,7 +256,7 @@ public class MobileController extends Html5Controller {
 	public void onStationEvent(ModelEvent e) {
 		FsNode message = e.getTargetFsNode();
 		String request = message.getProperty("request");
-		
+		System.out.println("STATIONEVENT");
 		if (request!=null) { 
 		    model.setProperty("@contentrole", request);
 			if (request.equals("init")) {
@@ -283,6 +287,8 @@ public class MobileController extends Html5Controller {
 		screen.get("#stationcodeselectionremote").remove();
 		screen.get("#globalcodeselectionremote").remove();
 		screen.get("#coverflowremote").remove();
+		screen.get("#selectionmapremote").remove();	
+		screen.get("#quizremote").remove();	
 		screen.get("#photoexplorerremote").remove();
 		screen.get("#photoinfospotsremote").remove();
 		screen.get("#photozoomremote").remove();
