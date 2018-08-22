@@ -115,9 +115,7 @@ public class QuizRemoteController extends Html5Controller {
 				data.put("slideanswer2",slidenode.getProperty("answer2"));
 				data.put("slideanswer3",slidenode.getProperty("answer3"));
 				data.put("slideanswer4",slidenode.getProperty("answer4"));
-				System.out.println("A="+slidenode.getProperty("correctanswer")+" B="+myanswer);
 				if (slidenode.getProperty("correctanswer").equals(myanswer)) {
-					System.out.println("CORRECT !!");
 					data.put("answercorrect","true");	
 				} 
 			} else if (slidetype.equals("videoquestion")) {
@@ -127,9 +125,7 @@ public class QuizRemoteController extends Html5Controller {
 				data.put("slideanswer2",slidenode.getProperty("answer2"));
 				data.put("slideanswer3",slidenode.getProperty("answer3"));
 				data.put("slideanswer4",slidenode.getProperty("answer4"));
-				System.out.println("A="+slidenode.getProperty("correctanswer")+" B="+myanswer);
 				if (slidenode.getProperty("correctanswer").equals(myanswer)) {
-					System.out.println("CORRECT !!");
 					data.put("answercorrect","true");	
 				} 
 			}
@@ -145,7 +141,6 @@ public class QuizRemoteController extends Html5Controller {
 	public void onAnswer(Screen s, JSONObject data) {
 		String id = ((String) data.get("id")).substring(16,17);
 		myanswer = id;
-		System.out.println("ANSWER="+id);
 		fillPage();
 	}
 	

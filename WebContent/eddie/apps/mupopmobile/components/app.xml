@@ -245,6 +245,12 @@
 		<style>mobile/intro/station/globalcodeselectionremote.css</style>
 		<controller id="GlobalCodeSelectionRemoteController" />
 	</view>
+	
+	<view id="#globalnameselectremote">
+		<template>mobile/intro/station/globalnameselectremote.mst</template>
+		<style>mobile/intro/station/globalnameselectremote.css</style>
+		<controller id="GlobalNameSelectRemoteController" />
+	</view>
 
 	<view id="#helpremote">
 		<template>mobile/help/helpremote.mst</template>

@@ -146,7 +146,9 @@ public class GlobalCodeSelectionRemoteController extends Html5Controller {
 					System.out.println("STYLE="+style+" STATIONID="+stationid);
 					screen.loadStyleSheet("mobile/styles/"+style+".css");
 					FsNode message = new FsNode("message",screen.getId());
-					message.setProperty("request","station");
+				//	message.setProperty("request","station");
+					message.setProperty("request","globalnameselect");
+					
 					message.setProperty("@stationid", stationid);
 					System.out.println("STATION MSG="+message.asXML());
 					model.notify("@stationevents/fromclient",message);

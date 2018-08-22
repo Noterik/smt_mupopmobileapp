@@ -24,6 +24,7 @@ import org.springfield.fs.FsNode;
 import org.springfield.fs.FsPropertySet;
 import org.springfield.lou.controllers.Html5Controller;
 import org.springfield.lou.screen.Screen;
+import org.springfield.lou.controllers.ExhibitionMemberManager;
 
 /**
  * CoverFlowRemoteController.java
@@ -42,18 +43,31 @@ public class SelectionMapRemoteController extends Html5Controller {
 	String deviceid;
 	String userLanguage;
 	boolean voicecoverplayed = false;
+	String username = null;
 
 	public SelectionMapRemoteController() { }
 
 	public void attach(String sel) {
-		System.out.println("STARTED SELECTIONMAP REMOTE");
 		selector = sel;
 
-		deviceid = model.getProperty("@deviceid");	
+		FsNode member = ExhibitionMemberManager.getMember(screen); // based on exhibitionid and browserid
+		System.out.println("SCREENNAME="+member);
+		fillSelectionPage();
+		/*
+		if (member==null) {
+			ExhibitionMemberManager.claimMember(screen,"daniel");
+		}
+		*/
+		
+		
+
+		
+	}
+
+	public void fillSelectionPage() {
 		String userLanguage = model.getProperty("@userlanguage");
 		String audiosrc = "";
 		String transcript = "";
-
 		FsNode stationnode = model.getNode("@station");
 		if (stationnode != null) {
 			JSONObject data = new JSONObject();
@@ -76,38 +90,7 @@ public class SelectionMapRemoteController extends Html5Controller {
 
 			screen.get(selector).render(data);
 			screen.get("#trackpad").track("mousemove","mouseMove", this); // track mouse move event on the #trackpad
-
-			
-			/*
-			screen.get(selector).loadScript(this);
-
-			screen.get("#coverflow-trackpad").on("swipeleft","swipeLeft", this);
-			screen.get("#coverflow-trackpad").on("swiperight","swipeRight", this);
-			screen.get("#coverflow-trackpad").on("enter","enter", this);
-			screen.get("#coverflow-help").on("click", "helpClicked", this);
-			screen.get("#coverflow-header").on("mouseup", "previousPage", this);
-
-			JSONObject audiocmd = new JSONObject();
-
-			String played = model.getProperty("@coverflowplayed");
-			System.out.println("AUDIOSRC="+audiosrc);
-			if (audiosrc != null) {
-				//only play on first time in coverflow, otherwise getting very annoying!
-				if (played == null) {
-					audiocmd.put("action","play");
-					model.setProperty("@coverflowplayed", "true");
-				} else {
-					audiocmd.put("action","load");
-				}
-				audiocmd.put("src",audiosrc);
-				screen.get("#mobile").update(audiocmd);
-			}
-
-			JSONObject d = new JSONObject();	
-			d.put("command","init");
-			screen.get(selector).update(d);
-			*/
-		}
+		}		
 	}
 	
 	public void mouseMove(Screen s, JSONObject data) {
@@ -120,21 +103,11 @@ public class SelectionMapRemoteController extends Html5Controller {
 		lastx = (rx / width) * 100; 
 		lasty = (ry / height) * 100;	
 
-		//FsPropertySet ps = new FsPropertySet(); // send them as a set so we get 1 event
-
 		FsNode msg = new FsNode("msg","1");
 		msg.setProperty("x", "" + lastx); // we should support auto convert
 		msg.setProperty("y", "" + lasty);
 		msg.setProperty("color", mycolor);
 		msg.setProperty("action", "spotmove");
-		/*
-		ps.setProperty("deviceid", "");
-		ps.setProperty("language", "");
-		ps.setProperty("action", "move");
-		*/
-		//System.out.println("EX="+model.getProperty("@exhibitionid"));
-		//System.out.println("ST="+model.getProperty("@stationid"));
-		//System.out.println("X="+lastx+" Y="+lasty);
 		model.notify("@stationevents/fromclient",msg);
 
 		//Update position on triggering screen

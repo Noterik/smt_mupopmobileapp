@@ -1,0 +1,20 @@
+<div class="header col-xs-12">
+	<div class="row">
+		<div class="col-xs-2">
+			&nbsp;
+		</div>
+		<div class="col-xs-2 font-settings">
+				&nbsp;
+		</div>
+		<div class="col-xs-6">
+				<div id="flags">
+				<img class="flag" id="flag_en" src="/eddie/apps/mupopmobile/img/flags/en.svg" />
+				<img class="flag" id="flag_nl" src="/eddie/apps/mupopmobile/img/flags/nl.svg" />
+				</flags>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="station_codeselect" class="col-xs-12 fill-height">
+	WHOOO GLOBAL NAME SELECT !
+</div>

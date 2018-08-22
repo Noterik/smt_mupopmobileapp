@@ -31,6 +31,7 @@ import org.springfield.lou.controllers.intro.language.GlobalLanguageSelectionRem
 import org.springfield.lou.controllers.intro.language.LanguageSelectionRemoteController;
 import org.springfield.lou.controllers.intro.language.LanguageSelectionRemoteControllerMupop;
 import org.springfield.lou.controllers.intro.station.GlobalCodeSelectionRemoteController;
+import org.springfield.lou.controllers.intro.station.GlobalNameSelectRemoteController;
 import org.springfield.lou.controllers.intro.station.StationCodeSelectionRemoteController;
 import org.springfield.lou.controllers.intro.station.StationSelectionRemoteController;
 import org.springfield.lou.controllers.photoexplore.PhotoExploreRemoteController;
@@ -81,6 +82,8 @@ public class MobileController extends Html5Controller {
 		    initStep(); 
 		} else if (state.equals("globalcodeselect")) { // pre-step global code select
 			globalSelectStep();
+		} else if (state.equals("globalnameselect")) { // we need to select a name based on exhibition
+			globalNameSelect();
 		} else if (state.equals("globallanguageselect")) { // pre-step global code select
 			globalLanguageStep();
 		} else if (state.equals("audiocheck")) { // perform the asked audio request
@@ -203,6 +206,11 @@ public class MobileController extends Html5Controller {
 		String style="leuven"; // very temp hack
 		screen.loadStyleSheet("mobile/styles/"+style+".css");
 		screen.get("#mobile").append("div", "globalcodeselectionremote", new GlobalCodeSelectionRemoteController());		
+	}
+	
+	private void globalNameSelect() {
+		resetScreen();
+		screen.get("#mobile").append("div", "globalnameselectremote", new GlobalNameSelectRemoteController());		
 	}
 
 	private void contentSelectStep() {
