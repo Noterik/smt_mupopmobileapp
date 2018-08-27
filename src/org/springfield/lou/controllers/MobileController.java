@@ -210,6 +210,7 @@ public class MobileController extends Html5Controller {
 	
 	private void globalNameSelect() {
 		resetScreen();
+		System.out.println("GLOBAL NAME SELECT !!!");
 		screen.get("#mobile").append("div", "globalnameselectremote", new GlobalNameSelectRemoteController());		
 	}
 

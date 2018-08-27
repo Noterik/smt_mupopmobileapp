@@ -1371,3 +1371,71 @@ h3 {
 	height: 100%;
 }
 
+#station_nameselect {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+}
+
+#station_nameselect_title {
+	position: absolute;
+	text-align: center;
+	top: 20%;
+	left: 20%;
+	font-size: 4vh;
+}
+
+#station_nameselect_name1 {
+	position: absolute;
+	border-radius: 10px;
+	background-color: #348dd5;
+	color: white;
+	top: 30%;
+	text-align: center;
+	left: 20%;
+	width: 60%;
+	font-size: 4vh;
+	padding: 1%;
+}
+
+#station_nameselect_name2 {
+	position: absolute;
+	border-radius: 10px;
+	background-color: #348dd5;
+	color: white;
+	top: 45%;
+	text-align: center;
+	left: 20%;
+	width: 60%;
+	font-size: 4vh;
+	padding: 1%;
+}
+
+#station_nameselect_name3 {
+	position: absolute;
+	border-radius: 10px;
+	background-color: #348dd5;
+	color: white;
+	top: 60%;
+	text-align: center;
+	left: 20%;
+	width: 60%;
+	font-size: 4vh;
+	padding: 1%;
+}
+
+#station_nameselect_name4 {
+	position: absolute;
+	border-radius: 10px;
+	background-color: #348dd5;
+	color: white;
+	top: 75%;
+	text-align: center;
+	left: 20%;
+	width: 60%;
+	font-size: 4vh;
+	padding: 1%;
+}
+

@@ -15,6 +15,10 @@
 		</div>
 	</div>
 </div>
-<div id="station_codeselect" class="col-xs-12 fill-height">
-	WHOOO GLOBAL NAME SELECT !
+<div id="station_nameselect" class="col-xs-12 fill-height">
+	<div id="station_nameselect_title">pick your name</div>
+	<div id="station_nameselect_name1">{{name1}}</div>
+	<div id="station_nameselect_name2">{{name2}}</div>
+	<div id="station_nameselect_name3">{{name3}}</div>
+	<div id="station_nameselect_name4">{{name4}}</div>
 </div>

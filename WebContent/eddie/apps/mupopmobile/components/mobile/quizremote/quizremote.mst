@@ -29,7 +29,7 @@
 	{{/showanswer}}
 	{{^showanswer}}
 		{{#imagequestion}}
-			<div id="quiz-game-question-header">CHOOSE YOUR ANSWER</div>
+			<div id="quiz-game-question-header">CHOOSE YOUR ANSWER {{membername}}</div>
 			{{#noanswer}}
 			<div class="quiz-game-answer" id="quiz-game-answer1_container">A</div>
 			<div class="quiz-game-answer" id="quiz-game-answer2_container">B</div>
@@ -62,7 +62,7 @@
 			{{/myanswer4}}
 		{{/imagequestion}}
 		{{#videoquestion}}
-			<div id="quiz-game-question-header">CHOOSE YOUR ANSWER</div>
+			<div id="quiz-game-question-header">CHOOSE YOUR ANSWER {{membername}}</div>
 			{{#noanswer}}
 			<div class="quiz-game-answer" id="quiz-game-answer1_container">A</div>
 			<div class="quiz-game-answer" id="quiz-game-answer2_container">B</div>

@@ -28,6 +28,7 @@ import java.util.Random;
 import org.json.simple.JSONObject;
 import org.springfield.fs.FSList;
 import org.springfield.fs.FsNode;
+import org.springfield.lou.controllers.ExhibitionMemberManager;
 import org.springfield.lou.controllers.Html5Controller;
 import org.springfield.lou.model.ModelEvent;
 import org.springfield.lou.screen.Screen;
@@ -90,6 +91,11 @@ public class QuizRemoteController extends Html5Controller {
 		model.setProperty("@contentrole", "mainapp");
 		FsNode item = model.getNode("@item");
 		JSONObject data = new JSONObject();
+		
+		FsNode member= ExhibitionMemberManager.getMember(screen);
+		if (member!=null) {
+			data.put("membername",member.getProperty("name"));
+		}
 		if (slidenode!=null) {
 			data.put("slidetype",slidetype);
 			data.put(slidetype,"true");
