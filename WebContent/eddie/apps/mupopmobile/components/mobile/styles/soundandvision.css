@@ -1208,7 +1208,8 @@ h3 {
 
 #quiz-game-question-header {
 	position: absolute;
-	background-color: #344659;	
+	background-color: #344659;
+	text-align: center:	
 	bottom: 70%;
 	height: 40%;
 	width: 100%;
@@ -1347,8 +1348,16 @@ h3 {
 }
 
 #quiz-game-correcttext {
-	padding-left: 20%;
+	text-align: center;
 	font-size: 8vh;
+}
+
+#quiz-game-scoretext {
+	position: absolute;
+	bottom: 40%;
+	left: 30%;
+	text-align: center;
+	font-size: 5vh;
 }
 
 #quiz-game-wronglogo {
@@ -1357,7 +1366,7 @@ h3 {
 }
 
 #quiz-game-wrongtext {
-	padding-left: 20%;
+	text-align: center;
 	font-size: 8vh;
 }
 
@@ -1438,4 +1447,56 @@ h3 {
 	font-size: 4vh;
 	padding: 1%;
 }
+
+#quiz-game-image-header {
+	position: absolute;
+	background-color: #344659;	
+	text-align: center;
+	bottom: 50%;
+	height: 50%;
+	width: 100%;
+	left:0px;
+	font-size: 5vh;
+	padding-top: 20%;
+	color: white;
+}
+#quiz-game-image-footer {
+	position: absolute;
+	background-color: #49637f;	
+	text-align: center;
+	bottom: 0%;
+	height: 50%;
+	width: 100%;
+	left:0px;
+	font-size: 5vh;
+	padding-top: 20%;
+	color: white;
+}
+
+#quiz-game-highscore-header {
+	position: absolute;
+	background-color: #344659;	
+	text-align: center;
+	bottom: 80%;
+	height: 20%;
+	width: 100%;
+	left:0px;
+	font-size: 5vh;
+	padding-top: 20%;
+	color: white;
+}
+
+#quiz-game-highscore-footer {
+	position: absolute;
+	background-color: #49637f;	
+	text-align: center;
+	bottom: 0%;
+	height: 80%;
+	width: 100%;
+	left:0px;
+	font-size: 5vh;
+	padding-top: 20%;
+	color: white;
+}
+
 

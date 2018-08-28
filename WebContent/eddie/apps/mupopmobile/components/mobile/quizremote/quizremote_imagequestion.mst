@@ -18,18 +18,20 @@
 			<div id="quiz-game-correct">
 				<div id="quiz-game-correctlogo"><div class="fa fa-check"/></div>
 				<div id="quiz-game-correcttext">CORRECT! {{score}}</div>
+				<div id="quiz-game-scoretext">SCORE {{score}}</div>		
 			</div>
 		{{/answercorrect}}
 		{{^answercorrect}}
 			<div id="quiz-game-wrong">
 				<div id="quiz-game-wronglogo"><div class="fa fa-times"/></div>
-				<div id="quiz-game-wrongtext">WRONG! score = {{score}}</div>
+				<div id="quiz-game-wrongtext">WRONG!</div>
+				<div id="quiz-game-scoretext">SCORE {{score}}</div>			
 			</div>
 		{{/answercorrect}}
 	{{/showanswer}}
 	{{^showanswer}}
 		{{#imagequestion}}
-			<div id="quiz-game-question-header">CHOOSE YOUR ANSWER {{membername}}</div>
+			<div id="quiz-game-question-header">CHOOSE YOUR ANSWER<br /> {{membername}}</div>
 			{{#noanswer}}
 			<div class="quiz-game-answer" id="quiz-game-answer1_container">A</div>
 			<div class="quiz-game-answer" id="quiz-game-answer2_container">B</div>
@@ -62,7 +64,7 @@
 			{{/myanswer4}}
 		{{/imagequestion}}
 		{{#videoquestion}}
-			<div id="quiz-game-question-header">CHOOSE YOUR ANSWER {{membername}}</div>
+			<div id="quiz-game-question-header">CHOOSE YOUR ANSWER <br />{{membername}}</div>
 			{{#noanswer}}
 			<div class="quiz-game-answer" id="quiz-game-answer1_container">A</div>
 			<div class="quiz-game-answer" id="quiz-game-answer2_container">B</div>

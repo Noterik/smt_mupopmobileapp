@@ -1,0 +1,20 @@
+<div id="quiz-header" class="quiz-header col-xs-12">
+	<div class="row">
+		<div class="col-xs-8">
+			MuPoP Quiz
+		</div>
+		<div id="quiz-header-playerinfo" class="col-xs-4">
+		{{#username}}
+		<span class="quiz-header-player"></span>
+		<span class="quiz-header-username">{{username}}</span>
+		{{/username}}
+		</div>
+	</div>
+</div>
+
+<div class="col-xs-12 fill-height">
+	<div id="quiz-game-highscore-header">Hi {{membername}} {{score}} Points</div>
+	<div id="quiz-game-highscore-footer">
+		HIGHSCORES
+	</div>
+</div>

@@ -143,22 +143,23 @@ public class QuizRemoteController extends Html5Controller {
 
 
 	//	data.put("score",score);
+		screen.get(selector).setViewProperty("template","mobile/quizremote/quizremote_"+slidetype+".mst");
 		screen.get(selector).render(data);
 		screen.get(".quiz-game-answer").on("mouseup", "onAnswer", this);
 	}
-
+	
 
 	public void onAnswer(Screen s, JSONObject data) {
 		String id = ((String) data.get("id")).substring(16,17);
 		myanswer = id;
 		if (slidenode.getProperty("correctanswer").equals(myanswer)) {
-				try {
-					int score = Integer.parseInt(ExhibitionMemberManager.getMember(screen).getProperty("score"));
-					score++;
-					ExhibitionMemberManager.getMember(screen).setProperty("score",""+score);	
-				} catch(Exception e) {
-					ExhibitionMemberManager.getMember(screen).setProperty("score","1");	
-				}
+			try {
+				int score = Integer.parseInt(ExhibitionMemberManager.getMember(screen).getProperty("score"));
+				score++;
+				ExhibitionMemberManager.getMember(screen).setProperty("score",""+score);	
+			} catch(Exception e) {
+				ExhibitionMemberManager.getMember(screen).setProperty("score","1");	
+			}
 		}
 		fillPage();
 	}

@@ -67,7 +67,7 @@ public class ExhibitionMemberManager {
 		int size=0;
 		FSList l = s.getModel().getList("/shared/exhibition/availablenames/"+s.getModel().getProperty("@exhibitionid")+"/");
 		if (l!=null) size=l.size();
-		System.out.println("AVAIL NAMES LIST SIZE="+size);
+//		System.out.println("AVAIL NAMES LIST SIZE="+size);
 		if (size==0) {
 			String names = "Bert,Ernie,Elmo,Grover,Pino,Mumford,Koekiemonster,Troel,Purk,Tommie";
 			String[] list = names.split(",");
@@ -76,8 +76,11 @@ public class ExhibitionMemberManager {
 				s.getModel().putNode("/shared/exhibition/availablenames/"+s.getModel().getProperty("@exhibitionid"),namenode);
 			}
 		}
-		
-		
 	}
+	
+    public static int getMemberCount(Screen s) {
+    	FSList members = s.getModel().getList("/shared/exhibition/member/"+s.getModel().getProperty("@exhibitionid"));
+    	return members.size();
+    }
     
 }
