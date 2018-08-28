@@ -58,6 +58,7 @@ public class QuizRemoteController extends Html5Controller {
 		//fillPage();
 		model.onNotify("@quizslide","onSlideUpdate", this);
 		//model.onNotify("/shared[timers]/1second", "on1SecondTimer", this);
+		
 	}
 	
 	public void onSlideUpdate(ModelEvent e) {
@@ -103,7 +104,7 @@ public class QuizRemoteController extends Html5Controller {
 				if (slidenode.getProperty("correctanswer").equals(myanswer)) {
 					System.out.println("CORRECT !!");
 					data.put("answercorrect","true");	
-				} 
+				}
 				data.put("showanswer","true");
 			}
 			if (!myanswer.equals("")) {
@@ -111,6 +112,9 @@ public class QuizRemoteController extends Html5Controller {
 			} else {
 				data.put("noanswer","true");
 			}
+			String sc = ExhibitionMemberManager.getMember(screen).getProperty("score");
+			if (sc==null || sc.equals("")) sc = "0";
+			data.put("score",sc);
 			data.put("slideid",slidenode.getId());
 			if (slidetype.equals("image")) {
 				data.put("imageurl",slidenode.getProperty("imageurl"));
@@ -147,6 +151,15 @@ public class QuizRemoteController extends Html5Controller {
 	public void onAnswer(Screen s, JSONObject data) {
 		String id = ((String) data.get("id")).substring(16,17);
 		myanswer = id;
+		if (slidenode.getProperty("correctanswer").equals(myanswer)) {
+				try {
+					int score = Integer.parseInt(ExhibitionMemberManager.getMember(screen).getProperty("score"));
+					score++;
+					ExhibitionMemberManager.getMember(screen).setProperty("score",""+score);	
+				} catch(Exception e) {
+					ExhibitionMemberManager.getMember(screen).setProperty("score","1");	
+				}
+		}
 		fillPage();
 	}
 	

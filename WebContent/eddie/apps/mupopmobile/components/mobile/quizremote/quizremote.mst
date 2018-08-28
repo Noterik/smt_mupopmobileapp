@@ -17,13 +17,13 @@
 		{{#answercorrect}}
 			<div id="quiz-game-correct">
 				<div id="quiz-game-correctlogo"><div class="fa fa-check"/></div>
-				<div id="quiz-game-correcttext">CORRECT!</div>
+				<div id="quiz-game-correcttext">CORRECT! {{score}}</div>
 			</div>
 		{{/answercorrect}}
 		{{^answercorrect}}
 			<div id="quiz-game-wrong">
 				<div id="quiz-game-wronglogo"><div class="fa fa-times"/></div>
-				<div id="quiz-game-wrongtext">WRONG!</div>
+				<div id="quiz-game-wrongtext">WRONG! score = {{score}}</div>
 			</div>
 		{{/answercorrect}}
 	{{/showanswer}}
