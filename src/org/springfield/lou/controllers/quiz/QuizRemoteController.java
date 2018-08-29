@@ -23,7 +23,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
+import java.util.Date;
 
 import org.json.simple.JSONObject;
 import org.springfield.fs.FSList;
@@ -47,6 +49,7 @@ public class QuizRemoteController extends Html5Controller {
 	private int showtimer=0;
 	private String showanswer="false";
 	private String myanswer="";
+	private FsNode member;
 
 	public QuizRemoteController() { }
 	
@@ -79,7 +82,10 @@ public class QuizRemoteController extends Html5Controller {
 			showanswer = sa;
 		}
 		fillPage();
+		// lets update the member last seen date
+		member.setProperty("lastseen",""+(new Date().getTime()));
 	}
+
 
 
 	public void onAppStateChange(ModelEvent e) {
@@ -93,7 +99,7 @@ public class QuizRemoteController extends Html5Controller {
 		FsNode item = model.getNode("@item");
 		JSONObject data = new JSONObject();
 		
-		FsNode member= ExhibitionMemberManager.getMember(screen);
+		member= ExhibitionMemberManager.getMember(screen);
 		if (member!=null) {
 			data.put("membername",member.getProperty("name"));
 		}
@@ -138,7 +144,11 @@ public class QuizRemoteController extends Html5Controller {
 				if (slidenode.getProperty("correctanswer").equals(myanswer)) {
 					data.put("answercorrect","true");	
 				} 
+			} else if (slidetype.equals("highscore")) {
+				System.out.println("SHOW HIGHSCORE");
+				addHighScoreNodes(data);
 			}
+		
 		}
 
 
@@ -146,6 +156,30 @@ public class QuizRemoteController extends Html5Controller {
 		screen.get(selector).setViewProperty("template","mobile/quizremote/quizremote_"+slidetype+".mst");
 		screen.get(selector).render(data);
 		screen.get(".quiz-game-answer").on("mouseup", "onAnswer", this);
+	}
+	
+	
+	private void addHighScoreNodes(JSONObject data) {
+		FSList list = ExhibitionMemberManager.getActiveMembers(screen,40);
+		List<FsNode> nodes = list.getNodes();
+		FSList results = new FSList();
+		if (nodes != null) {
+			for (Iterator<FsNode> iter = nodes.iterator(); iter.hasNext();) {
+				FsNode node = (FsNode) iter.next();
+				FsNode nnode = new FsNode("member",node.getId());
+				String name = node.getProperty("name");
+				String score = node.getProperty("score");
+				
+				if (name!=null && !name.equals("")) {
+					nnode.setProperty("name",name);
+					if (score!=null && !score.equals("")) {
+						nnode.setProperty("score",score);
+					}
+				}
+				results.addNode(nnode);
+			}
+			data.put("members",results.toJSONObject("en","name,score"));
+		}
 	}
 	
 

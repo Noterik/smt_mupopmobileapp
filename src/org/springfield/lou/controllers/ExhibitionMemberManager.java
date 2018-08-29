@@ -54,7 +54,7 @@ public class ExhibitionMemberManager {
     }
     
     public static FsNode claimMember(Screen s,String username) { 
-    	FsNode member = s.getModel().getNode("/shared/exhibition/member/"+s.getModel().getProperty("@exhibitionid")+"/name/"+s.getBrowserId());
+    	FsNode member = s.getModel().getNode("/shared/exhibition/availablenames/"+s.getModel().getProperty("@exhibitionid")+"/name/"+s.getBrowserId());
     	String name = member.getProperty("name");
     	if (name==null || name.equals("")) {
     		member.setProperty("name",username);
@@ -86,6 +86,34 @@ public class ExhibitionMemberManager {
     public static int getMemberCount(Screen s) {
     	FSList members = s.getModel().getList("/shared/exhibition/member/"+s.getModel().getProperty("@exhibitionid"));
     	return members.size();
+    }
+    
+    public static FSList getActiveMembers(Screen s,int expiretime) {
+    	FSList list = s.getModel().getList("/shared/exhibition/member/"+s.getModel().getProperty("@exhibitionid"));
+		List<FsNode> nodes = list.getNodes();
+		FSList members = new FSList();
+		if (nodes != null) {
+			for (Iterator<FsNode> iter = nodes.iterator(); iter.hasNext();) {
+				FsNode node = (FsNode) iter.next();
+				FsNode nnode = new FsNode("member",node.getId());
+				String name = node.getProperty("name");
+				String score = node.getProperty("score");
+				String lastseen = node.getProperty("lastseen");
+				
+				if (name!=null && !name.equals("")) {
+					nnode.setProperty("name",name);
+					if (score!=null && !score.equals("")) {
+						nnode.setProperty("score",score);
+					}
+					if (lastseen!=null && !lastseen.equals("")) {
+						nnode.setProperty("lastseen",lastseen);
+					}
+					members.addNode(nnode);
+				}
+
+			}
+		}			
+    	return members;
     }
     
 }
