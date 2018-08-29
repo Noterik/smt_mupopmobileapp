@@ -117,12 +117,9 @@ public class GlobalCodeSelectionRemoteController extends Html5Controller {
 
 		String trycode = alphacode+numbercode;
 		FSList joincodes = model.getList("@joincodes"); // check all the active stations
-		System.out.println("JOINNODESSIZE="+joincodes);
 		if (joincodes != null) {
-			System.out.println("JOINNODESSIZE="+joincodes.size());
 			for (Iterator<FsNode> iter = joincodes.getNodes().iterator(); iter.hasNext();) {
 				FsNode node = (FsNode) iter.next();
-				System.out.println("JOIN CODES=+"+node.asXML());
 				String correctcode = node.getProperty("codeselect");
 				if (correctcode!=null && correctcode.equals(trycode)) {
 					String exhibitionid = node.getProperty("exhibitionid");
@@ -132,9 +129,9 @@ public class GlobalCodeSelectionRemoteController extends Html5Controller {
 					model.setProperty("@username",userid);
 					model.setProperty("@exhibitionid",exhibitionid);
 					model.setProperty("@stationid",stationid);
-					System.out.println("STATION ID="+stationid);
-					System.out.println("USER ID="+userid);
-					System.out.println("EXHIBTION ID="+exhibitionid);
+					//System.out.println("STATION ID="+stationid);
+					//System.out.println("USER ID="+userid);
+					//System.out.println("EXHIBTION ID="+exhibitionid);
 
 					String style = model.getProperty("@station/style");		    	    
 					if (style==null || style.equals("")) {
@@ -143,14 +140,12 @@ public class GlobalCodeSelectionRemoteController extends Html5Controller {
 							style="neutral";
 						}
 					}
-					System.out.println("STYLE="+style+" STATIONID="+stationid);
 					screen.loadStyleSheet("mobile/styles/"+style+".css");
 					FsNode message = new FsNode("message",screen.getId());
 				//	message.setProperty("request","station");
 					message.setProperty("request","globalnameselect");
 					
 					message.setProperty("@stationid", stationid);
-					System.out.println("STATION MSG="+message.asXML());
 					model.notify("@stationevents/fromclient",message);
 					return;
 				}

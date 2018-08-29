@@ -51,17 +51,7 @@ public class SelectionMapRemoteController extends Html5Controller {
 		selector = sel;
 
 		FsNode member = ExhibitionMemberManager.getMember(screen); // based on exhibitionid and browserid
-		System.out.println("SCREENNAME="+member);
 		fillSelectionPage();
-		/*
-		if (member==null) {
-			ExhibitionMemberManager.claimMember(screen,"daniel");
-		}
-		*/
-		
-		
-
-		
 	}
 
 	public void fillSelectionPage() {

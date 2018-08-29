@@ -76,7 +76,6 @@ public class MobileController extends Html5Controller {
 		String state = event.getTargetFsNode().getProperty("state");
 		if (oldstate.equals(state)) return;
 		oldstate = state;		
-		System.out.println("STATE="+state);
 		model.setProperty("@contentrole", state); 	//state and contentrole are the same ????
 		if (state.equals("init")) { // init the exhibition and probably show language selector
 		    initStep(); 
@@ -210,7 +209,6 @@ public class MobileController extends Html5Controller {
 	
 	private void globalNameSelect() {
 		resetScreen();
-		System.out.println("GLOBAL NAME SELECT !!!");
 		screen.get("#mobile").append("div", "globalnameselectremote", new GlobalNameSelectRemoteController());		
 	}
 
@@ -232,7 +230,6 @@ public class MobileController extends Html5Controller {
 
 		FsNode stationnode = model.getNode("@station");	
 		String app =  stationnode.getProperty("app"); // get the app name
-		System.out.println("WANTED APP="+app);
 		if (app!=null) {
 			if (app.equals("photoexplore")) {
 				screen.get("#mobile").append("div","photoexplorerremote",new PhotoExplorerRemoteController());
@@ -265,7 +262,6 @@ public class MobileController extends Html5Controller {
 	public void onStationEvent(ModelEvent e) {
 		FsNode message = e.getTargetFsNode();
 		String request = message.getProperty("request");
-		System.out.println("STATIONEVENT");
 		if (request!=null) { 
 		    model.setProperty("@contentrole", request);
 			if (request.equals("init")) {

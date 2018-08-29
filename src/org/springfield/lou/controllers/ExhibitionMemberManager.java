@@ -13,7 +13,8 @@ public class ExhibitionMemberManager {
 	
     public static FsNode getMember(Screen s) {
     	checkAvailableNameslist(s);
-    	FsNode member = s.getModel().getNode("/shared/exhibition/member/"+s.getModel().getProperty("@exhibitionid")+"/"+s.getBrowserId());
+    	
+    	FsNode member = s.getModel().getNode("/shared/exhibition/member/"+s.getModel().getProperty("@exhibitionid")+"/name/"+s.getBrowserId());
     	String name = member.getProperty("name");
     	if (name==null || name.equals("")) {
     		return null;
@@ -53,7 +54,7 @@ public class ExhibitionMemberManager {
     }
     
     public static FsNode claimMember(Screen s,String username) { 
-    	FsNode member = s.getModel().getNode("/shared/exhibition/members/"+s.getModel().getProperty("@exhibitionid")+"/"+s.getBrowserId());
+    	FsNode member = s.getModel().getNode("/shared/exhibition/member/"+s.getModel().getProperty("@exhibitionid")+"/name/"+s.getBrowserId());
     	String name = member.getProperty("name");
     	if (name==null || name.equals("")) {
     		member.setProperty("name",username);
@@ -69,7 +70,11 @@ public class ExhibitionMemberManager {
 		if (l!=null) size=l.size();
 //		System.out.println("AVAIL NAMES LIST SIZE="+size);
 		if (size==0) {
-			String names = "Bert,Ernie,Elmo,Grover,Pino,Mumford,Koekiemonster,Troel,Purk,Tommie";
+			String names = "Bert,Ernie,Elmo,Grover,Pino,Mumford,Koekiemonster,Troel,Purk,Tommie"+
+				"Bert2,Ernie2,Elmo2,Grover2,Pino2,Mumford2,Koekiemonster2,Troel2,Purk2,Tommie2"+
+				"Bert3,Ernie3,Elmo3,Grover3,Pino3,Mumford3,Koekiemonster3,Troel2,Purk3,Tommie3"+
+				"Bert4,Ernie4,Elmo4,Grover4,Pino4,Mumford4,Koekiemonster4,Troel2,Purk4,Tommie4"+
+				"Bert5,Ernie5,Elmo5,Grover5,Pino5,Mumford5,Koekiemonster5,Troel2,Purk5,Tommie5";
 			String[] list = names.split(",");
 			for (int i=0;i<list.length;i++) {
 				FsNode namenode = new FsNode("name",list[i]);

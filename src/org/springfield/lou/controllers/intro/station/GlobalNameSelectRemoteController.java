@@ -56,12 +56,10 @@ public class GlobalNameSelectRemoteController extends Html5Controller {
 		selector = sel;
 		fillPage();
 		model.onNotify("/shared[timers]/1second","onTimeoutChecks",this); 
-		System.out.println("ADDING NAME SELECT CONTROLLER !!!!");
 	}
 
 	private  void fillPage() {
 		FsNode member= ExhibitionMemberManager.getMember(screen);
-		System.out.println("MEMBER NAME="+member);
 		if (member==null) {
 			JSONObject data = new JSONObject();
 			name1 = ExhibitionMemberManager.getNextFreeName(screen);
