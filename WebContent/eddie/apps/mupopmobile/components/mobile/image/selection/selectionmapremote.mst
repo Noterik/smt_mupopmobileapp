@@ -27,10 +27,22 @@
 </div>
 <div class="contents col-xs-12 fill-height">
 	{{#waiting}}
-		waiting
+		<div id="selectionmap-slave">
+		</div>
 	{{/waiting}}
 	{{#slave}}
-		slave
+		<div id="selectionmap-slave">
+			<div id="selectionmap-slave-text">
+			{{#nl}}
+			Speler {{currentmaster}}<br />
+			Mag nu kiezen !
+			{{/nl}}
+			{{#nl}}
+			Player {{currentmaster}}<br />
+			Turn to choose !
+			{{/nl}}
+			</div>
+		</div>
 	{{/slave}}	
 	{{#master}}
 	<div class="trackpad-wrapper-spotting">

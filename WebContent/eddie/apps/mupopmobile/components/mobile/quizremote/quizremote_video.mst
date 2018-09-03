@@ -13,6 +13,12 @@
 </div>
 
 <div class="col-xs-12 fill-height">
+	{{#nl}}
+	<div id="quiz-game-image-header">Hallo {{membername}} kijk en<br /> wacht op de vragen</div>
+	<div id="quiz-game-image-footer">Punten tot nu toe <br /> {{score}}</div>
+	{{/nl}}
+	{{#en}}
 	<div id="quiz-game-image-header">Hi {{membername}} watch and get<br /> ready for questions</div>
 	<div id="quiz-game-image-footer">Your current score<br /> {{score}}</div>
+	{{/en}}
 </div>

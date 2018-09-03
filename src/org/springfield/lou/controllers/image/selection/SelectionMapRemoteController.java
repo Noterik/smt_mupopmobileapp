@@ -61,15 +61,18 @@ public class SelectionMapRemoteController extends Html5Controller {
     public void onSelectionmapeventChange(ModelEvent event) {
     	FsNode msg = event.getTargetFsNode();
     	String master = msg.getProperty("master");
-    	System.out.println("S="+screen.getBrowserId()+" I="+master);
+    	String mastername = msg.getProperty("mastername");
+    	System.out.println("S="+screen.getBrowserId()+" I="+master+" mastername="+mastername);
     	if (master.equals(screen.getBrowserId())) {
     		if (member.getProperty("master").equals("waiting")) {
     			member.setProperty("master","master");
+    			member.setProperty("currentmaster",mastername);
         		fillPage();
         	}
     	} else {
     		if (member.getProperty("master").equals("waiting")) {
     			member.setProperty("master","slave");
+    			member.setProperty("currentmaster",mastername);
         		fillPage();
         	}	
     	}
@@ -109,6 +112,7 @@ public class SelectionMapRemoteController extends Html5Controller {
 					data.put("slave","true");		
 				}
 			}
+			data.put("nl","true");
 			screen.get(selector).render(data);
 			screen.get("#trackpad").track("mousemove","mouseMove", this); // track mouse move event on the #trackpad
 		}		

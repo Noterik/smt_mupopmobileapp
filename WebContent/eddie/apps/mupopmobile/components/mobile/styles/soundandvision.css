@@ -1206,6 +1206,27 @@ h3 {
 	color: #99bbd0;
 }
 
+#selectionmap-slave {
+	position: absolute;
+	background-color: #344659;
+	text-align: center;	
+	font-size: 4vh;
+	color: white;
+	top-padding: 20%;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;	
+}
+
+#selectionmap-slave-text {
+	position: absolute;
+	top: 30%;
+	left: 0%;
+	width: 100%;
+	height: 100%;	
+}
+
 #quiz-game-question-header {
 	position: absolute;
 	background-color: #344659;
