@@ -3,6 +3,7 @@ package org.springfield.lou.controllers;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Date;
 import java.util.Random;
 
 import org.springfield.fs.FSList;
@@ -58,6 +59,11 @@ public class ExhibitionMemberManager {
     	String name = member.getProperty("name");
     	if (name==null || name.equals("")) {
     		member.setProperty("name",username);
+    		member.setProperty("score","0");	
+    		member.setProperty("lastseen","");
+    		member.setProperty("mastercount","0");
+    		member.setProperty("master","waiting");
+    		member.setProperty("lastmaster","");
     		return member;
     	} else {
     		return null;
@@ -84,7 +90,8 @@ public class ExhibitionMemberManager {
 	}
 	
     public static int getMemberCount(Screen s) {
-    	FSList members = s.getModel().getList("/shared/exhibition/member/"+s.getModel().getProperty("@exhibitionid"));
+    	FSList members = getActiveMembers(s,600);
+    	if (members==null) return 0;
     	return members.size();
     }
     
@@ -92,6 +99,7 @@ public class ExhibitionMemberManager {
     	FSList list = s.getModel().getList("/shared/exhibition/member/"+s.getModel().getProperty("@exhibitionid"));
 		List<FsNode> nodes = list.getNodes();
 		FSList members = new FSList();
+		long now = new Date().getTime();
 		if (nodes != null) {
 			for (Iterator<FsNode> iter = nodes.iterator(); iter.hasNext();) {
 				FsNode node = (FsNode) iter.next();
@@ -99,18 +107,26 @@ public class ExhibitionMemberManager {
 				String name = node.getProperty("name");
 				String score = node.getProperty("score");
 				String lastseen = node.getProperty("lastseen");
-				
-				if (name!=null && !name.equals("")) {
-					nnode.setProperty("name",name);
-					if (score!=null && !score.equals("")) {
-						nnode.setProperty("score",score);
-					}
-					if (lastseen!=null && !lastseen.equals("")) {
-						nnode.setProperty("lastseen",lastseen);
-					}
-					members.addNode(nnode);
-				}
 
+				try {
+					long ls = Long.parseLong(lastseen);
+					long dl = (now-ls)/1000;
+					//System.out.println("LAST SEEN="+name+" TIME="+dl);
+					if (dl<expiretime) {
+						if (name!=null && !name.equals("")) {
+							nnode.setProperty("name",name);
+							if (score!=null && !score.equals("")) {
+								nnode.setProperty("score",score);
+							} else {
+								nnode.setProperty("score","0");
+							}
+							nnode.setProperty("lastseen",lastseen);
+							members.addNode(nnode);
+						}
+					}
+				} catch(Exception e) {
+					// if a error on parse we don't want this node anyway.
+				}
 			}
 		}			
     	return members;

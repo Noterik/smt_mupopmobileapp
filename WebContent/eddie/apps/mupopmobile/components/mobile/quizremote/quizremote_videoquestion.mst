@@ -17,21 +17,37 @@
 		{{#answercorrect}}
 			<div id="quiz-game-correct">
 				<div id="quiz-game-correctlogo"><div class="fa fa-check"/></div>
+				{{#nl}}
+				<div id="quiz-game-correcttext">GOED!</div>
+				<div id="quiz-game-scoretext">FOUT {{score}}</div>	
+				{{/nl}}
+				{{#en}}
 				<div id="quiz-game-correcttext">CORRECT!</div>
 				<div id="quiz-game-scoretext">SCORE {{score}}</div>	
+				{{/en}}
 			</div>
 		{{/answercorrect}}
 		{{^answercorrect}}
 			<div id="quiz-game-wrong">
 				<div id="quiz-game-wronglogo"><div class="fa fa-times"/></div>
-				<div id="quiz-game-wrongtext">WRONG!</div>
-				<div id="quiz-game-scoretext">SCORE {{score}}</div>	
+				{{#nl}}
+					<div id="quiz-game-wrongtext">FOUT!</div>
+					<div id="quiz-game-scoretext">SCORE {{score}}</div>	
+				{{/nl}}
+				{{#en}}
+					<div id="quiz-game-wrongtext">WRONG!</div>
+					<div id="quiz-game-scoretext">SCORE {{score}}</div>	
+				{{/en}}
 			</div>
 		{{/answercorrect}}
 	{{/showanswer}}
 	{{^showanswer}}
-		{{#imagequestion}}
+			{{#nl}}
+			<div id="quiz-game-question-header">KIES JE ANTWOORD <br />{{membername}}</div>
+			{{/nl}}
+			{{#en}}
 			<div id="quiz-game-question-header">CHOOSE YOUR ANSWER <br />{{membername}}</div>
+			{{/en}}
 			{{#noanswer}}
 			<div class="quiz-game-answer" id="quiz-game-answer1_container">A</div>
 			<div class="quiz-game-answer" id="quiz-game-answer2_container">B</div>
@@ -62,39 +78,5 @@
 			<div class="quiz-game-answer" id="quiz-game-answer3_containerwhite">C</div>
 			<div class="quiz-game-answer" id="quiz-game-answer4_container">D</div>
 			{{/myanswer4}}
-		{{/imagequestion}}
-		{{#videoquestion}}
-			<div id="quiz-game-question-header">CHOOSE YOUR ANSWER <br />{{membername}}</div>
-			{{#noanswer}}
-			<div class="quiz-game-answer" id="quiz-game-answer1_container">A</div>
-			<div class="quiz-game-answer" id="quiz-game-answer2_container">B</div>
-			<div class="quiz-game-answer" id="quiz-game-answer3_container">C</div>
-			<div class="quiz-game-answer" id="quiz-game-answer4_container">D</div>
-			{{/noanswer}}
-			{{#myanswer1}}
-			<div class="quiz-game-answer" id="quiz-game-answer1_container">A</div>
-			<div class="quiz-game-answer" id="quiz-game-answer2_containerwhite">B</div>
-			<div class="quiz-game-answer" id="quiz-game-answer3_containerwhite">C</div>
-			<div class="quiz-game-answer" id="quiz-game-answer4_containerwhite">D</div>
-			{{/myanswer1}}
-			{{#myanswer2}}
-			<div class="quiz-game-answer" id="quiz-game-answer1_containerwhite">A</div>
-			<div class="quiz-game-answer" id="quiz-game-answer2_container">B</div>
-			<div class="quiz-game-answer" id="quiz-game-answer3_containerwhite">C</div>
-			<div class="quiz-game-answer" id="quiz-game-answer4_containerwhite">D</div>
-			{{/myanswer2}}
-			{{#myanswer3}}
-			<div class="quiz-game-answer" id="quiz-game-answer1_containerwhite">A</div>
-			<div class="quiz-game-answer" id="quiz-game-answer2_containerwhite">B</div>
-			<div class="quiz-game-answer" id="quiz-game-answer3_container">C</div>
-			<div class="quiz-game-answer" id="quiz-game-answer4_containerwhite">D</div>
-			{{/myanswer3}}
-			{{#myanswer4}}
-			<div class="quiz-game-answer" id="quiz-game-answer1_containerwhite">A</div>
-			<div class="quiz-game-answer" id="quiz-game-answer2_containerwhite">B</div>
-			<div class="quiz-game-answer" id="quiz-game-answer3_containerwhite">C</div>
-			<div class="quiz-game-answer" id="quiz-game-answer4_container">D</div>
-			{{/myanswer4}}
-		{{/videoquestion}}
 	{{/showanswer}}
 </div>

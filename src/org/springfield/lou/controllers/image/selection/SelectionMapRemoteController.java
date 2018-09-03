@@ -23,6 +23,7 @@ import org.json.simple.JSONObject;
 import org.springfield.fs.FsNode;
 import org.springfield.fs.FsPropertySet;
 import org.springfield.lou.controllers.Html5Controller;
+import org.springfield.lou.model.ModelEvent;
 import org.springfield.lou.screen.Screen;
 import org.springfield.lou.controllers.ExhibitionMemberManager;
 
@@ -44,17 +45,37 @@ public class SelectionMapRemoteController extends Html5Controller {
 	String userLanguage;
 	boolean voicecoverplayed = false;
 	String username = null;
+	FsNode member;
 
 	public SelectionMapRemoteController() { }
 
 	public void attach(String sel) {
 		selector = sel;
 
-		FsNode member = ExhibitionMemberManager.getMember(screen); // based on exhibitionid and browserid
-		fillSelectionPage();
+		member = ExhibitionMemberManager.getMember(screen); // based on exhibitionid and browserid
+		member.setProperty("master","waiting");
+		model.onNotify("@selectionmapevent","onSelectionmapeventChange",this);
+		fillPage();
 	}
+	
+    public void onSelectionmapeventChange(ModelEvent event) {
+    	FsNode msg = event.getTargetFsNode();
+    	String master = msg.getProperty("master");
+    	System.out.println("S="+screen.getBrowserId()+" I="+master);
+    	if (master.equals(screen.getBrowserId())) {
+    		if (member.getProperty("master").equals("waiting")) {
+    			member.setProperty("master","master");
+        		fillPage();
+        	}
+    	} else {
+    		if (member.getProperty("master").equals("waiting")) {
+    			member.setProperty("master","slave");
+        		fillPage();
+        	}	
+    	}
+    }
 
-	public void fillSelectionPage() {
+	public void fillPage() {
 		String userLanguage = model.getProperty("@userlanguage");
 		String audiosrc = "";
 		String transcript = "";
@@ -77,7 +98,17 @@ public class SelectionMapRemoteController extends Html5Controller {
 				data.put("transcript",  language_content.getSmartProperty(userLanguage, "coverflow_transcript"));
 				data.put("transcript-text", contentnode.getProperty("transcript"));
 			}
-
+			if (member!=null) {
+				String master = member.getProperty("master");
+				System.out.println("master="+master);
+				if (master.equals("") || master.equals("waiting")) {
+					data.put("waiting","true");
+				} else if (master.equals("master")) {
+					data.put("master","true");	
+				} else {
+					data.put("slave","true");		
+				}
+			}
 			screen.get(selector).render(data);
 			screen.get("#trackpad").track("mousemove","mouseMove", this); // track mouse move event on the #trackpad
 		}		
@@ -112,4 +143,5 @@ public class SelectionMapRemoteController extends Html5Controller {
 		System.out.println("Station select requested by mobile");
 		model.setProperty("/screen/state","globalcodeselect");
 	}
+	
 }

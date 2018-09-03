@@ -145,7 +145,6 @@ public class QuizRemoteController extends Html5Controller {
 					data.put("answercorrect","true");	
 				} 
 			} else if (slidetype.equals("highscore")) {
-				System.out.println("SHOW HIGHSCORE");
 				addHighScoreNodes(data);
 			}
 		
@@ -153,6 +152,7 @@ public class QuizRemoteController extends Html5Controller {
 
 
 	//	data.put("score",score);
+		data.put("nl","true");
 		screen.get(selector).setViewProperty("template","mobile/quizremote/quizremote_"+slidetype+".mst");
 		screen.get(selector).render(data);
 		screen.get(".quiz-game-answer").on("mouseup", "onAnswer", this);
@@ -160,7 +160,7 @@ public class QuizRemoteController extends Html5Controller {
 	
 	
 	private void addHighScoreNodes(JSONObject data) {
-		FSList list = ExhibitionMemberManager.getActiveMembers(screen,40);
+		FSList list = ExhibitionMemberManager.getActiveMembers(screen,600);
 		List<FsNode> nodes = list.getNodes();
 		FSList results = new FSList();
 		if (nodes != null) {

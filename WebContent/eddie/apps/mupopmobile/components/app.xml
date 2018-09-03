@@ -72,6 +72,7 @@
 		<whatwethinkdots>/shared['whatwethink']/exhibition['@exhibitionid']/station['@stationid']</whatwethinkdots>
 		<itemaxis>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/content['@contentrole']/axis</itemaxis>
 		<selectionmapspot>/shared['selectionmapspot']/exhibition['@exhibitionid']/station['@stationid']</selectionmapspot>
+		<selectionmapevent>/shared['exhibitionevents']/exhibition['@exhibitionid']/selectionmapevent</selectionmapevent>
 
 		<triviaplayerslist>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/players['list']</triviaplayerslist>
 		<quizslide>/shared['exhibitionevents']/exhibition['@exhibitionid']/station['@stationid']/quiz</quizslide>
