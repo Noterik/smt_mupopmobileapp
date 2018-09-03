@@ -19,6 +19,9 @@
 */
 package org.springfield.lou.controllers.image.selection;
 
+import java.awt.Color;
+import java.util.Random;
+
 import org.json.simple.JSONObject;
 import org.springfield.fs.FsNode;
 import org.springfield.fs.FsPropertySet;
@@ -55,6 +58,9 @@ public class SelectionMapRemoteController extends Html5Controller {
 		member = ExhibitionMemberManager.getMember(screen); // based on exhibitionid and browserid
 		member.setProperty("master","waiting");
 		model.onNotify("@selectionmapevent","onSelectionmapeventChange",this);
+		
+		mycolor = getColor();
+		
 		fillPage();
 	}
 	
@@ -115,6 +121,8 @@ public class SelectionMapRemoteController extends Html5Controller {
 			data.put("nl","true");
 			screen.get(selector).render(data);
 			screen.get("#trackpad").track("mousemove","mouseMove", this); // track mouse move event on the #trackpad
+			screen.get("#trackpad").on("enter","onEnter", this);
+			screen.get("#pointer_icon").css("background-color","#"+mycolor);
 		}		
 	}
 	
@@ -140,12 +148,45 @@ public class SelectionMapRemoteController extends Html5Controller {
 		screen.get("#pointer_icon").css("top",(ry)+"px"); // comp back for the top shift
 		screen.get("#pointer_icon").css("background-color", mycolor);
 	}
-
-
+	
+	public void onEnter(Screen s, JSONObject data) {
+		System.out.println("Enter received from client on x="+lastx+" y="+lasty);
+		FsNode msg = new FsNode("msg","1");
+		msg.setProperty("x", "" + lastx); // we should support auto convert
+		msg.setProperty("y", "" + lasty);
+		msg.setProperty("color", mycolor);
+		msg.setProperty("action", "enter");
+		model.notify("@stationevents/fromclient",msg);
+	}
 
 	public void previousPage(Screen s, JSONObject data) {
 		System.out.println("Station select requested by mobile");
 		model.setProperty("/screen/state","globalcodeselect");
+	}
+	
+	private String getColor() {     
+		String color;
+		String colorProperty = model.getProperty("@color");
+
+		if (colorProperty != null) {
+			color = colorProperty;
+		} else {		
+			color = generateColor();
+			model.setProperty("@color", color);
+		}	    
+		return color;
+	}
+
+	private String generateColor() {	    
+		//to get rainbow, pastel colors
+		Random random = new Random();
+		final float hue = random.nextFloat();
+		// Saturation between 0.6 and 0.8
+		final float saturation = (random.nextInt(2000) + 6000) / 10000f;
+		final float luminance = 0.9f;
+		final Color color = Color.getHSBColor(hue, saturation, luminance);
+
+		return "#"+Integer.toHexString(color.getRGB()).substring(2);
 	}
 	
 }
