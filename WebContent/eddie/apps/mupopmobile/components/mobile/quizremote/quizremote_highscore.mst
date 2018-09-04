@@ -13,23 +13,29 @@
 </div>
 
 <div class="col-xs-12 fill-height">
-	<#en>
-	<div id="quiz-game-highscore-header">Hi {{membername}} your current score is {{score}} points</div>
-	</en>
-	<#nl>
-	<div id="quiz-game-highscore-header">Hallo {{membername}} je huidige score is {{score}} punten</div>
-	</nl>
+	<div id="quiz-game-highscore-header">
+		<div id="quiz-game-highscore-header-inner">
+			{{#en}}
+			{{membername}} your current score is {{score}} points
+			{{/en}}
+			{{#nl}}
+			{{membername}} je huidige score is {{score}} punten
+			{{/nl}}
+		</div>
+	</div>
 	<div id="quiz-game-highscore-footer">
-		{{#members}}
-		{{#en}}
-		Highscores<br />
-		{{/en}}
-		{{#nl}}
-		Scores<br />
-		{{/nl}}
-			{{#nodes}}
-				{{name}} {{score}}<br />
-			{{/nodes}}
-		{{/members}}
+		<div id="quiz-game-highscore-footer-inner">
+			{{#members}}
+			{{#en}}
+			<u>Highscores</u><br />
+			{{/en}}
+			{{#nl}}
+			<u>Scores</u><br />
+			{{/nl}}
+				{{#nodes}}
+					{{name}} {{score}}<br />
+				{{/nodes}}
+			{{/members}}
+		</div>
 	</div>
 </div>

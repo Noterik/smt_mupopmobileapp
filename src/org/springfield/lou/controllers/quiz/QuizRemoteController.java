@@ -46,7 +46,7 @@ public class QuizRemoteController extends Html5Controller {
 	String slidetype;
 	FsNode slidenode;
 	private int slidetimeout=-1;
-	private int showtimer=0;
+	private int showtimer=5;
 	private String showanswer="false";
 	private String myanswer="";
 	private FsNode member;
@@ -65,6 +65,7 @@ public class QuizRemoteController extends Html5Controller {
 	}
 	
 	public void onSlideUpdate(ModelEvent e) {
+		System.out.println("slide update");
 		FsNode node = e.getTargetFsNode();
 		if (node!=slidenode) { // extra check since we always get a node from shared space
 			slidenode = node;
@@ -72,7 +73,7 @@ public class QuizRemoteController extends Html5Controller {
 			if (slidetype==null) slidetype="image";
 			slidetimeout =  Integer.parseInt(slidenode.getProperty("timeout"));
 			if (slidetype.equals("imagequestion") || slidetype.equals("videoquestion")) {
-				showtimer = 3;
+				showtimer = 5;
 			}
 			myanswer="";
 			//fillPage();
@@ -91,7 +92,6 @@ public class QuizRemoteController extends Html5Controller {
 	public void onAppStateChange(ModelEvent e) {
 		FsNode message = e.getTargetFsNode();
 		String command = message.getProperty("command");
-		System.out.println("CLIENT COMMAND="+command);
 	}
 
 	private void fillPage() {
@@ -108,7 +108,6 @@ public class QuizRemoteController extends Html5Controller {
 			data.put(slidetype,"true");
 			if (showanswer.equals("true")) {
 				if (slidenode.getProperty("correctanswer").equals(myanswer)) {
-					System.out.println("CORRECT !!");
 					data.put("answercorrect","true");	
 				}
 				data.put("showanswer","true");
@@ -147,17 +146,13 @@ public class QuizRemoteController extends Html5Controller {
 			} else if (slidetype.equals("highscore")) {
 				addHighScoreNodes(data);
 			}
-		
 		}
 
-
-	//	data.put("score",score);
 		data.put("nl","true");
 		screen.get(selector).setViewProperty("template","mobile/quizremote/quizremote_"+slidetype+".mst");
 		screen.get(selector).render(data);
 		screen.get(".quiz-game-answer").on("mouseup", "onAnswer", this);
 	}
-	
 	
 	private void addHighScoreNodes(JSONObject data) {
 		FSList list = ExhibitionMemberManager.getActiveMembers(screen,43200);
@@ -178,6 +173,7 @@ public class QuizRemoteController extends Html5Controller {
 				}
 				results.addNode(nnode);
 			}
+			List<FsNode> scores = results.getNodesSorted("score", "int_up");
 			data.put("members",results.toJSONObject("en","name,score"));
 		}
 	}
@@ -197,6 +193,4 @@ public class QuizRemoteController extends Html5Controller {
 		}
 		fillPage();
 	}
-	
-
 }

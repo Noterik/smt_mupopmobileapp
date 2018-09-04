@@ -1233,8 +1233,7 @@ h3 {
 	align-items:center;
 	justify-content: center;
 	background-color: #344659;
-	bottom: 70%;
-	height: calc(40% - 65px);
+	height: 40%;
 	width: 100%;
 	left:0px;
 	font-size: 4vh;
@@ -1361,10 +1360,13 @@ h3 {
 	left:0px;
 	width: 100%;
 	height: 100%;
+	display: flex;
+  	justify-content: flex-start;
+  	flex-direction: column;
 }
 
 #quiz-game-correctlogo {
-	padding-left: 35%;
+	text-align: center;
 	font-size: 20vh;
 }
 
@@ -1374,15 +1376,12 @@ h3 {
 }
 
 #quiz-game-scoretext {
-	position: absolute;
-	bottom: 40%;
-	left: 30%;
 	text-align: center;
 	font-size: 5vh;
 }
 
 #quiz-game-wronglogo {
-	padding-left: 35%;
+	text-align: center;
 	font-size: 20vh;
 }
 
@@ -1399,6 +1398,9 @@ h3 {
 	background-color: #e74b3c;
 	width: 100%;
 	height: 100%;
+	display: flex;
+  	justify-content: flex-start;
+  	flex-direction: column;
 }
 
 #station_nameselect {
@@ -1484,15 +1486,21 @@ h3 {
 #quiz-game-image-header {
 	position: absolute;
 	background-color: #344659;	
-	text-align: center;
 	bottom: 50%;
 	height: 50%;
 	width: 100%;
 	left:0px;
 	font-size: 5vh;
-	padding-top: 20%;
 	color: white;
+	display: flex;
+  	align-items: center;
+  	justify-content: center;
 }
+
+#quiz-game-image-header-inner {
+	text-align: center;
+}
+
 #quiz-game-image-footer {
 	position: absolute;
 	background-color: #49637f;	
@@ -1502,8 +1510,14 @@ h3 {
 	width: 100%;
 	left:0px;
 	font-size: 5vh;
-	padding-top: 20%;
 	color: white;
+	display: flex;
+  	align-items: center;
+  	justify-content: center;
+}
+
+#quiz-game-image-footer-inner {
+	align-self: flex-start;
 }
 
 #quiz-game-highscore-header {
@@ -1515,8 +1529,14 @@ h3 {
 	width: 100%;
 	left:0px;
 	font-size: 5vh;
-	padding-top: 20%;
 	color: white;
+	display: flex;
+  	align-items: center;
+  	justify-content: center;
+}
+
+#quiz-game-highscore-header-inner {
+	text-align: center;
 }
 
 #quiz-game-highscore-footer {
@@ -1528,8 +1548,11 @@ h3 {
 	width: 100%;
 	left:0px;
 	font-size: 5vh;
-	padding-top: 20%;
 	color: white;
+}
+
+#quiz-game-highscore-footer-inner {
+	align-self: flex-start;
 }
 
 #selectionmap-help-button {

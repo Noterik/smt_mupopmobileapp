@@ -13,12 +13,24 @@
 </div>
 
 <div class="col-xs-12 fill-height">
-	{{#nl}}
-	<div id="quiz-game-image-header">Hallo {{membername}} kijk en<br /> wacht op de vragen</div>
-	<div id="quiz-game-image-footer">Punten tot nu toe <br /> {{score}}</div>
-	{{/nl}}
-	{{#en}}
-	<div id="quiz-game-image-header">Hi {{membername}} watch and get<br /> ready for questions</div>
-	<div id="quiz-game-image-footer">Your current score<br /> {{score}}</div>
+	<div id="quiz-game-image-header">
+		<div id="quiz-game-image-header-inner">
+			{{#nl}}
+			{{membername}}, bekijk de video op het hoofdscherm en beantwoord hierna de vragen
+			{{/nl}}
+			{{#en}}
+			{{membername}}, watch the video on the mainscreen and after this answer the questions
+			{{/en}}
+		</div>
+	</div>
+	<div id="quiz-game-image-footer">
+		<div id="quiz-game-image-footer-inner">
+			{{#nl}}
+			Huidige score:<br/> {{score}}
+			{{/nl}}
+			{{#en}}
+			Current score:<br /> {{score}}
+			{{/en}}
+		</div>
 	{{/en}}
 </div>

@@ -12,7 +12,7 @@
 	</div>
 </div>
 
-<div class="col-xs-12 fill-height" style="display: flex; flex-direction: column;">
+<div class="col-xs-12 fill-height">
 	{{#showanswer}}
 		{{#answercorrect}}
 			<div id="quiz-game-correct">
@@ -43,12 +43,12 @@
 	{{/showanswer}}
 	{{^showanswer}}
 			{{#nl}}
-			<div id="quiz-game-question-header" style="flex-grow: 1;">
+			<div id="quiz-game-question-header">
 				<div>KIES JE ANTWOORD {{membername}}</div>
 			</div>
 			{{/nl}}
 			{{#en}}
-			<div id="quiz-game-question-header" style="flex-grow: 1;">
+			<div id="quiz-game-question-header">
 				<div>
 				CHOOSE YOUR ANSWER {{membername}}
 				</div>	

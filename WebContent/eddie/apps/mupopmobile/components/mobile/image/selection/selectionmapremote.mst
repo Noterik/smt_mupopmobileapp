@@ -30,12 +30,10 @@
 		<div id="selectionmap-slave">
 			<div id="selectionmap-slave-text">
 			{{#nl}}
-			Speler {{currentmaster}}<br />
-			Mag nu kiezen !
+			Een ogenblik geduld
 			{{/nl}}
 			{{#en}}
-			Player {{currentmaster}}<br />
-			Turn to choose !
+			Just wait for a moment
 			{{/en}}
 			</div>
 		</div>
@@ -44,11 +42,11 @@
 		<div id="selectionmap-slave">
 			<div id="selectionmap-slave-text">
 			{{#nl}}
-			Speler {{currentmaster}}<br />
+			Speler {{mastername}}<br />
 			Mag nu kiezen !
 			{{/nl}}
 			{{#en}}
-			Player {{currentmaster}}<br />
+			Player {{mastername}}<br />
 			Turn to choose !
 			{{/en}}
 			</div>

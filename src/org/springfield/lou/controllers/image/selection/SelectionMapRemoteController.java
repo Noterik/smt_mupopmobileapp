@@ -72,13 +72,13 @@ public class SelectionMapRemoteController extends Html5Controller {
     	if (master.equals(screen.getBrowserId())) {
     		if (member.getProperty("master").equals("waiting")) {
     			member.setProperty("master","master");
-    			member.setProperty("currentmaster",mastername);
+    			member.setProperty("mastername",mastername);
         		fillPage();
         	}
     	} else {
     		if (member.getProperty("master").equals("waiting")) {
     			member.setProperty("master","slave");
-    			member.setProperty("currentmaster",mastername);
+    			member.setProperty("mastername",mastername);
         		fillPage();
         	}	
     	}
