@@ -291,6 +291,7 @@ public class MobileController extends Html5Controller {
 		screen.get("#stationselectionremote").remove();	
 		screen.get("#stationcodeselectionremote").remove();
 		screen.get("#globalcodeselectionremote").remove();
+		screen.get("#globalnameselectremote").remove();	
 		screen.get("#coverflowremote").remove();
 		screen.get("#selectionmapremote").remove();	
 		screen.get("#quizremote").remove();	

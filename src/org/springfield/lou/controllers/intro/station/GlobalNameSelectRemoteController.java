@@ -44,7 +44,7 @@ import org.springfield.lou.controllers.ExhibitionMemberManager;
 public class GlobalNameSelectRemoteController extends Html5Controller {
 
 	int timeout_toselect = 500;
-	String name1,name2,name3;
+	String name1,name2,name3,name4;
 	
 	public GlobalNameSelectRemoteController() { 
 		
@@ -65,10 +65,11 @@ public class GlobalNameSelectRemoteController extends Html5Controller {
 			name1 = ExhibitionMemberManager.getNextFreeName(screen);
 			name2 = ExhibitionMemberManager.getNextFreeName(screen);
 			name3 = ExhibitionMemberManager.getNextFreeName(screen);
+			name4 = ExhibitionMemberManager.getNextFreeName(screen);
 			data.put("name1",name1);
 			data.put("name2",name2);
 			data.put("name3",name3);
-			data.put("name4","custom");
+			data.put("name4",name4);
 			screen.get(selector).render(data);
 			System.out.println("ONE="+name1+" TWO="+name2+" THREE="+name3);
 			screen.get(".flag").on("click", "onFlagSelected", this);
