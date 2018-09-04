@@ -34,6 +34,8 @@
 		<language_station_code_selection_screen>/domain['mupop']/config['languages']/default['apps']/intro['stationcodeselection']</language_station_code_selection_screen>
 		<language_photoexplore_coverflow_screen>/domain['mupop']/config['languages']/default['apps']/photoexplore['coverflow']</language_photoexplore_coverflow_screen>
 		<language_photoexplore_main_screen>/domain['mupop']/config['languages']/default['apps']/photoexplore['main']</language_photoexplore_main_screen>
+		<language_quiz_selectionmap_screen>/domain['mupop']/config['languages']/default['apps']/quiz['selectionmap']</language_quiz_selectionmap_screen>
+		
 
 		<exhibitions>/domain['mupop']/user['@username']/exhibition</exhibitions>
 		<exhibition>/domain['mupop']/user['@username']/exhibition['@exhibitionid']</exhibition>
@@ -192,6 +194,7 @@
 		<template>mobile/image/selection/selectionmapremote.mst</template>
 		<style>mobile/image/selection/selectionmapremote.css</style>
 		<controller id="SelectionMapRemoteController">
+			<javascript>mobile/image/selection/SelectionMapRemoteController.js</javascript>
 		</controller>
 	</view>
 

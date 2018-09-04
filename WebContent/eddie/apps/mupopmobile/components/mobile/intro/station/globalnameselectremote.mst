@@ -16,9 +16,25 @@
 	</div>
 </div>
 <div id="station_nameselect" class="col-xs-12 fill-height">
-	<div id="station_nameselect_title">pick your name</div>
-	<div id="station_nameselect_name1">{{name1}}</div>
-	<div id="station_nameselect_name2">{{name2}}</div>
-	<div id="station_nameselect_name3">{{name3}}</div>
-	<div id="station_nameselect_name4">{{name4}}</div>
+	<div id="station_nameselect_title">
+	{{#nl}}
+	Kies je nickname
+	{{/nl}}
+	{{#en}}
+	Pick your nickname
+	{{/en}}
+	<!--<i id="station_nameselect_reload" class="fa fa-refresh"></i>-->
+	</div>
+	<div class="row station_nameselect_button">
+		<div id="station_nameselect_name1" class="station_nameselect_name">{{name1}}</div>
+	</div>
+	<div class="row station_nameselect_button">
+		<div id="station_nameselect_name2" class="station_nameselect_name">{{name2}}</div>
+	</div>
+	<div class="row station_nameselect_button">
+		<div id="station_nameselect_name3" class="station_nameselect_name">{{name3}}</div>
+	</div>
+	<div class="row station_nameselect_button">
+		<div id="station_nameselect_name4" class="station_nameselect_name">{{name4}}</div>
+	</div>
 </div>

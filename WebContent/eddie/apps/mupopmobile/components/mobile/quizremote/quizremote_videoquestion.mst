@@ -32,21 +32,21 @@
 				<div id="quiz-game-wronglogo"><div class="fa fa-times"/></div>
 				{{#nl}}
 					<div id="quiz-game-wrongtext">FOUT!</div>
-					<div id="quiz-game-scoretext">SCORE {{score}}</div>	
+					<div id="quiz-game-scoretext">{{score}} PUNTEN</div>	
 				{{/nl}}
 				{{#en}}
 					<div id="quiz-game-wrongtext">WRONG!</div>
-					<div id="quiz-game-scoretext">SCORE {{score}}</div>	
+					<div id="quiz-game-scoretext">SCORE: {{score}}</div>	
 				{{/en}}
 			</div>
 		{{/answercorrect}}
 	{{/showanswer}}
 	{{^showanswer}}
 			{{#nl}}
-			<div id="quiz-game-question-header">KIES JE ANTWOORD <br />{{membername}}</div>
+			<div id="quiz-game-question-header">KIES JE ANTWOORD {{membername}}</div>
 			{{/nl}}
 			{{#en}}
-			<div id="quiz-game-question-header">CHOOSE YOUR ANSWER <br />{{membername}}</div>
+			<div id="quiz-game-question-header">CHOOSE YOUR ANSWER {{membername}}</div>
 			{{/en}}
 			{{#noanswer}}
 			<div class="quiz-game-answer" id="quiz-game-answer1_container">A</div>

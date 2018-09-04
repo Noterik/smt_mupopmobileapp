@@ -62,6 +62,7 @@ public class GlobalNameSelectRemoteController extends Html5Controller {
 		FsNode member= ExhibitionMemberManager.getMember(screen);
 		if (member==null) {
 			JSONObject data = new JSONObject();
+			data.put("nl","true"); //TODO: hardcoded for now			
 			name1 = ExhibitionMemberManager.getNextFreeName(screen);
 			name2 = ExhibitionMemberManager.getNextFreeName(screen);
 			name3 = ExhibitionMemberManager.getNextFreeName(screen);
@@ -71,8 +72,8 @@ public class GlobalNameSelectRemoteController extends Html5Controller {
 			data.put("name3",name3);
 			data.put("name4",name4);
 			screen.get(selector).render(data);
-			System.out.println("ONE="+name1+" TWO="+name2+" THREE="+name3);
-			screen.get(".flag").on("click", "onFlagSelected", this);
+			
+			screen.get("#station_nameselect_reload").on("click", "onReloadNamesSelected", this);
 			screen.get("#station_nameselect_name1").on("click", "onName1", this);
 			screen.get("#station_nameselect_name2").on("click", "onName2", this);
 			screen.get("#station_nameselect_name3").on("click", "onName3", this);
@@ -102,6 +103,7 @@ public class GlobalNameSelectRemoteController extends Html5Controller {
 		ExhibitionMemberManager.claimMember(screen,name1);
 		ExhibitionMemberManager.freeName(screen,name2);
 		ExhibitionMemberManager.freeName(screen,name3);
+		ExhibitionMemberManager.freeName(screen,name4);
 		gotoNextStep();
 	}
 	
@@ -109,6 +111,7 @@ public class GlobalNameSelectRemoteController extends Html5Controller {
 		ExhibitionMemberManager.claimMember(screen,name2);
 		ExhibitionMemberManager.freeName(screen,name1);
 		ExhibitionMemberManager.freeName(screen,name3);
+		ExhibitionMemberManager.freeName(screen,name4);
 		gotoNextStep();
 	}
 	
@@ -116,17 +119,23 @@ public class GlobalNameSelectRemoteController extends Html5Controller {
 		ExhibitionMemberManager.claimMember(screen,name3);
 		ExhibitionMemberManager.freeName(screen,name1);
 		ExhibitionMemberManager.freeName(screen,name2);
+		ExhibitionMemberManager.freeName(screen,name4);
 		gotoNextStep();
 	}
 	
 	public void onName4(Screen s, JSONObject data) {
-		System.out.println("NAME4");
+		ExhibitionMemberManager.claimMember(screen,name4);
+		ExhibitionMemberManager.freeName(screen,name1);
+		ExhibitionMemberManager.freeName(screen,name2);
+		ExhibitionMemberManager.freeName(screen,name3);
+		gotoNextStep();
 	}
 	
 	
-	public void onFlagSelected(Screen s, JSONObject data) {
+	public void onReloadNamesSelected(Screen s, JSONObject data) {
 		// temp free all names
 		ExhibitionMemberManager.freeAllNames(screen);
+		fillPage();
 	}
 	
 	private void gotoNextStep() {

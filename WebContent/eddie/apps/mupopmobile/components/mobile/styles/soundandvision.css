@@ -1229,15 +1229,15 @@ h3 {
 
 #quiz-game-question-header {
 	position: absolute;
+	display: flex;
+	align-items:center;
+	justify-content: center;
 	background-color: #344659;
-	text-align: center:	
 	bottom: 70%;
-	height: 40%;
+	height: calc(40% - 65px);
 	width: 100%;
 	left:0px;
 	font-size: 4vh;
-	padding-top: 20%;
-	padding-left: 13%;
 	color: white;
 }
 
@@ -1410,11 +1410,23 @@ h3 {
 }
 
 #station_nameselect_title {
-	position: absolute;
+	position: relative;
 	text-align: center;
 	top: 20%;
-	left: 20%;
 	font-size: 4vh;
+}
+
+.station_nameselect_name {
+	border-radius: 10px;
+	background-color: #348dd5;
+	color: white;
+	text-align: center;
+	font-size: 4vh;
+	padding: 1%;	
+}
+
+#station_nameselect_reload {
+	font-size: 3vh;
 }
 
 #station_nameselect_name1 {
@@ -1520,4 +1532,12 @@ h3 {
 	color: white;
 }
 
-
+#selectionmap-help-button {
+	display: none;
+	top: 0;
+	right: 0;
+	padding-top: 3px;
+	padding-right: 5px;
+	position: absolute;
+	cursor: pointer;
+}

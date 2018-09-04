@@ -1,3 +1,8 @@
+
+
+
+
+
 var CoverFlowRemoteController = function(options) {}; // needed for detection
 
 var $wrapper;

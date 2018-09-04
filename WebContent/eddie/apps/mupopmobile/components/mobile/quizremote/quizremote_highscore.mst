@@ -14,18 +14,18 @@
 
 <div class="col-xs-12 fill-height">
 	<#en>
-	<div id="quiz-game-highscore-header">Hi {{membername}} {{score}} Points</div>
+	<div id="quiz-game-highscore-header">Hi {{membername}} your current score is {{score}} points</div>
 	</en>
 	<#nl>
-	<div id="quiz-game-highscore-header">Hallo {{membername}} {{score}} Punten</div>
+	<div id="quiz-game-highscore-header">Hallo {{membername}} je huidige score is {{score}} punten</div>
 	</nl>
 	<div id="quiz-game-highscore-footer">
 		{{#members}}
 		{{#en}}
-		highscores<br />
+		Highscores<br />
 		{{/en}}
 		{{#nl}}
-		Punten lijst<br />
+		Scores<br />
 		{{/nl}}
 			{{#nodes}}
 				{{name}} {{score}}<br />

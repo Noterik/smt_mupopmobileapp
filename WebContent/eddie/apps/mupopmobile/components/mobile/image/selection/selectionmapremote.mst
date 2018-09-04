@@ -28,6 +28,16 @@
 <div class="contents col-xs-12 fill-height">
 	{{#waiting}}
 		<div id="selectionmap-slave">
+			<div id="selectionmap-slave-text">
+			{{#nl}}
+			Speler {{currentmaster}}<br />
+			Mag nu kiezen !
+			{{/nl}}
+			{{#en}}
+			Player {{currentmaster}}<br />
+			Turn to choose !
+			{{/en}}
+			</div>
 		</div>
 	{{/waiting}}
 	{{#slave}}
@@ -37,19 +47,21 @@
 			Speler {{currentmaster}}<br />
 			Mag nu kiezen !
 			{{/nl}}
-			{{#nl}}
+			{{#en}}
 			Player {{currentmaster}}<br />
 			Turn to choose !
-			{{/nl}}
+			{{/en}}
 			</div>
 		</div>
 	{{/slave}}	
 	{{#master}}
 	<div class="trackpad-wrapper-spotting">
 		<div id="trackpad" class="trackpad">
-			<div id="help-text">{{helptext}}</div>
-			<div id="help-button" class="fa fa-question-circle"></div>
-			<img class="img-responsive" id="move-pointer-animation" src="/eddie/apps/mupopmobile/img/move-pointer.gif"/>	
+			<div id="help-text1">{{helptext1}}</div>
+			<div id="help-text2">{{helptext2}}</div>
+			<div id="selectionmap-help-button"><i class="fa fa-question-circle"></i></div>
+			<img class="img-responsive" id="move-animation" src="/eddie/apps/mupopmobile/img/move-pointer.gif"/>
+			<img class="img-responsive" id="touch-animation" src="/eddie/apps/mupopmobile/img/single-tap.gif"/>	
 			<div id="pointer_icon" class="pointer-icon" style="background-color: {{color}}"></div>
 		</div>
 		<div id="textreader">

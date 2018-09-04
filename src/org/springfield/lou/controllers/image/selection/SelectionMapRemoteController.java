@@ -86,6 +86,7 @@ public class SelectionMapRemoteController extends Html5Controller {
 
 	public void fillPage() {
 		String userLanguage = model.getProperty("@userlanguage");
+		userLanguage = "nl"; //TODO: hardcoded for now
 		String audiosrc = "";
 		String transcript = "";
 		FsNode stationnode = model.getNode("@station");
@@ -95,10 +96,10 @@ public class SelectionMapRemoteController extends Html5Controller {
 
 			FsNode contentnode = model.getNode("@contentnode");
 			audiosrc = contentnode.getProperty("voiceover");
-
-			FsNode language_content = model.getNode("@language_photoexplore_coverflow_screen");
+				
+			FsNode language_content = model.getNode("@language_quiz_selectionmap_screen");
 			if (language_content!=null) {
-				data.put("helptext1", language_content.getSmartProperty(userLanguage, "swipe_help_text"));
+				data.put("helptext1", language_content.getSmartProperty(userLanguage, "discover_help_text"));
 				data.put("helptext2", language_content.getSmartProperty(userLanguage, "select_help_text"));
 			}
 			
@@ -110,6 +111,7 @@ public class SelectionMapRemoteController extends Html5Controller {
 			if (member!=null) {
 				String master = member.getProperty("master");
 				System.out.println("master="+master);
+				data.put("currentmaster", master);
 				if (master.equals("") || master.equals("waiting")) {
 					data.put("waiting","true");
 				} else if (master.equals("master")) {
@@ -123,6 +125,10 @@ public class SelectionMapRemoteController extends Html5Controller {
 			screen.get("#trackpad").track("mousemove","mouseMove", this); // track mouse move event on the #trackpad
 			screen.get("#trackpad").on("enter","onEnter", this);
 			screen.get("#pointer_icon").css("background-color","#"+mycolor);
+			
+			JSONObject d = new JSONObject();	
+			d.put("command","init");
+			screen.get(selector).update(d);
 		}		
 	}
 	
