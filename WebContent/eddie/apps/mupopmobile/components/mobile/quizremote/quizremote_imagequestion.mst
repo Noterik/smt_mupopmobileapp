@@ -8,6 +8,9 @@
 		<span class="quiz-header-player"></span>
 		<span class="quiz-header-username">{{username}}</span>
 		{{/username}}
+		<a id="quiz-header-exit" href="https://www.beeldengeluid.nl/verhalen">
+			<i class="fa fa-sign-out"></i>
+		</a>
 		</div>
 	</div>
 </div>

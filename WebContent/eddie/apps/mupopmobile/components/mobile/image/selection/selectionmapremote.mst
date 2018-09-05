@@ -42,13 +42,16 @@
 		<div id="selectionmap-slave">
 			<div id="selectionmap-slave-text">
 			{{#nl}}
-			Speler {{mastername}}<br />
-			Mag nu kiezen !
+			Een andere speler mag nu kiezen
 			{{/nl}}
 			{{#en}}
-			Player {{mastername}}<br />
-			Turn to choose !
+			Another player can now choose
 			{{/en}}
+			</div>
+			<div style="z-index: 200;">
+				<a href="https://www.beeldengeluid.nl/verhalen">
+				<i class="fa fa-sign-out"></i>{{#nl}}Verlaat het spel{{/nl}}{{#en}}Exit the game{{/en}}
+				</a>
 			</div>
 		</div>
 	{{/slave}}	

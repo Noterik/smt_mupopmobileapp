@@ -8,6 +8,9 @@
 		<span class="quiz-header-player"></span>
 		<span class="quiz-header-username">{{username}}</span>
 		{{/username}}
+		<a id="quiz-header-exit" href="https://www.beeldengeluid.nl/verhalen">
+			<i class="fa fa-sign-out"></i>
+		</a>
 		</div>
 	</div>
 </div>
@@ -16,10 +19,10 @@
 	<div id="quiz-game-image-header">
 		<div id="quiz-game-image-header-inner">
 			{{#nl}}
-			{{membername}}, bekijk de video op het hoofdscherm en beantwoord hierna de vragen
+			Bekijk de video op het hoofdscherm en beantwoord hierna de vragen
 			{{/nl}}
 			{{#en}}
-			{{membername}}, watch the video on the mainscreen and after this answer the questions
+			Watch the video on the mainscreen and after this answer the questions
 			{{/en}}
 		</div>
 	</div>
@@ -32,5 +35,5 @@
 			Current score:<br /> {{score}}
 			{{/en}}
 		</div>
-	{{/en}}
+	</div>
 </div>
