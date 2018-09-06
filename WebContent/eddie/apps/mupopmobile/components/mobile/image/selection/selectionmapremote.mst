@@ -48,11 +48,6 @@
 			Another player can now choose
 			{{/en}}
 			</div>
-			<div style="z-index: 200;">
-				<a href="https://www.beeldengeluid.nl/verhalen">
-				<i class="fa fa-sign-out"></i>{{#nl}}Verlaat het spel{{/nl}}{{#en}}Exit the game{{/en}}
-				</a>
-			</div>
 		</div>
 	{{/slave}}	
 	{{#master}}

@@ -65,7 +65,6 @@ public class QuizRemoteController extends Html5Controller {
 	}
 	
 	public void onSlideUpdate(ModelEvent e) {
-		System.out.println("slide update");
 		FsNode node = e.getTargetFsNode();
 		if (node!=slidenode) { // extra check since we always get a node from shared space
 			slidenode = node;

@@ -8,8 +8,8 @@
 		<span class="quiz-header-player"></span>
 		<span class="quiz-header-username">{{username}}</span>
 		{{/username}}
-		<a id="quiz-header-exit" href="https://www.beeldengeluid.nl/verhalen">
-			<i class="fa fa-sign-out"></i>
+		<a id="quiz-header-exit" href="https://docs.google.com/forms/d/1id9zlPOp0aWS4wTQVX1-u1E0akyEWJ5nryuvN9y1iXw">
+			<i class="fa fa-times"></i>
 		</a>
 		</div>
 	</div>
