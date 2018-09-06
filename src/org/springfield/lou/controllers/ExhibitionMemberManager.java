@@ -74,14 +74,14 @@ public class ExhibitionMemberManager {
 		int size=0;
 		FSList l = s.getModel().getList("/shared/exhibition/availablenames/"+s.getModel().getProperty("@exhibitionid")+"/");
 		if (l!=null) size=l.size();
-//		System.out.println("AVAIL NAMES LIST SIZE="+size);
 		if (size==0) {
-			String names = "Bert,Ernie,Elmo,Grover,Pino,Mumford,Koekiemonster,Troel,Purk,Tommie"+
-				"Bert2,Ernie2,Elmo2,Grover2,Pino2,Mumford2,Koekiemonster2,Troel2,Purk2,Tommie2"+
-				"Bert3,Ernie3,Elmo3,Grover3,Pino3,Mumford3,Koekiemonster3,Troel2,Purk3,Tommie3"+
-				"Bert4,Ernie4,Elmo4,Grover4,Pino4,Mumford4,Koekiemonster4,Troel2,Purk4,Tommie4"+
-				"Bert5,Ernie5,Elmo5,Grover5,Pino5,Mumford5,Koekiemonster5,Troel2,Purk5,Tommie5";
-			String[] list = names.split(",");
+			String[] list = {"Bassie","Adriaan","Theo","Thea","Oma Knots","Swiebertje","Pipo de Clown","Mamalou","Rembo & Rembo","Purno de Purno",
+					"Bert","Ernie","Elmo","Grover","Kermit de Kikker","Pino","Mumford","Koekiemonster","Troel","Tommy","Ieniemienie","Purk","Karbonkel",
+					"Meneer Aart","Bor de Wolf","Meneer de Uil","Juffrouw Ooievaar","Lowieke de Vos","Ed Bever","Willem Bever","Gerrit de Postduif",
+					"Meneer de Raaf","Zaza Zebra","Zuster Klivia","Gerrit de inbreker","De ingenieur","Bertus","Lorre","De Klisjeemannetjes","F. Jacobse",
+					"Tedje van Es","Gé Temmes","Arie Temmes","Koos Koets","Doortje Lefèvre","Kootje de Beer","Lukas Blijschap","Lena Braams","Arie Balk",
+					"Opoe Withof","Dinky","Fred Onderbuik","Ria Onderbuik","Bob de Rooy","Annie de Rooy","Tita Tovernaar","Willempie","Ome Joop","Jaap Aap"
+			};
 			for (int i=0;i<list.length;i++) {
 				FsNode namenode = new FsNode("name",list[i]);
 				s.getModel().putNode("/shared/exhibition/availablenames/"+s.getModel().getProperty("@exhibitionid"),namenode);

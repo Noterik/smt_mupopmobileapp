@@ -8,7 +8,7 @@
 		<span class="quiz-header-player"></span>
 		<span class="quiz-header-username">{{username}}</span>
 		{{/username}}
-		<a id="quiz-header-exit" href="https://docs.google.com/forms/d/1id9zlPOp0aWS4wTQVX1-u1E0akyEWJ5nryuvN9y1iXw">
+		<a id="quiz-header-exit" href="https://docs.google.com/forms/d/e/1FAIpQLSeM-lceR68aUtVQfH1_rx16rKcFuAb8RWwbQWn51fw3abfuNg/viewform">
 			<i class="fa fa-times"></i>
 		</a>
 		</div>
