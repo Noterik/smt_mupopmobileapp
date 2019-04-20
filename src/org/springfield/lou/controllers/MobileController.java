@@ -224,9 +224,32 @@ public class MobileController extends Html5Controller {
 			}
 		}
 	}
+	
+	private void updateUsageCounter() {
+	//	/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']
+		System.out.println("station counter="+model.getProperty("@stationusagecount"));
+		String counter = model.getProperty("@stationusagecount");
+		try {
+			int c = Integer.parseInt(counter);
+			model.setProperty("@stationusagecount",""+(c+1));
+		} catch(Exception e) {
+			model.setProperty("@stationusagecount","1");
+		}
+		System.out.println("exhibition counter="+model.getProperty("@exhibitionusagecount"));
+		counter = model.getProperty("@exhibitionusagecount");
+		try {
+			int c = Integer.parseInt(counter);
+			model.setProperty("@exhibitionusagecount",""+(c+1));
+		} catch(Exception e) {
+			model.setProperty("@exhibitionusagecount","1");
+		}
+	}
 
 	private void mainAppStep() {
 		resetScreen();
+		
+		updateUsageCounter();
+		
 
 		FsNode stationnode = model.getNode("@station");	
 		String app =  stationnode.getProperty("app"); // get the app name

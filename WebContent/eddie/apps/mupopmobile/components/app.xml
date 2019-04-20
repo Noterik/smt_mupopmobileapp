@@ -39,6 +39,7 @@
 
 		<exhibitions>/domain['mupop']/user['@username']/exhibition</exhibitions>
 		<exhibition>/domain['mupop']/user['@username']/exhibition['@exhibitionid']</exhibition>
+		<exhibitionusagecount>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/exhibitionusagecount</exhibitionusagecount>	
 
 		<languages>/domain['mupop']/config['languages']/default</languages>
 		<language>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/languages['@languageid']</language>
@@ -48,6 +49,8 @@
 
 		<stations>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station</stations>
 		<station>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']</station>
+		<stationusagecount>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/stationusagecount</stationusagecount>
+
 
 		<help_topics>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/help</help_topics>
 		<help_topic>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/station['@stationid']/help['@helpid']</help_topic>
