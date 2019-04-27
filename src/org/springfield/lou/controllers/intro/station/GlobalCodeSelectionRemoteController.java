@@ -152,12 +152,26 @@ public class GlobalCodeSelectionRemoteController extends Html5Controller {
 					
 					message.setProperty("@stationid", stationid);
 					model.notify("@stationevents/fromclient",message);
+					
+					System.out.println("CODE CORRECT SHOULD COUNT");
+					updateUsageCounter();
 					return;
 				}
 			}
 		}
 		fillPage();
 	}
+	
+	private void updateUsageCounter() {
+		String counter = model.getProperty("@exhibitionlogincounter");
+		try {
+			int c = Integer.parseInt(counter);
+			model.setProperty("@exhibitionlogincounter",""+(c+1));
+		} catch(Exception e) {
+			model.setProperty("@exhibitionlogincounter","1");
+		}
+	}
+
 
 	private void fillAlphaCodes(JSONObject data) {
 		codes = new HashMap<String, String>();

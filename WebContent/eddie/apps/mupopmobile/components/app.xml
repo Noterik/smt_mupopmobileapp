@@ -40,6 +40,7 @@
 		<exhibitions>/domain['mupop']/user['@username']/exhibition</exhibitions>
 		<exhibition>/domain['mupop']/user['@username']/exhibition['@exhibitionid']</exhibition>
 		<exhibitionusagecount>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/exhibitionusagecount</exhibitionusagecount>	
+		<exhibitionlogincounter>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/exhibitionlogincounter</exhibitionlogincounter>	
 
 		<languages>/domain['mupop']/config['languages']/default</languages>
 		<language>/domain['mupop']/user['@username']/exhibition['@exhibitionid']/languages['@languageid']</language>
