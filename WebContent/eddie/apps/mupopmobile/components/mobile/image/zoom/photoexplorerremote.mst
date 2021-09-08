@@ -32,7 +32,7 @@
 			<img class="img-responsive" id="pinch-zoom-animation" src="/eddie/apps/mupopmobile/img/pinch-zoom.gif"/>	
 			<img class="img-responsive" id="swipe-animation" src="/eddie/apps/mupopmobile/img/left-right-swipe.gif"/>
 		</div>
-		<div id="textreader">
+		<div id="textreader" style="height:90%;overflow:auto">
 		<h3>{{transcript}}</h3>
 		<div id="textreader_text">{{transcript-text}}</div>
 		</div>

@@ -64,7 +64,7 @@ public class MupopmobileApplication extends Html5Application {
 		//System.out.println("A0");
 		System.out.println("NEW SCREEN CALLED"+path);
 		if (path!=null) {
-			//System.out.println("A1");
+			System.out.println("A1");
 			if (path.equals("")) {
 				//System.out.println("A11");
 				s.getModel().setProperty("@username","unknown");
@@ -76,12 +76,22 @@ public class MupopmobileApplication extends Html5Application {
 				System.out.println("OLD METHOD JUMPER OR URL IS WRONG !");
 			}
 		} else {
-			//System.out.println("B1");
+			System.out.println("B1");
 			String u = s.getParameter("u");
 			String e = s.getParameter("e");
 			//System.out.println("USER="+u+" EX="+e);
 			s.getModel().setProperty("@username", u);
 			s.getModel().setProperty("@exhibitionid",e);
+			s.get("#screen").append("div","mobile",new MobileController());
+		}
+		String directcode = s.getParameter("code");
+		if (directcode!=null && !directcode.equals("")) {
+			System.out.println("C1 CODE="+directcode);
+			s.getModel().setProperty("@directcode", directcode);
+			//s.getModel().setProperty("@username","unknown");
+			//s.getModel().setProperty("@exhibitionid","unknown");
+			//s.getModel().setProperty("@username",directcode);
+			//s.getModel().setProperty("@exhibitionid","qrcode");
 			s.get("#screen").append("div","mobile",new MobileController());
 		}
 	}

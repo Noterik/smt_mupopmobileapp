@@ -47,12 +47,23 @@ public class GlobalCodeSelectionRemoteController extends Html5Controller {
 	String alphacode="";
 	String numbercode="";
 	Boolean toggle = false;
+	String code = null;
 
 
-	public GlobalCodeSelectionRemoteController() { }
+	public GlobalCodeSelectionRemoteController() { 
+		
+	}
+	
+	public GlobalCodeSelectionRemoteController(String c) { 
+		System.out.println("MADE IT TO DIRECT GLOBAL SELECTOR WITH="+c);
+		code = c;
+	}
 
 	public void attach(String sel) {
 		selector = sel;
+		if (code!=null) {
+			checkDirectCode(code);
+		}
 		fillPage();
 	}
 
@@ -203,6 +214,52 @@ public class GlobalCodeSelectionRemoteController extends Html5Controller {
 		codes.put("codeselect-P10","");data.put("P10","");
 		codes.put("codeselect-P11","0");data.put("P11","0");
 		codes.put("codeselect-P12","");data.put("P12","");
+	}
+	
+	private void checkDirectCode(String trycode) {
+		FSList joincodes = model.getList("@joincodes"); // check all the active stations
+		if (joincodes != null) {
+			for (Iterator<FsNode> iter = joincodes.getNodes().iterator(); iter.hasNext();) {
+				FsNode node = (FsNode) iter.next();
+				String correctcode = node.getProperty("codeselect");
+				if (correctcode!=null && correctcode.equals(trycode)) {
+					String exhibitionid = node.getProperty("exhibitionid");
+					String stationid = node.getProperty("stationid");
+					String userid = node.getProperty("userid");
+					screen.removeContent(selector.substring(1));
+					model.setProperty("@username",userid);
+					model.setProperty("@exhibitionid",exhibitionid);
+					model.setProperty("@stationid",stationid);
+					//System.out.println("STATION ID="+stationid);
+					//System.out.println("USER ID="+userid);
+					//System.out.println("EXHIBTION ID="+exhibitionid);
+
+					String style = model.getProperty("@station/style");		    	    
+					if (style==null || style.equals("")) {
+						style = model.getProperty("@exhibition/style");
+						if (style==null || style.equals("")) {
+							style="neutral";
+						}
+					}
+					screen.loadStyleSheet("mobile/styles/"+style+".css");
+					FsNode message = new FsNode("message",screen.getId());
+
+					String app = model.getProperty("@station/app");
+					if (app.equals("quiz")) {
+						message.setProperty("request","globalnameselect");
+					} else {
+						message.setProperty("request","station");
+					}
+					
+					message.setProperty("@stationid", stationid);
+					model.notify("@stationevents/fromclient",message);
+					
+					System.out.println("CODE CORRECT SHOULD COUNT");
+					updateUsageCounter();
+					return;
+				}
+			}
+		}
 	}
 
 }

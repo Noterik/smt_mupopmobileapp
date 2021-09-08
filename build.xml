@@ -122,7 +122,7 @@
 
 	<!-- Copile java code -->
 	<target name="compile" depends="compile.init">
-		<javac srcdir="${sources.dir}" destdir="${classes.dir}" debug="on">
+		<javac srcdir="${sources.dir}" destdir="${classes.dir}" target="1.7" source="1.7" debug="on">
 			<classpath>
 				<path refid="provided.classpath" />
 				<path refid="compile.classpath" />
@@ -163,7 +163,7 @@
 		<exec executable="/bin/bash">
 			<!-- remove this line or use your own auto deploy method to get it into 
 				the lou upload dir -->
-			<arg value="/springfield/tomcat/bin/installapp_betamupopmobile.sh" />
+			<arg value="/Users/danielockeloen/Documents/workspace/bin/installapp_betamupopmobile.sh" />
 		</exec>
 
 	</target>

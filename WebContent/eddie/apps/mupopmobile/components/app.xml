@@ -19,6 +19,7 @@
 		<exhibitionid>/screen['vars']/exhibitionid</exhibitionid>
 		<stationid>/screen['vars']/stationid</stationid>
 		<roomid>/screen['vars']/roomid</roomid>
+		<directcode>/screen['vars']/directcode</directcode>
 		<imageid>/screen['vars']/imageid</imageid>
 		<videoid>/screen['vars']/videoid</videoid>
 		<contentrole>/screen['vars']/contentrole</contentrole>

@@ -62,13 +62,20 @@ public class MobileController extends Html5Controller {
 
 		screen.get(selector).render();
 	    screen.get(selector).loadScript(this);
-		String exh = model.getProperty("@exhibitionid");
-		if (exh!=null && exh.equals("unknown")) {
-			model.setProperty("/screen/state","globalcodeselect"); // will trigger a event 
-			//model.setProperty("/screen/state","globallanguageselect"); // will trigger a event 
-		} else {
-			model.setProperty("/screen/state","init"); // will trigger a event 
-		}
+	    String directcode = model.getProperty("@directcode");
+	    System.out.println("directcode="+directcode);
+	    if (directcode!=null) {
+    		System.out.println("WE need to figure our use and exh. id");
+    		model.setProperty("/screen/state","globalcodeselect"); // will trigger a event 
+	    } else {
+	    	String exh = model.getProperty("@exhibitionid");
+	    	if (exh!=null && exh.equals("unknown")) {
+	    		model.setProperty("/screen/state","globalcodeselect"); // will trigger a event 
+	    		//model.setProperty("/screen/state","globallanguageselect"); // will trigger a event 
+	    	} else {
+	    		model.setProperty("/screen/state","init"); // will trigger a event 
+	    	}
+	    }
 		System.out.println("C1");
 	}
 
@@ -201,10 +208,21 @@ public class MobileController extends Html5Controller {
 	}
 	
 	private void globalSelectStep() {
+		System.out.println("MADE IT TO GLOBAL SELECT STEP");
+		
 		resetScreen();
 		String style="leuven"; // very temp hack
 		screen.loadStyleSheet("mobile/styles/"+style+".css");
-		screen.get("#mobile").append("div", "globalcodeselectionremote", new GlobalCodeSelectionRemoteController());		
+		
+		
+		String code = model.getProperty("@directcode");
+		System.out.println("DIRECT CODE USER="+code);
+		if (code!=null) {
+			System.out.println("DO DIRECT");
+			screen.get("#mobile").append("div", "globalcodeselectionremote", new GlobalCodeSelectionRemoteController(code));	
+		} else {
+			screen.get("#mobile").append("div", "globalcodeselectionremote", new GlobalCodeSelectionRemoteController());	
+		}
 	}
 	
 	private void globalNameSelect() {
